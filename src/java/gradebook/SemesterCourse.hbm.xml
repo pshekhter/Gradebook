@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 22, 2017 3:30:16 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="gradebook.SemesterCourse" table="semester_course" catalog="mydb" optimistic-lock="version">
+        <id name="semesterCourseId" type="java.lang.Integer">
+            <column name="SEMESTER_COURSE_ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="course" class="gradebook.Course" fetch="select">
+            <column name="COURSE_ID" not-null="true" />
+        </many-to-one>
+        <many-to-one name="semester" class="gradebook.Semester" fetch="select">
+            <column name="SEMESTER_ID" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

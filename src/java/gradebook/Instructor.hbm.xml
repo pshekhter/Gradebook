@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 22, 2017 3:30:16 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="gradebook.Instructor" table="instructor" catalog="mydb" optimistic-lock="version">
+        <id name="instructorId" type="java.lang.Integer">
+            <column name="INSTRUCTOR_ID" />
+            <generator class="identity" />
+        </id>
+        <property name="instructorEmail" type="string">
+            <column name="INSTRUCTOR_EMAIL" length="45" not-null="true" />
+        </property>
+        <set name="gradebooks" table="gradebook" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="INSTRUCTOR_ID" not-null="true" />
+            </key>
+            <one-to-many class="gradebook.Gradebook" />
+        </set>
+    </class>
+</hibernate-mapping>

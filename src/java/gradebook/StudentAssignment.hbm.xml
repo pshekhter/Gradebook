@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 22, 2017 3:30:16 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="gradebook.StudentAssignment" table="student_assignment" catalog="mydb" optimistic-lock="version">
+        <id name="studentAssignmentId" type="java.lang.Integer">
+            <column name="STUDENT_ASSIGNMENT_ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="assignment" class="gradebook.Assignment" fetch="select">
+            <column name="ASSIGNMENT_ID" not-null="true" />
+        </many-to-one>
+        <many-to-one name="student" class="gradebook.Student" fetch="select">
+            <column name="STUDENT_ID" not-null="true" />
+        </many-to-one>
+        <property name="studentAssignmentGrade" type="int">
+            <column name="STUDENT_ASSIGNMENT_GRADE" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
