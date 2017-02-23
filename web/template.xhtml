@@ -7,48 +7,79 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="/css/default.css"/>
-        <h:outputStylesheet name="/css/bootstrap.css"/>
+        <h:outputStylesheet name="/css/bootstrap.min.css"/>
         <title>Gradebook</title>
     </h:head>
 
     <h:body>
-        <div class="navbar-header">
-            <button class="navbar-toggle collapsed" type="button" data-target="navbar-links" data-toggle="collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+        <!-- Header -->
+        <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
             <div class="container-fluid">
-                <h1 class="header-heading">Gradebook</h1>
-            </div>
-        </div>
-        <!-- Navbar -->
-        <div class="collapse navbar-collapse" id="navbar-links">
-            <ul class="nav navbar-nav">
-                <li><h:link value="Home" outcome="index"></h:link></li>
-                <li><h:link value="Add Actor" outcome="index"></h:link></li>
-                <li><h:link value="Create Gradebook" outcome="index"></h:link></li>
-                <li><h:link value="Email Grades" outcome="index"></h:link></li>
-                <li><h:link value="Display Gradebook" outcome="index"></h:link></li>
-            </ul>
-        </div>
-
-        <!-- Content -->
-        <div id="content" class="content">
-            <div class="container-fluid">
-                <div class="main">
-                    <ui:insert name="body">Content</ui:insert>
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" type="button" data-target="navbar-links" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">Gradebook</a>
+                    </div>
+                </div>
+                <!-- Navbar -->
+                <div class="collapse navbar-collapse" id="navbar-links">
+                    <ul class="nav navbar-nav">
+                        <li><h:link value="Home" outcome="index"></h:link></li>
+                        <li><h:link value="Add Actor" outcome="index"></h:link></li>
+                        <li><h:link value="Create Gradebook" outcome="index"></h:link></li>
+                        <li><h:link value="Email Grades" outcome="index"></h:link></li>
+                        <li><h:link value="Display Gradebook" outcome="index"></h:link></li>
+                    </ul>
                 </div>
             </div>
+
+        </nav>
+
+        <!-- Content -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <br></br>
+                    <div id="title" class="page-header">
+                        <h1><ui:insert name="title">Title></ui:insert></h1>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-8">
+                    <p class="lead">
+                        <ui:insert name="content">Content></ui:insert>
+                    </p>
+                </div>
+            </div>
+
+
+            <!-- Sidebar -->
+            <div class="col-sm-4">
+                <div class="well">
+                    <h4 class="margin-t-0">Enter E-mail</h4>
+                </div>
+            </div>
+
         </div>
 
+
         <div class="footer">
-            <div class="container-fluid">
-                <p>By: Allison Heuwetter and Pavel Shekhter</p>
-                <p>Spring 2017</p>
-                <p>Chestnut Hill College</p>
+            <div class="row">
+                <div class="col-lg-12">
+                    <h:form>
+                        <p>By: Allison Heuwetter</p>
+                        <p>   Pavel Shekhter</p>
+                        <p>    Spring 2017</p>
+                    </h:form>
+                </div>
             </div>
         </div>
 
