@@ -14,8 +14,11 @@
             <h:form>
                 <h:panelGrid columns="2">
                     <h:outputText value="Course" />
-                    <h:outputText value="Course pholder" />
-
+                    <h:selectOneMenu value="#{gradebookController.course}">
+                        <f:selectItems value="#{gradebookController.courseValues}" var="c"
+                                       itemLabel="#{c.courseName}" itemValue="#{c.courseId}" />
+                    </h:selectOneMenu>
+                    
                     <h:outputText value="Semester" />
                     <h:outputText value="Semester pholder" />
 
