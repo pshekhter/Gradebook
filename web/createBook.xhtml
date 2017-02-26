@@ -20,7 +20,10 @@
                     </h:selectOneMenu>
                     
                     <h:outputText value="Semester" />
-                    <h:outputText value="Semester pholder" />
+                    <h:selectOneMenu value="#{gradebookController.semester}">
+                        <f:selectItems value="#{gradebookController.semesterValues}" var="s"
+                                       itemLabel="#{s.semesterName}" itemValue="#{s.semesterId}" />
+                    </h:selectOneMenu>
 
                     <h:outputText value="Instructor" />
                     <h:outputText value="Instructor pholder" />

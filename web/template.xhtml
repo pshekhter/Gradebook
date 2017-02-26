@@ -31,7 +31,6 @@
                 <div class="collapse navbar-collapse" id="navbar-links">
                     <ul class="nav navbar-nav">
                         <li><h:link value="Home" outcome="index"></h:link></li>
-                        <li><h:link value="Add Actor" outcome="index"></h:link></li>
                         <li><h:link value="Create Gradebook" outcome="createBook"></h:link></li>
                         <li><h:link value="Email Grades" outcome="index"></h:link></li>
                         <li><h:link value="Display Gradebook" outcome="index"></h:link></li>
@@ -63,12 +62,15 @@
                 <div class="col-sm-4">
                     <div class="well">
                         <h:form>
-                            <h4 class="margin-t-0">Enter Instructor Name</h4>
-                            <h:inputText id="iname" value="" size="10" maxlength="45"
-                                         required="true" label="Instructor Name"/>
-                            <h:message for="iname" style="color: red; font-size: 0.7em" />
-                            <h:commandButton id="submit" value="Login" action="index" />
-                            <h:commandButton value="Clear" type="reset"/>
+                            <h:outputText class="col-sm-12" value="Whose Gradebook Do You Want to Change?" />
+                            <h:panelGrid columns="3">
+                                <h4 class="margin-t-0">Enter Instructor Name</h4>
+                                <h:inputText id="iname" value="" size="10" maxlength="45"
+                                             required="true" label="Instructor Name"/>
+                                <h:message for="iname" style="color: red; font-size: 0.7em" />
+                                <h:commandButton id="submit" value="Login" action="index" />
+                                <h:commandButton value="Clear" type="reset"/>
+                            </h:panelGrid>
                         </h:form>
                     </div>
                 </div>
