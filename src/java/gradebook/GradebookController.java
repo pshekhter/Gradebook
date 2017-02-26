@@ -21,6 +21,7 @@ public class GradebookController implements Serializable {
     // Fields mapping to select options in createBook.xhtml
     DataModel courseValues;
     DataModel semesterValues;
+    DataModel instructorValues;
     
     // Create CourseHelper instance
     CourseHelper courseHelper;
@@ -28,12 +29,16 @@ public class GradebookController implements Serializable {
     // Create SemesterHelper instance
     SemesterHelper semesterHelper;
     
+    // Create InstructorHelper instance
+    InstructorHelper instructorHelper;
+    
     // Maps to components
     // Represents selected values
     String course;
     int courseID;
     String semester;
     int semesterID;
+    String instructor;
     int instructorID;    
 
     /**
@@ -42,6 +47,7 @@ public class GradebookController implements Serializable {
     public GradebookController() {
         courseHelper = new CourseHelper();
         semesterHelper = new SemesterHelper();
+        instructorHelper = new InstructorHelper();
     }
     
     /**
@@ -124,6 +130,33 @@ public class GradebookController implements Serializable {
     public void setSemester(String semester) {
         this.semester = semester;
     }
-    
+
+    /**
+     * Get all instructors.
+     * @return instructorValues
+     */
+    public DataModel getInstructorValues() {
+        if (instructorValues == null) {
+            instructorValues = new ListDataModel(instructorHelper.getInstructors());
+        }
+        
+        return instructorValues;
+    }
+
+    /**
+     * Set instructor values.
+     * @param instructorValues 
+     */
+    public void setInstructorValues(DataModel instructorValues) {
+        this.instructorValues = instructorValues;
+    }
+
+    public String getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(String instructor) {
+        this.instructor = instructor;
+    }
     
 }

@@ -26,8 +26,10 @@
                     </h:selectOneMenu>
 
                     <h:outputText value="Instructor" />
-                    <h:outputText value="Instructor pholder" />
-                    
+                    <h:selectOneMenu value="#{gradebookController.instructor}">
+                        <f:selectItems value="#{gradebookController.instructorValues}" var="i"
+                                       itemLabel="#{i.instructorEmail}" itemValue="#{i.instructorId}" />
+                    </h:selectOneMenu>
                 </h:panelGrid>
                 <h:commandButton id="submit" value="Submit" action="createBook" />
                 <h:commandButton value="Clear" type="reset" />

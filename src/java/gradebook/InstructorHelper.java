@@ -5,14 +5,15 @@ import java.util.List;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
+
 /**
  *
  * @author Pavel Shekhter (2/25/2017)
  */
-public class CourseHelper {
+public class InstructorHelper {
 
     /**
-     * Contains SQL Database connection to Course as well as related tables.
+     * Contains SQL Database connection to Instructor as well as related tables.
      * (2/24/2017)
      *
      * @author Pavel Shekhter
@@ -22,7 +23,7 @@ public class CourseHelper {
     /**
      * Default constructor to initialize Session - Pavel Shekhter (2/25/2017)
      */
-    public CourseHelper() {
+    public InstructorHelper() {
         // 
         try {
             // Initialize session and begin transaction with MySQL
@@ -33,13 +34,13 @@ public class CourseHelper {
         }
     }
     
-    public List getCourses() {
+    public List getInstructors() {
         
         // Create course list
-        List courseList = null;
+        List instructorList = null;
         
         // Get all courses in table
-        String sql = "SELECT * FROM course";
+        String sql = "SELECT * FROM instructor";
         
         try {
             // Initialize transaction if not already initialized
@@ -49,14 +50,14 @@ public class CourseHelper {
             
             SQLQuery query = session.createSQLQuery(sql);
             
-            query.addEntity(Course.class);
+            query.addEntity(Instructor.class);
             
-            courseList = (List<Course>) query.list();
+            instructorList = (List<Instructor>) query.list();
         } catch (Exception e) {
             e.printStackTrace();
         }
         
-        return courseList;
+        return instructorList;
     }
 
 }
