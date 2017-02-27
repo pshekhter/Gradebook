@@ -31,8 +31,7 @@
                 <div class="collapse navbar-collapse" id="navbar-links">
                     <ul class="nav navbar-nav">
                         <li><h:link value="Home" outcome="index"></h:link></li>
-                        <li><h:link value="Add Actor" outcome="index"></h:link></li>
-                        <li><h:link value="Create Gradebook" outcome="index"></h:link></li>
+                        <li><h:link value="Create Gradebook" outcome="createBook"></h:link></li>
                         <li><h:link value="Email Grades" outcome="index"></h:link></li>
                         <li><h:link value="Display Gradebook" outcome="index"></h:link></li>
                     </ul>
@@ -51,22 +50,34 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-sm-8">
                     <p class="lead">
                         <ui:insert name="content">Content></ui:insert>
                     </p>
                 </div>
-            </div>
 
-
-            <!-- Sidebar -->
-            <div class="col-sm-4">
-                <div class="well">
-                    <h4 class="margin-t-0">Enter E-mail</h4>
+                <!-- Sidebar -->
+                <div class="col-sm-4">
+                    <div class="well">
+                        <h:form>
+                            <h:outputText class="col-sm-12" value="Whose Gradebook Do You Want to Change?" />
+                            <h:panelGrid columns="3">
+                                <h4 class="margin-t-0">Enter Instructor Email</h4>
+                                <h:inputText id="iemail" value="" size="10" maxlength="45"
+                                             required="true" label="Instructor Email"/>
+                                <h:message for="iemail" style="color: red; font-size: 0.7em" />
+                                <h:commandButton id="submit" value="Login" action="index" />
+                                <h:commandButton value="Clear" type="reset"/>
+                            </h:panelGrid>
+                        </h:form>
+                    </div>
                 </div>
             </div>
+
+
+
 
         </div>
 

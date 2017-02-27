@@ -162,7 +162,7 @@ DROP TABLE IF EXISTS `instructor`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `instructor` (
   `INSTRUCTOR_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `INSTRUCTOR_NAME` varchar(45) NOT NULL,
+  `INSTRUCTOR_EMAIL` varchar(45) NOT NULL,
   PRIMARY KEY (`INSTRUCTOR_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

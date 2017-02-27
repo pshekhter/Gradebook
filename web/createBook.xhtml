@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Create Gradebook" />
+        </ui:define>
+
+        <ui:define name="content">
+
+            <h:form id="createGradebookForm">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Course" />
+                    <h:selectOneMenu value="#{gradebookController.course}">
+                        <f:selectItems value="#{gradebookController.courseValues}" var="c"
+                                       itemLabel="#{c.courseName}" itemValue="#{c.courseId}" />
+                    </h:selectOneMenu>
+                    
+                    <h:outputText value="Semester" />
+                    <h:selectOneMenu value="#{gradebookController.semester}">
+                        <f:selectItems value="#{gradebookController.semesterValues}" var="s"
+                                       itemLabel="#{s.semesterName}" itemValue="#{s.semesterId}" />
+                    </h:selectOneMenu>
+
+                    <h:outputText value="Instructor" />
+                    <h:selectOneMenu value="#{gradebookController.instructor}">
+                        <f:selectItems value="#{gradebookController.instructorValues}" var="i"
+                                       itemLabel="#{i.instructorEmail}" itemValue="#{i.instructorId}" />
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandButton id="submit" value="Submit" action="createBook" />
+                <h:commandButton value="Clear" type="reset" />
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>
+
