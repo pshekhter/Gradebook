@@ -6,13 +6,19 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Welcome to Gradebook!" />
+            <h:outputText value="Create Assignment" />
         </ui:define>
-        
+
         <ui:define name="content">
-            <h:outputText value="This is a test!" />
-            
+
+            <h:form id="createGradebookForm">
+                <h:panelGrid columns="3">
+                    
+                </h:panelGrid>
+                <h:commandButton id="submit" value="Submit" action="createAssignment" />
+                <h:commandButton value="Clear" type="reset" />
+            </h:form>
+
         </ui:define>
     </ui:composition>
 </html>
-
