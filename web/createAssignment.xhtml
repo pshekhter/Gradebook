@@ -16,12 +16,12 @@
                     <h:outputText value="Assignment" />
                     <h:selectOneMenu value="#{assignmentController.assignmentName}">
                         <f:selectItems value="#{assignmentController.assignmentValues}" var="a"
-                                       itemLabel="#{a.assignmentName}" itemValue="#{a.assignmentID}" />
+                                       itemLabel="#{a.assignmentName}" itemValue="#{a.assignmentId}" />
                     </h:selectOneMenu>
                     
                     
                 </h:panelGrid>
-                <h:commandButton id="submit" value="Submit" action="createBook" />
+                <h:commandButton id="submit" value="Submit" action="createAssignment" />
                 <h:commandButton value="Clear" type="reset" />
             </h:form>
 
