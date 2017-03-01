@@ -33,6 +33,14 @@ public class AssignmentController implements Serializable {
         helper = new AssignmentHelper();
         
     }
+    
+    public DataModel getAssignmentValues() {
+        if (assignmentValues == null) {
+            assignmentValues = new ListDataModel(helper.getAssignments());
+        }
+        
+        return assignmentValues;
+    }
 
     public int getAssignmentID() {
         return assignmentID;
