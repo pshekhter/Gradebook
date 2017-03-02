@@ -1,4 +1,3 @@
-
 package gradebook;
 
 import java.util.List;
@@ -32,31 +31,32 @@ public class CourseHelper {
             e.printStackTrace();
         }
     }
-    
+
     public List getCourses() {
-        
+
         // Create course list
         List courseList = null;
-        
+
         // Get all courses in table
         String sql = "SELECT * FROM course";
-        
+
         try {
             // Initialize transaction if not already initialized
             if (!this.session.getTransaction().isActive()) {
                 session.beginTransaction();
             }
-            
+
             SQLQuery query = session.createSQLQuery(sql);
-            
+
             query.addEntity(Course.class);
-            
+
             courseList = (List<Course>) query.list();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return courseList;
     }
+
 
 }

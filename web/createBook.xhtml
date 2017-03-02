@@ -14,19 +14,25 @@
             <h:form id="createGradebookForm">
                 <h:panelGrid columns="2">
                     <h:outputText value="Course" />
-                    <h:selectOneMenu value="#{gradebookController.course}">
+                    <h:selectOneMenu value="#{gradebookController.course}"
+                                     onchange="submit()"
+                                     valueChangeListener="#{gradebookController.courseNameValueChangedListener}">
                         <f:selectItems value="#{gradebookController.courseValues}" var="c"
                                        itemLabel="#{c.courseName}" itemValue="#{c.courseId}" />
                     </h:selectOneMenu>
                     
                     <h:outputText value="Semester" />
-                    <h:selectOneMenu value="#{gradebookController.semester}">
+                    <h:selectOneMenu value="#{gradebookController.semester}"
+                                     onchange="submit()"
+                                     valueChangeListener="#{gradebookController.semesterNameValueChangedListener}">
                         <f:selectItems value="#{gradebookController.semesterValues}" var="s"
                                        itemLabel="#{s.semesterName}" itemValue="#{s.semesterId}" />
                     </h:selectOneMenu>
 
                     <h:outputText value="Instructor" />
-                    <h:selectOneMenu value="#{gradebookController.instructor}">
+                    <h:selectOneMenu value="#{gradebookController.instructor}"
+                                     onchange="submit()"
+                                     valueChangeListener="#{gradebookController.instructorEmailValueChangedListener}">
                         <f:selectItems value="#{gradebookController.instructorValues}" var="i"
                                        itemLabel="#{i.instructorEmail}" itemValue="#{i.instructorId}" />
                     </h:selectOneMenu>
@@ -34,6 +40,7 @@
                 <h:commandButton id="submit" value="Submit" action="createBook" />
                 <h:commandButton value="Clear" type="reset" />
             </h:form>
+            <h:outputText escape="false" value="#{gradebookController.response}" />
 
         </ui:define>
     </ui:composition>

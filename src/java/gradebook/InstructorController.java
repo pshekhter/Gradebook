@@ -1,4 +1,3 @@
-
 package gradebook;
 
 import javax.inject.Named;
@@ -16,13 +15,13 @@ import javax.faces.model.ListDataModel;
 @Named(value = "instructorController")
 @SessionScoped
 public class InstructorController implements Serializable {
-    
+
     // Data values
     DataModel instructorValues;
-    
+
     // Instructor Helper
     InstructorHelper instructorHelper;
-    
+
     // Maps to components in template
     Instructor instructor;
     String instructorEmail;
@@ -66,9 +65,10 @@ public class InstructorController implements Serializable {
         this.instructorEmail = instructorEmail;
     }
 
-    
     public int getInstructorID() {
-        if (instructorID != previousInstructorID) previousInstructorID = instructorID;
+        if (instructorID != previousInstructorID) {
+            previousInstructorID = instructorID;
+        }
         return instructorID;
     }
 
@@ -78,14 +78,22 @@ public class InstructorController implements Serializable {
     }
 
     public String getResponse() {
-        if (instructorID == previousInstructorID) {
-            instructor = (Instructor)instructorHelper.getInstructors().get(instructorID);
-            instructorEmail = instructor.getInstructorEmail();
-            response = "The selected instructor is: ";
-            response = response.concat(instructorEmail);
+        
+        if (instructorEmail != null) {
+
+            if (instructorHelper.insertInstructor(instructorEmail) == 1) {
+                instructorEmail = null;
+                response = "Instructor Added.";
+                return response;
+            } else {
+                instructorEmail = null;
+                response = "Instructor Not Added.";
+                return response;
+            }
+        } else {
+            response = " ";
             return response;
-        } 
-        return response;
+        }
     }
 
     public void setResponse(String response) {
