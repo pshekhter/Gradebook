@@ -5,6 +5,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.event.ValueChangeEvent;
@@ -34,6 +35,11 @@ public class GradebookController implements Serializable {
     // Create GradebookHelper instance
     GradebookHelper gradebookHelper;
 
+    // List of elements
+    List<Course> courses;
+    List<Semester> semesters;
+    List<Instructor> instructors;
+
     // Maps to components
     // Represents selected values
     String courseName;
@@ -44,6 +50,9 @@ public class GradebookController implements Serializable {
     int instructorID;
     String response = " ";
 
+    // Tracks change
+    boolean isReadyForSubmit = false;
+
     /**
      * Creates a new instance of GradebookController
      */
@@ -53,6 +62,16 @@ public class GradebookController implements Serializable {
         instructorHelper = new InstructorHelper();
         gradebookHelper = new GradebookHelper();
 
+        courses = gradebookHelper.getCourses();
+        semesters = gradebookHelper.getSemesters();
+        instructors = gradebookHelper.getInstructors();
+
+        courseName = courses.get(0).getCourseName();
+        courseID = courses.get(0).getCourseId();
+        semesterName = semesters.get(0).getSemesterName();
+        semesterID = semesters.get(0).getSemesterId();
+        instructorEmail = instructors.get(0).getInstructorEmail();
+        instructorID = instructors.get(0).getInstructorId();
     }
 
     /**
@@ -172,28 +191,6 @@ public class GradebookController implements Serializable {
 
     public String getResponse() {
 
-        if (courseName != null && semesterName != null && instructorEmail != null) {
-            Course course = (Course) gradebookHelper.getCourseById(courseID);
-            Semester semester = (Semester) gradebookHelper.getSemesterNameAtId(semesterID);
-            Instructor instructor = (Instructor) gradebookHelper.getGradeBookInstructor(instructorID);
-
-            if ((course != null) && (semester != null) && (instructor != null)) {
-                if (gradebookHelper.insertGradebook(course, semester, instructor) == 1) {
-                    courseName = null;
-                    semesterName = null;
-                    instructorEmail = null;
-                    response = "Gradebook Added to Database.";
-                } else {
-                    courseName = null;
-                    semesterName = null;
-                    instructorEmail = null;
-                    response = "Gradebook Not Added to Database.";
-                }
-            }
-        } else {
-            response = " ";
-        }
-
         return response;
     }
 
@@ -205,7 +202,14 @@ public class GradebookController implements Serializable {
         String newVal = e.getNewValue().toString();
         try {
             this.courseID = Integer.parseInt(newVal);
-            this.courseName = (String) gradebookHelper.getCourseById(courseID).getCourseName();
+            Course course = courses.get(0);
+            for (int courseCounter = 0; courseCounter < courses.size(); courseCounter++) {
+                if (courses.get(courseCounter).getCourseId() == courseID) {
+                    course = courses.get(courseCounter);
+                    courseName = course.getCourseName();
+                }
+            }
+
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
         }
@@ -215,7 +219,14 @@ public class GradebookController implements Serializable {
         String newVal = e.getNewValue().toString();
         try {
             this.semesterID = Integer.parseInt(newVal);
-            this.semesterName = (String) gradebookHelper.getSemesterNameAtId(semesterID).getSemesterName();
+            Semester semester = semesters.get(0);
+            for (int semesterCounter = 0; semesterCounter < semesters.size(); semesterCounter++) {
+                if (semesters.get(semesterCounter).getSemesterId() == semesterID) {
+                    semester = semesters.get(semesterCounter);
+                    semesterName = semester.getSemesterName();
+                }
+            }
+
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
         }
@@ -226,10 +237,65 @@ public class GradebookController implements Serializable {
         String newVal = e.getNewValue().toString();
         try {
             this.instructorID = Integer.parseInt(newVal);
-            this.instructorEmail = (String) gradebookHelper.getInstructorById(instructorID).getInstructorEmail();
+            Instructor instructor = instructors.get(0);
+            for (int instructorCounter = 0; instructorCounter < instructors.size(); instructorCounter++) {
+                if (instructors.get(instructorCounter).getInstructorId() == instructorID) {
+                    instructor = instructors.get(instructorCounter);
+                    instructorEmail = instructor.getInstructorEmail();
+                }
+            }
+
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
         }
+    }
+
+    public String createBook() {
+        if (courseName != null && semesterName != null && instructorEmail != null) {
+            Course course = null;
+            Semester semester = null;
+            Instructor instructor = null;
+
+            for (int courseCounter = 0; courseCounter < courses.size(); courseCounter++) {
+                if (courses.get(courseCounter).getCourseId() == courseID) {
+                    course = courses.get(courseCounter);
+                }
+            }
+
+            for (int semesterCounter = 0; semesterCounter < semesters.size(); semesterCounter++) {
+                if (semesters.get(semesterCounter).getSemesterId() == semesterID) {
+                    semester = semesters.get(semesterCounter);
+                }
+            }
+
+            for (int instructorCounter = 0; instructorCounter < instructors.size(); instructorCounter++) {
+                if (instructors.get(instructorCounter).getInstructorId() == instructorID) {
+                    instructor = instructors.get(instructorCounter);
+                }
+            }
+
+            isReadyForSubmit = true;
+
+            if ((course != null) && (semester != null) && (instructor != null) && (isReadyForSubmit == true)) {
+                if (gradebookHelper.insertGradebook(course, semester, instructor) == 1) {
+                    courseName = null;
+                    semesterName = null;
+                    instructorEmail = null;
+                    response = "Gradebook Added to Database.";
+                    isReadyForSubmit = false;
+                } else {
+                    courseName = null;
+                    semesterName = null;
+                    instructorEmail = null;
+                    response = "Gradebook Not Added to Database.";
+                    isReadyForSubmit = false;
+                }
+            }
+        } else if (isReadyForSubmit == false) {
+            response = "Not ready for submit. Make sure you've changed all three fields.";
+        }
+        
+        return response;
     }
 
 }

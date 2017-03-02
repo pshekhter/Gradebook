@@ -203,7 +203,7 @@ public class GradebookHelper {
 
         // Select the instructor name
         String sql = "SELECT * FROM course "
-                + "WHERE COURSE_ID = :id LIMIT 1";
+                + "WHERE COURSE_ID = 1 LIMIT 1";
         try {
             // Begin transaction if inactive
             if (!this.session.getTransaction().isActive()) {
@@ -268,6 +268,93 @@ public class GradebookHelper {
         } else {
             return null;
         }
+
+    }
+
+    public List getCourses() {
+        // Create the list
+        List<Course> courseList = null;
+
+        String sql = "SELECT * FROM course";
+
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(Course.class);
+
+            // Execute query
+            courseList = (List<Course>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return gradebooks
+        return courseList;
+
+    }
+
+    public List getSemesters() {
+        // Create the list
+        List<Semester> semesterList = null;
+
+        String sql = "SELECT * FROM semester";
+
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(Semester.class);
+
+            // Execute query
+            semesterList = (List<Semester>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return gradebooks
+        return semesterList;
+
+    }
+
+    public List getInstructors() {
+        // Create the list
+        List<Instructor> instructorList = null;
+
+        String sql = "SELECT * FROM instructor";
+
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(Instructor.class);
+
+            // Execute query
+            instructorList = (List<Instructor>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return gradebooks
+        return instructorList;
 
     }
 
