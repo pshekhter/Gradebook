@@ -58,5 +58,40 @@ public class CourseHelper {
         return courseList;
     }
 
+    public int insertCourse(String courseName) {
+
+        // Initialize a result value
+        int result = 0;
+
+        // Set SQL Insertion String
+        String sql = "INSERT INTO Course "
+                + "(COURSE_NAME) "
+                + "VALUES (:courseName)";
+
+        try {
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create query
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Configure query
+            query.addEntity(Course.class);
+
+            query.setParameter("courseName", courseName);
+
+            // Execute update
+            result = query.executeUpdate();
+
+            // Commit
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
 
 }

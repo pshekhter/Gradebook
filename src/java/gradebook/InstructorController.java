@@ -3,8 +3,6 @@ package gradebook;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Date;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
