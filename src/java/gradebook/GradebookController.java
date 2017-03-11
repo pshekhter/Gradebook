@@ -283,19 +283,22 @@ public class GradebookController implements Serializable {
                     instructorEmail = null;
                     response = "Gradebook Added to Database.";
                     isReadyForSubmit = false;
+                    return "createBook";
                 } else {
                     courseName = null;
                     semesterName = null;
                     instructorEmail = null;
                     response = "Gradebook Not Added to Database.";
                     isReadyForSubmit = false;
+                    return "createBook";
                 }
             }
         } else if (isReadyForSubmit == false) {
             response = "Not ready for submit. Make sure you've changed all three fields.";
+            return "createBook";
         }
-        
         return response;
     }
-
+        
 }
+
