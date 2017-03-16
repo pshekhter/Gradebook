@@ -78,14 +78,15 @@ public class InstructorController implements Serializable {
     public String getResponse() {
         
         if (instructorEmail != null) {
-
-            if (instructorHelper.insertInstructor(instructorEmail) == 1) {
+            
+            if (instructorHelper.getInstructor(instructorEmail) != null) {
+                instructor = instructorHelper.getInstructor(instructorEmail);
                 instructorEmail = null;
-                response = "Instructor Added.";
+                response = "Instructor found. The currently active instructor is: " + instructor.getInstructorEmail();
                 return response;
             } else {
                 instructorEmail = null;
-                response = "Instructor Not Added.";
+                response = "Instructor not found.";
                 return response;
             }
         } else {

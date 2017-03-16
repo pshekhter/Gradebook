@@ -58,39 +58,33 @@ public class InstructorHelper {
         return instructorList;
     }
 
-    public int insertInstructor(String email) {
+    public Instructor getInstructor(String instructorEmail) {
+        // Create course list
+        List instructorList = null;
 
-        // Initialize a result value
-        int result = 0;
-
-        // Set SQL Insertion String
-        String sql = "INSERT INTO instructor "
-                + "(INSTRUCTOR_EMAIL) "
-                + "VALUES (:email)";
+        // Get all courses in table
+        String sql = "SELECT * FROM instructor WHERE INSTRUCTOR_EMAIL = :ins";
 
         try {
+            // Initialize transaction if not already initialized
             if (!this.session.getTransaction().isActive()) {
                 session.beginTransaction();
             }
 
-            // Create query
             SQLQuery query = session.createSQLQuery(sql);
 
-            // Configure query
             query.addEntity(Instructor.class);
+            query.setParameter("ins", instructorEmail);
 
-            query.setParameter("email", email);
-
-            // Execute update
-            result = query.executeUpdate();
-
-            // Commit
-            session.getTransaction().commit();
+            instructorList = (List<Instructor>) query.list();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return result;
+        if (instructorList.size() != 0) {
+            return (Instructor) instructorList.get(0);
+        } else {
+            return null;
+        }
     }
 
 }
