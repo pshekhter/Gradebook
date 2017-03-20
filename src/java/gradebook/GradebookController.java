@@ -254,7 +254,7 @@ public class GradebookController implements Serializable {
     }
 
     public String createBook() {
-        if (courseName != null && semesterName != null && instructorEmail != null) {
+        if (courseName != null && semesterName != null && selectedEmail != null) {
             Course course = null;
             Semester semester = null;
             Instructor instructor = null;
@@ -271,7 +271,7 @@ public class GradebookController implements Serializable {
                 }
             }
 
-            instructor = instructorHelper.getInstructor(instructorEmail);
+            instructor = instructorHelper.getInstructor(selectedEmail);
 
             isReadyForSubmit = true;
 
