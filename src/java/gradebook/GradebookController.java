@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.event.ValueChangeEvent;
@@ -49,6 +52,7 @@ public class GradebookController implements Serializable {
     String instructorEmail;
     int instructorID;
     String response = " ";
+    String selectedEmail;
 
     // Tracks change
     boolean isReadyForSubmit = false;
@@ -61,17 +65,16 @@ public class GradebookController implements Serializable {
         semesterHelper = new SemesterHelper();
         instructorHelper = new InstructorHelper();
         gradebookHelper = new GradebookHelper();
-
         courses = gradebookHelper.getCourses();
         semesters = gradebookHelper.getSemesters();
         instructors = gradebookHelper.getInstructors();
-
+        instructorID = instructors.get(0).getInstructorId();
+        instructorEmail = instructors.get(0).getInstructorEmail();
         courseName = courses.get(0).getCourseName();
         courseID = courses.get(0).getCourseId();
         semesterName = semesters.get(0).getSemesterName();
         semesterID = semesters.get(0).getSemesterId();
-        instructorEmail = instructors.get(0).getInstructorEmail();
-        instructorID = instructors.get(0).getInstructorId();
+        response = " ";
     }
 
     /**
@@ -268,11 +271,7 @@ public class GradebookController implements Serializable {
                 }
             }
 
-            for (int instructorCounter = 0; instructorCounter < instructors.size(); instructorCounter++) {
-                if (instructors.get(instructorCounter).getInstructorId() == instructorID) {
-                    instructor = instructors.get(instructorCounter);
-                }
-            }
+            instructor = instructorHelper.getInstructor(instructorEmail);
 
             isReadyForSubmit = true;
 
@@ -299,6 +298,30 @@ public class GradebookController implements Serializable {
         }
         return response;
     }
-        
-}
 
+    public void insert() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        String idString = params.get("id");
+        try {
+            this.instructorID = Integer.parseInt(idString);
+            this.instructorEmail = instructors.get(instructorID).getInstructorEmail();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getEmail(int insId) {
+        return instructors.get(insId - 1).getInstructorEmail();
+    }
+
+    public String getSelectedEmail() {
+        return selectedEmail;
+    }
+
+    public void setSelectedEmail(String selectedEmail) {
+        this.selectedEmail = selectedEmail;
+    }
+
+    
+}

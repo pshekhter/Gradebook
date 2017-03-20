@@ -62,15 +62,12 @@
 
                 <div class="col-sm-4">
                     <div class="well">                                
-                        <h:outputText value="Whose gradebooks do you want to modify?" style="font-weight: bold" />
+                        <h:outputText value="Enter a new email:" style="font-weight: bold" />
 
                         <h:panelGrid columns="2">
                             <h:form id="instructor_form">
-                                <h:outputText value="Instructor Name " />
-                                <h:inputText value="#{instructorController.instructorEmail}" />
-                                <h:commandButton id="instructor_submit" value="Submit" />
-                                <h:commandButton value="Clear" type="reset" />
-                                <h:outputText value="#{instructorController.response}" />
+                                <h:outputText value="The currently active email is: #{instructorController.instructorID}" />
+                                <h:inputHidden id="hidden" value="#{instructorController.instructorID}" />
                             </h:form>
                         </h:panelGrid>
                     </div>

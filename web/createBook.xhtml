@@ -20,7 +20,7 @@
                         <f:selectItems value="#{gradebookController.courseValues}" var="c"
                                        itemLabel="#{c.courseName}" itemValue="#{c.courseId}" />
                     </h:selectOneMenu>
-                    
+
                     <h:outputText value="Semester" />
                     <h:selectOneMenu value="#{gradebookController.semester}"
                                      valueChangeListener="#{gradebookController.semesterNameValueChangedListener}"
@@ -30,16 +30,14 @@
                     </h:selectOneMenu>
 
                     <h:outputText value="Instructor" />
-                    <h:selectOneMenu value="#{gradebookController.instructor}"
-                                     valueChangeListener="#{gradebookController.instructorEmailValueChangedListener}"
-                                     onchange="submit()">
-                        <f:selectItems value="#{gradebookController.instructorValues}" var="i"
-                                       itemLabel="#{i.instructorEmail}" itemValue="#{i.instructorId}" />
-                    </h:selectOneMenu>
+                    <h:inputText id="instructor_text" value="#{gradebookController.selectedEmail}" disabled="true" />
                 </h:panelGrid>
                 <h:commandButton id="createBook" value="Submit" action="#{gradebookController.createBook}" />
+                <h:inputHidden id="hidden_createGradebook" value="#{instructorController.instructorID}" />
+                <h:inputHidden id="hidden_instructor" value="#{gradebookController.instructorID}" />
             </h:form>
             <h:outputText escape="false" value="#{gradebookController.response}" />
+
 
         </ui:define>
     </ui:composition>

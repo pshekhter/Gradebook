@@ -86,5 +86,38 @@ public class InstructorHelper {
             return null;
         }
     }
+    
+    public int insertInstructor(String instructorEmail) {
+        
+        // Initialize result value
+        int result = 0;
+        
+        // Insert instructor
+        String sql = "INSERT INTO instructor "
+                + "(INSTRUCTOR_EMAIL) "
+                + "VALUES (:ins)";
+        
+        try {
+            // Initialize transaction if none initialized
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+            
+            // Create SQL query
+            SQLQuery query = session.createSQLQuery(sql);
+            
+            query.addEntity(Instructor.class);
+            
+            query.setParameter("ins", instructorEmail);
+            
+            result = query.executeUpdate();
+            
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return result;
+    }
 
 }

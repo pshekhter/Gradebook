@@ -25,7 +25,9 @@ public class InstructorController implements Serializable {
     String instructorEmail;
     int instructorID = 0;
     int previousInstructorID;
-    String response;
+    String selectResponse;
+    String createResponse;
+    String createInstructorEmail;
 
     /**
      * Creates a new instance of InstructorController
@@ -33,7 +35,7 @@ public class InstructorController implements Serializable {
     public InstructorController() {
         instructorHelper = new InstructorHelper();
         previousInstructorID = instructorID;
-        response = "The selected instructor is: ";
+        selectResponse = "The selected instructor is: ";
     }
 
     public DataModel getInstructorValues() {
@@ -75,28 +77,29 @@ public class InstructorController implements Serializable {
         this.instructorID = instructorID;
     }
 
-    public String getResponse() {
-        
+    public String getSelectResponse() {
+
         if (instructorEmail != null) {
-            
+
             if (instructorHelper.getInstructor(instructorEmail) != null) {
                 instructor = instructorHelper.getInstructor(instructorEmail);
                 instructorEmail = null;
-                response = "Instructor found. The currently active instructor is: " + instructor.getInstructorEmail();
-                return response;
+                selectResponse = "Instructor found. The currently active instructor is: " + instructor.getInstructorEmail();
+                instructorID = instructor.getInstructorId();
+                return selectResponse;
             } else {
                 instructorEmail = null;
-                response = "Instructor not found.";
-                return response;
+                selectResponse = "Instructor not found.";
+                return selectResponse;
             }
         } else {
-            response = " ";
-            return response;
+            selectResponse = " ";
+            return selectResponse;
         }
     }
 
-    public void setResponse(String response) {
-        this.response = response;
+    public void setSelectResponse(String selectResponse) {
+        this.selectResponse = selectResponse;
     }
 
     public int getPreviousInstructorID() {
@@ -107,4 +110,41 @@ public class InstructorController implements Serializable {
         this.previousInstructorID = previousInstructorID;
     }
 
+    public String getCreateResponse() {
+
+        if (createInstructorEmail != null) {
+
+            if (instructorHelper.insertInstructor(instructorEmail) == 1) {
+                createInstructorEmail = null;
+                createResponse = "Instructor created.";
+                return createResponse;
+            } else {
+                createInstructorEmail = null;
+                createResponse = "Instructor not created.";
+                return createResponse;
+            }
+        } else {
+            createResponse = " ";
+            return createResponse;
+        }
+
+    }
+
+    public void setCreateResponse(String createResponse) {
+        this.createResponse = createResponse;
+    }
+
+    public String getCreateInstructorEmail() {
+        return createInstructorEmail;
+    }
+
+    public void setCreateInstructorEmail(String createInstructorEmail) {
+        this.createInstructorEmail = createInstructorEmail;
+    }
+    
+    public String submit() {
+        return "index";
+    }
+
+     
 }
