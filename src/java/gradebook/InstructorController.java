@@ -114,7 +114,7 @@ public class InstructorController implements Serializable {
 
         if (createInstructorEmail != null) {
 
-            if (instructorHelper.insertInstructor(instructorEmail) == 1) {
+            if (instructorHelper.insertInstructor(createInstructorEmail) == 1) {
                 createInstructorEmail = null;
                 createResponse = "Instructor created.";
                 return createResponse;
