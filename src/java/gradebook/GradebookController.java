@@ -282,6 +282,9 @@ public class GradebookController implements Serializable {
                     instructorEmail = null;
                     response = "Gradebook Added to Database.";
                     isReadyForSubmit = false;
+                    this.courseID = course.getCourseId();
+                    this.semesterID = semester.getSemesterId();
+                    this.instructorID = instructor.getInstructorId();
                     return "createBook";
                 } else {
                     courseName = null;
