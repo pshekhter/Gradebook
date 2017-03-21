@@ -13,7 +13,7 @@ public class Instructor  implements java.io.Serializable {
 
      private Integer instructorId;
      private String instructorEmail;
-     private Set<Gradebook> gradebooks = new HashSet<Gradebook>(0);
+     private Set<Gradebook> gradebooks = new HashSet<>(0);
 
     public Instructor() {
     }

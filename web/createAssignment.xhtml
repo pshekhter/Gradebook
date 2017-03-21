@@ -11,6 +11,7 @@
         </ui:define>
         
         <ui:define name="content">
+
         <h:form id="createAssignmentForm">
             <h:panelGrid columns="2">
                 <h:outputText value="Assignment Name: "/>
@@ -26,5 +27,23 @@
         <h:outputText escape="false" value="#{assignmentController.response}" />
          </h:form>
     </ui:define>
+
+
+            <h:form id="createAssignmentForm">
+                <h:panelGrid columns="3">
+                    <h:outputText value="Assignment" />
+                    <h:selectOneMenu value="#{assignmentController.assignmentName}">
+                        <f:selectItems value="#{assignmentController.assignmentValues}" var="a"
+                                       itemLabel="#{a.assignmentName}" itemValue="#{a.assignmentId}" />
+                    </h:selectOneMenu>
+                    
+                    
+                </h:panelGrid>
+                <h:commandButton id="submit" value="Submit" action="createAssignment" />
+                <h:commandButton value="Clear" type="reset" />
+            </h:form>
+
+        </ui:define>
+
     </ui:composition>
 </html>

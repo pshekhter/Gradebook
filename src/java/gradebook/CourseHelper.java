@@ -1,4 +1,3 @@
-
 package gradebook;
 
 import java.util.List;
@@ -32,31 +31,67 @@ public class CourseHelper {
             e.printStackTrace();
         }
     }
-    
+
     public List getCourses() {
-        
+
         // Create course list
         List courseList = null;
-        
+
         // Get all courses in table
         String sql = "SELECT * FROM course";
-        
+
         try {
             // Initialize transaction if not already initialized
             if (!this.session.getTransaction().isActive()) {
                 session.beginTransaction();
             }
-            
+
             SQLQuery query = session.createSQLQuery(sql);
-            
+
             query.addEntity(Course.class);
-            
+
             courseList = (List<Course>) query.list();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return courseList;
     }
+
+    public int insertCourse(String courseName) {
+
+        // Initialize a result value
+        int result = 0;
+
+        // Set SQL Insertion String
+        String sql = "INSERT INTO Course "
+                + "(COURSE_NAME) "
+                + "VALUES (:courseName)";
+
+        try {
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create query
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Configure query
+            query.addEntity(Course.class);
+
+            query.setParameter("courseName", courseName);
+
+            // Execute update
+            result = query.executeUpdate();
+
+            // Commit
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
 
 }

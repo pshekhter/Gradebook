@@ -1,4 +1,3 @@
-
 package gradebook;
 
 import javax.inject.Named;
@@ -6,9 +5,13 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-
+import javax.faces.event.ValueChangeEvent;
 
 /**
  *
@@ -17,29 +20,42 @@ import javax.faces.model.ListDataModel;
 @Named(value = "gradebookController")
 @SessionScoped
 public class GradebookController implements Serializable {
-    
+
     // Fields mapping to select options in createBook.xhtml
     DataModel courseValues;
     DataModel semesterValues;
     DataModel instructorValues;
-    
+
     // Create CourseHelper instance
     CourseHelper courseHelper;
-       
+
     // Create SemesterHelper instance
     SemesterHelper semesterHelper;
-    
+
     // Create InstructorHelper instance
     InstructorHelper instructorHelper;
-    
+
+    // Create GradebookHelper instance
+    GradebookHelper gradebookHelper;
+
+    // List of elements
+    List<Course> courses;
+    List<Semester> semesters;
+    List<Instructor> instructors;
+
     // Maps to components
     // Represents selected values
-    String course;
+    String courseName;
     int courseID;
-    String semester;
+    String semesterName;
     int semesterID;
-    String instructor;
-    int instructorID;    
+    String instructorEmail;
+    int instructorID;
+    String response = " ";
+    String selectedEmail;
+
+    // Tracks change
+    boolean isReadyForSubmit = false;
 
     /**
      * Creates a new instance of GradebookController
@@ -48,23 +64,36 @@ public class GradebookController implements Serializable {
         courseHelper = new CourseHelper();
         semesterHelper = new SemesterHelper();
         instructorHelper = new InstructorHelper();
+        gradebookHelper = new GradebookHelper();
+        courses = gradebookHelper.getCourses();
+        semesters = gradebookHelper.getSemesters();
+        instructors = gradebookHelper.getInstructors();
+        instructorID = instructors.get(0).getInstructorId();
+        instructorEmail = instructors.get(0).getInstructorEmail();
+        courseName = courses.get(0).getCourseName();
+        courseID = courses.get(0).getCourseId();
+        semesterName = semesters.get(0).getSemesterName();
+        semesterID = semesters.get(0).getSemesterId();
+        response = " ";
     }
-    
+
     /**
      * Get Course values
+     *
      * @return courseValues
      */
     public DataModel getCourseValues() {
         if (courseValues == null) {
             courseValues = new ListDataModel(courseHelper.getCourses());
         }
-        
+
         return courseValues;
     }
-    
+
     /**
      * Sets course values.
-     * @param courseValues 
+     *
+     * @param courseValues
      */
     public void setCourseValues(DataModel courseValues) {
         this.courseValues = courseValues;
@@ -95,68 +124,207 @@ public class GradebookController implements Serializable {
     }
 
     public String getCourse() {
-        return course;
+        return courseName;
     }
 
     public void setCourse(String course) {
-        this.course = course;
-    } 
+        this.courseName = course;
+    }
 
     /**
      * Gets semesters.
+     *
      * @return semester values
      */
     public DataModel getSemesterValues() {
         if (semesterValues == null) {
             semesterValues = new ListDataModel(semesterHelper.getSemesters());
         }
-        
+
         return semesterValues;
 
     }
 
     /**
      * Sets semester values.
-     * @param semesterValues 
+     *
+     * @param semesterValues
      */
     public void setSemesterValues(DataModel semesterValues) {
         this.semesterValues = semesterValues;
     }
 
     public String getSemester() {
-        return semester;
+        return semesterName;
     }
 
     public void setSemester(String semester) {
-        this.semester = semester;
+        this.semesterName = semester;
     }
 
     /**
      * Get all instructors.
+     *
      * @return instructorValues
      */
     public DataModel getInstructorValues() {
         if (instructorValues == null) {
             instructorValues = new ListDataModel(instructorHelper.getInstructors());
         }
-        
+
         return instructorValues;
     }
 
     /**
      * Set instructor values.
-     * @param instructorValues 
+     *
+     * @param instructorValues
      */
     public void setInstructorValues(DataModel instructorValues) {
         this.instructorValues = instructorValues;
     }
 
     public String getInstructor() {
-        return instructor;
+        return instructorEmail;
     }
 
     public void setInstructor(String instructor) {
-        this.instructor = instructor;
+        this.instructorEmail = instructor;
     }
+
+    public String getResponse() {
+
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
+    public void courseNameValueChangedListener(ValueChangeEvent e) {
+        String newVal = e.getNewValue().toString();
+        try {
+            this.courseID = Integer.parseInt(newVal);
+            Course course = courses.get(0);
+            for (int courseCounter = 0; courseCounter < courses.size(); courseCounter++) {
+                if (courses.get(courseCounter).getCourseId() == courseID) {
+                    course = courses.get(courseCounter);
+                    courseName = course.getCourseName();
+                }
+            }
+
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+        }
+    }
+
+    public void semesterNameValueChangedListener(ValueChangeEvent e) {
+        String newVal = e.getNewValue().toString();
+        try {
+            this.semesterID = Integer.parseInt(newVal);
+            Semester semester = semesters.get(0);
+            for (int semesterCounter = 0; semesterCounter < semesters.size(); semesterCounter++) {
+                if (semesters.get(semesterCounter).getSemesterId() == semesterID) {
+                    semester = semesters.get(semesterCounter);
+                    semesterName = semester.getSemesterName();
+                }
+            }
+
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+        }
+
+    }
+
+    public void instructorEmailValueChangedListener(ValueChangeEvent e) {
+        String newVal = e.getNewValue().toString();
+        try {
+            this.instructorID = Integer.parseInt(newVal);
+            Instructor instructor = instructors.get(0);
+            for (int instructorCounter = 0; instructorCounter < instructors.size(); instructorCounter++) {
+                if (instructors.get(instructorCounter).getInstructorId() == instructorID) {
+                    instructor = instructors.get(instructorCounter);
+                    instructorEmail = instructor.getInstructorEmail();
+                }
+            }
+
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+        }
+    }
+
+    public String createBook() {
+        if (courseName != null && semesterName != null && selectedEmail != null) {
+            Course course = null;
+            Semester semester = null;
+            Instructor instructor = null;
+
+            for (int courseCounter = 0; courseCounter < courses.size(); courseCounter++) {
+                if (courses.get(courseCounter).getCourseId() == courseID) {
+                    course = courses.get(courseCounter);
+                }
+            }
+
+            for (int semesterCounter = 0; semesterCounter < semesters.size(); semesterCounter++) {
+                if (semesters.get(semesterCounter).getSemesterId() == semesterID) {
+                    semester = semesters.get(semesterCounter);
+                }
+            }
+
+            instructor = instructorHelper.getInstructor(selectedEmail);
+
+            isReadyForSubmit = true;
+
+            if ((course != null) && (semester != null) && (instructor != null) && (isReadyForSubmit == true)) {
+                if (gradebookHelper.insertGradebook(course, semester, instructor) == 1) {
+                    courseName = null;
+                    semesterName = null;
+                    instructorEmail = null;
+                    response = "Gradebook Added to Database.";
+                    isReadyForSubmit = false;
+                    this.courseID = course.getCourseId();
+                    this.semesterID = semester.getSemesterId();
+                    this.instructorID = instructor.getInstructorId();
+                    return "createBook";
+                } else {
+                    courseName = null;
+                    semesterName = null;
+                    instructorEmail = null;
+                    response = "Gradebook Not Added to Database.";
+                    isReadyForSubmit = false;
+                    return "createBook";
+                }
+            }
+        } else if (isReadyForSubmit == false) {
+            response = "Not ready for submit. Make sure you've changed all three fields.";
+            return "createBook";
+        }
+        return response;
+    }
+
+    public void insert() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String, String> params = fc.getExternalContext().getRequestParameterMap();
+        String idString = params.get("id");
+        try {
+            this.instructorID = Integer.parseInt(idString);
+            this.instructorEmail = instructors.get(instructorID).getInstructorEmail();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getEmail(int insId) {
+        return instructors.get(insId - 1).getInstructorEmail();
+    }
+
+    public String getSelectedEmail() {
+        return selectedEmail;
+    }
+
+    public void setSelectedEmail(String selectedEmail) {
+        this.selectedEmail = selectedEmail;
+    }
+
     
 }
