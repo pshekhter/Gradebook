@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+        <ui:composition template="template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Add Student" />
+        </ui:define>
+
+        <ui:define name="content">
+
+            <h:form id="createStudentForm">
+                <h:panelGrid columns="1">
+                <h:outputText value="Student First Name: "/>
+                <h:inputText id="First" value="#{studentController.studentFName}" size="50" maxlength="255"
+                             required="true" label="First Name" />
+                <h:message for="First" style="color: red; font-size: 0.7em" /> 
+        
+                <h:outputText value="Student Last Name: "/>
+                <h:inputText id="Last" value="#{studentController.studentLName}" size="50" maxlength="255"
+                             required="true" label="Last Name" />
+                <h:message for="Last" style="color: red; font-size: 0.7em" /> 
+        </h:panelGrid>
+        
+        <h:commandButton id="submit" value="Submit" action="addStudent" />
+            <h:commandButton value="Clear" type="reset" />
+       
+            <h:outputText escape="false" value="#{studentController.response}" />
+            </h:form>
+        </ui:define>
+            </ui:composition>
+</html>

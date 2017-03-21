@@ -5,26 +5,26 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="template.xhtml">
+        
         <ui:define name="title">
             <h:outputText value="Create Assignment" />
         </ui:define>
-
+        
         <ui:define name="content">
-
-            <h:form id="createAssignmentForm">
-                <h:panelGrid columns="3">
-                    <h:outputText value="Assignment" />
-                    <h:selectOneMenu value="#{assignmentController.assignmentName}">
-                        <f:selectItems value="#{assignmentController.assignmentValues}" var="a"
-                                       itemLabel="#{a.assignmentName}" itemValue="#{a.assignmentID}" />
-                    </h:selectOneMenu>
-                    
-                    
-                </h:panelGrid>
-                <h:commandButton id="submit" value="Submit" action="createBook" />
-                <h:commandButton value="Clear" type="reset" />
-            </h:form>
-
-        </ui:define>
+        <h:form id="createAssignmentForm">
+            <h:panelGrid columns="2">
+                <h:outputText value="Assignment Name: "/>
+                <h:inputText id="Name" value="#{assignmentController.assignmentName}" size="50" maxlength="255"
+                             required="true" label="Name" />
+                <h:message for="Name" style="color: red; font-size: 0.7em" /> 
+              
+            </h:panelGrid>
+        
+        <h:commandButton id="submit" value="Submit" action="createAssignment" />
+            <h:commandButton value="Clear" type="reset" />
+        
+        <h:outputText escape="false" value="#{assignmentController.response}" />
+         </h:form>
+    </ui:define>
     </ui:composition>
 </html>

@@ -20,44 +20,51 @@ public class AssignmentController implements Serializable {
      * Creates a new instance of AssignmentController
      */
     
-    DataModel assignmentValues;
-    
-    
-    int assignmentID;
     String assignmentName;
-        
+
+    String response;
+
+  
     AssignmentHelper helper;
-    
+
+    Assignment assignment;
+
     public AssignmentController() {
-        
         helper = new AssignmentHelper();
-        
-    }
-    
-    public DataModel getAssignmentValues() {
-        if (assignmentValues == null) {
-            assignmentValues = new ListDataModel(helper.getAssignments());
-        }
-        
-        return assignmentValues;
-    }
 
-    public int getAssignmentID() {
-        return assignmentID;
-    }
-
-    public void setAssignmentID(int assignmentID) {
-        this.assignmentID = assignmentID;
     }
 
     public String getAssignmentName() {
         return assignmentName;
+
     }
 
     public void setAssignmentName(String assignmentName) {
         this.assignmentName = assignmentName;
+
     }
-    
-    
+    public String getResponse() {
+
+        if (assignmentName != null) {
+            assignment = new Assignment(assignmentName);
+
+            if (helper.insertAssignment(assignmentName) == 1) {
+                assignmentName = null;
+                response = "Assignment Added.";
+
+            } else {
+                assignmentName = null;
+                response = "Assignment Not Added.";
+            }
+
+        } else {
+            response = " ";
+        }
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
     
 }

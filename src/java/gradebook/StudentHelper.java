@@ -44,7 +44,7 @@ public class StudentHelper {
             
             SQLQuery query = session.createSQLQuery(sql);
             
-            query.addEntity(Assignment.class);
+            query.addEntity(Student.class);
             
             studentList = (List<Student>) query.list();
         } catch (Exception e) {
@@ -52,6 +52,58 @@ public class StudentHelper {
         }
         
         return studentList;
+    }
+    
+    public int getStudentNumber(){
+        
+        List<Student> studentList = null;
+        
+        String sql = "select * from student";
+        
+        try {
+            
+           
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            SQLQuery q = session.createSQLQuery(sql);
+
+            q.addEntity(Student.class);
+            
+            studentList = (List<Student>) q.list();
+            
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        return studentList.size();
+    }
+    
+    public int insertStudent(String studentFName, String studentLName) {
+        int result = 0;
+
+        String sql = "insert into student(student_FName, student_LName)"
+                + "values (:studentFName, :studentLName)";
+
+        try {
+
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            SQLQuery q = session.createSQLQuery(sql);
+            q.addEntity(Student.class);
+            q.setParameter("studentFName", studentFName);
+            q.setParameter("studentLName", studentLName);
+
+            result = q.executeUpdate();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }
