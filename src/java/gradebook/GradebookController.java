@@ -42,6 +42,10 @@ public class GradebookController implements Serializable {
     List<Course> courses;
     List<Semester> semesters;
     List<Instructor> instructors;
+    List<Gradebook> gradebooks;
+
+    // Stores the currently selected gradebook ID for passing
+    int gradebookID;
 
     // Maps to components
     // Represents selected values
@@ -67,6 +71,7 @@ public class GradebookController implements Serializable {
         gradebookHelper = new GradebookHelper();
         courses = gradebookHelper.getCourses();
         semesters = gradebookHelper.getSemesters();
+        gradebooks = gradebookHelper.getGradebooks();
         instructors = gradebookHelper.getInstructors();
         instructorID = instructors.get(0).getInstructorId();
         instructorEmail = instructors.get(0).getInstructorEmail();
@@ -201,23 +206,6 @@ public class GradebookController implements Serializable {
         this.response = response;
     }
 
-    public void courseNameValueChangedListener(ValueChangeEvent e) {
-        String newVal = e.getNewValue().toString();
-        try {
-            this.courseID = Integer.parseInt(newVal);
-            Course course = courses.get(0);
-            for (int courseCounter = 0; courseCounter < courses.size(); courseCounter++) {
-                if (courses.get(courseCounter).getCourseId() == courseID) {
-                    course = courses.get(courseCounter);
-                    courseName = course.getCourseName();
-                }
-            }
-
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-        }
-    }
-
     public void semesterNameValueChangedListener(ValueChangeEvent e) {
         String newVal = e.getNewValue().toString();
         try {
@@ -245,6 +233,8 @@ public class GradebookController implements Serializable {
                 if (instructors.get(instructorCounter).getInstructorId() == instructorID) {
                     instructor = instructors.get(instructorCounter);
                     instructorEmail = instructor.getInstructorEmail();
+                    instructorID = instructor.getInstructorId();
+                    gradebooks = gradebookHelper.getGradebooks(instructorID);
                 }
             }
 
@@ -326,5 +316,37 @@ public class GradebookController implements Serializable {
         this.selectedEmail = selectedEmail;
     }
 
-    
+    public int getGradebookID() {
+        return gradebookID;
+    }
+
+    public void setGradebookID(int gradebookID) {
+        this.gradebookID = gradebookID;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public void courseNameValueChangedListener(ValueChangeEvent e) {
+        String newVal = e.getNewValue().toString();
+        try {
+            this.courseID = Integer.parseInt(newVal);
+            Course course = courses.get(0);
+            for (int courseCounter = 0; courseCounter < courses.size(); courseCounter++) {
+                if (courses.get(courseCounter).getCourseId() == courseID) {
+                    course = courses.get(courseCounter);
+                    courseName = course.getCourseName();
+                }
+            }
+
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+        }
+    }
+
 }
