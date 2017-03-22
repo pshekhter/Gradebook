@@ -29,19 +29,17 @@ public class GradebookHelper {
     }
 
     /**
-     * Returns a List of Gradebooks belonging to the Instructor based on a
-     * startID. Return null if transaction failed. - Pavel Shekhter (2/24/2017)
+     * Returns a List of Gradebooks belonging to the Instructor Return null if
+     * transaction failed. - Pavel Shekhter (2/24/2017)
      *
      * @param instructorId Instructor ID
-     * @param startId Start ID
      * @return gradebookList
      */
-    public List getGradebooks(int instructorId, int startId) {
+    public List getGradebooks(int instructorId) {
         // Create the list
         List<Gradebook> gradebookList = null;
 
-        String sql = "SELECT * FROM gradebook WHERE INSTRUCTOR_ID = :ins "
-                + "ORDER BY SEMESTER_ID LIMIT :start, :end";
+        String sql = "SELECT * FROM gradebook WHERE INSTRUCTOR_ID = :ins ";
 
         try {
             // Begin new transaction if we have an inactive one
@@ -57,7 +55,6 @@ public class GradebookHelper {
 
             // Binding parameters
             query.setParameter("ins", instructorId);
-            query.setParameter("start", startId);
             query.setParameter("end", 50);
 
             // Execute query
@@ -234,13 +231,13 @@ public class GradebookHelper {
 
     }
 
-    public Semester getSemesterNameAtId(int id) {
+    public List<Gradebook> getSemesterNameAtId(int id) {
         // Create list
-        List<Semester> semesterList = null;
+        List<Gradebook> list = null;
 
         // Select the instructor name
-        String sql = "SELECT * FROM semester "
-                + "WHERE SEMESTER_ID = :id LIMIT 1";
+        String sql = "SELECT * FROM gradebook "
+                + "WHERE SEMESTER_ID = :id";
         try {
             // Begin transaction if inactive
             if (!this.session.getTransaction().isActive()) {
@@ -251,20 +248,20 @@ public class GradebookHelper {
             SQLQuery query = session.createSQLQuery(sql);
 
             // Add entities
-            query.addEntity(Semester.class);
+            query.addEntity(Gradebook.class);
 
             // Bind parameter
             query.setParameter("id", id);
 
             // Execute query and cast
-            semesterList = (List<Semester>) query.list();
+            list = (List<Gradebook>) query.list();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if ((semesterList != null) && (semesterList.isEmpty())) {
-            return semesterList.get(0);
+        if ((list != null) && (list.isEmpty())) {
+            return list;
         } else {
             return null;
         }
@@ -355,6 +352,98 @@ public class GradebookHelper {
 
         // Return gradebooks
         return instructorList;
+
+    }
+
+    public List getGradebooks() {
+        // Create the list
+        List<Gradebook> gradebookList = null;
+
+        String sql = "SELECT * FROM gradebook";
+
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(Gradebook.class);
+
+            // Execute query
+            gradebookList = (List<Gradebook>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return gradebooks
+        return gradebookList;
+
+    }
+
+    public List getGradebooksAtSemesterAndCourseId(int sid, int cid) {
+        // Create the list
+        List<Gradebook> gradebookList = null;
+
+        String sql = "SELECT * FROM gradebook WHERE SEMESTER_ID = :sid AND COURSE_ID = :cid";
+
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(Gradebook.class);
+            
+            query.setParameter("sid", sid);
+            query.setParameter("cid", cid);
+
+            // Execute query
+            gradebookList = (List<Gradebook>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return gradebooks
+        return gradebookList;
+
+    }
+    
+        public List getGradebooksOfInstructor(int instructorId) {
+        // Create the list
+        List<Gradebook> gradebookList = null;
+
+        String sql = "SELECT * FROM gradebook WHERE INSTRUCTOR_ID = :id";
+
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(Gradebook.class);
+            
+            query.setParameter("id", instructorId);
+
+            // Execute query
+            gradebookList = (List<Gradebook>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return gradebooks
+        return gradebookList;
 
     }
 

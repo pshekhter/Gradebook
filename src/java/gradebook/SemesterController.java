@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package gradebook;
 
 import javax.inject.Named;
@@ -13,7 +9,7 @@ import javax.faces.model.ListDataModel;
 
 /**
  *
- * @author iGenius
+ * @author Pavel Shekhter
  */
 @Named(value = "semesterController")
 @SessionScoped
@@ -37,5 +33,31 @@ public class SemesterController implements Serializable {
     public SemesterController() {
         semesterHelper = new SemesterHelper();
     }
+
+    public DataModel getSemesterValues() {
+        return semesterValues;
+    }
+
+    public void setSemesterValues(DataModel semesterValues) {
+        this.semesterValues = semesterValues;
+    }
+
+    public String getSemesterName() {
+        return semesterName;
+    }
+
+    public void setSemesterName(String semesterName) {
+        this.semesterName = semesterName;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+    
+    
     
 }
