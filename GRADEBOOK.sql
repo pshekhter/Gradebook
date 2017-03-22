@@ -1,6 +1,6 @@
 CREATE DATABASE  IF NOT EXISTS `gradebook` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `gradebook`;
--- MySQL dump 10.13  Distrib 5.7.12, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: gradebook
 -- ------------------------------------------------------
@@ -28,7 +28,7 @@ CREATE TABLE `assignment` (
   `ASSIGNMENT_ID` int(11) NOT NULL AUTO_INCREMENT,
   `ASSIGNMENT_NAME` varchar(45) NOT NULL,
   PRIMARY KEY (`ASSIGNMENT_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,7 +52,7 @@ CREATE TABLE `course` (
   `COURSE_ID` int(11) NOT NULL AUTO_INCREMENT,
   `COURSE_NAME` varchar(45) NOT NULL,
   PRIMARY KEY (`COURSE_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=401 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -82,7 +82,7 @@ CREATE TABLE `gradebook` (
   KEY `GRADEBOOK_INSTRUCTOR_FK` (`INSTRUCTOR_ID`),
   CONSTRAINT `GRADEBOOK_INSTRUCTOR_FK` FOREIGN KEY (`INSTRUCTOR_ID`) REFERENCES `instructor` (`INSTRUCTOR_ID`),
   CONSTRAINT `GRADEBOOK_SEMESTER_FK` FOREIGN KEY (`SEMESTER_ID`) REFERENCES `semester` (`SEMESTER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4419 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `gradebook` (
 
 LOCK TABLES `gradebook` WRITE;
 /*!40000 ALTER TABLE `gradebook` DISABLE KEYS */;
-INSERT INTO `gradebook` VALUES (3758,300,637,2),(4375,284,521,1);
+INSERT INTO `gradebook` VALUES (3758,300,637,2),(4375,284,521,1),(4381,284,521,1),(4382,284,521,1),(4383,284,521,1),(4384,400,521,1),(4385,400,637,1),(4396,284,637,1),(4397,284,521,1),(4398,284,521,1),(4399,284,521,2),(4400,284,637,2),(4401,284,637,2),(4402,284,521,2),(4403,300,521,1),(4404,300,521,1),(4405,284,521,1),(4406,284,521,1),(4407,300,637,3),(4408,284,521,1),(4409,300,637,2),(4410,300,637,2),(4411,300,637,4),(4412,400,637,2),(4413,300,637,6),(4414,400,835,5),(4415,300,835,6),(4416,300,637,7),(4417,300,835,6),(4418,300,637,5);
 /*!40000 ALTER TABLE `gradebook` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,7 +120,6 @@ CREATE TABLE `gradebook_assignment` (
 
 LOCK TABLES `gradebook_assignment` WRITE;
 /*!40000 ALTER TABLE `gradebook_assignment` DISABLE KEYS */;
-INSERT INTO `gradebook_assignment` VALUES (1,3758,100),(3,4375,100),(4,3758,101),(5,3758,102),(6,4375,101),(7,4375,102);
 /*!40000 ALTER TABLE `gradebook_assignment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +148,6 @@ CREATE TABLE `gradebook_student` (
 
 LOCK TABLES `gradebook_student` WRITE;
 /*!40000 ALTER TABLE `gradebook_student` DISABLE KEYS */;
-INSERT INTO `gradebook_student` VALUES (1,2385,3758),(2,4742,3758),(3,7532,3758),(4,2385,4375),(5,4742,4375),(6,7532,4375);
 /*!40000 ALTER TABLE `gradebook_student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,7 +162,7 @@ CREATE TABLE `instructor` (
   `INSTRUCTOR_ID` int(11) NOT NULL AUTO_INCREMENT,
   `INSTRUCTOR_EMAIL` varchar(45) NOT NULL,
   PRIMARY KEY (`INSTRUCTOR_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,7 +171,7 @@ CREATE TABLE `instructor` (
 
 LOCK TABLES `instructor` WRITE;
 /*!40000 ALTER TABLE `instructor` DISABLE KEYS */;
-INSERT INTO `instructor` VALUES (1,'MrSmith@gmail.com'),(2,'MrsGold@aol.com'),(3,'MrBig@comcast.net');
+INSERT INTO `instructor` VALUES (1,'MrSmith@gmail.com'),(2,'MrsGold@aol.com'),(3,'MrBig@comcast.net'),(4,'pshekhter@gmail.com'),(5,'goldSmith@comcast.net'),(6,'CekloskyS@chc.edu'),(7,'HeuwetterA@chc.edu'),(8,'lolivieri@chc.edu');
 /*!40000 ALTER TABLE `instructor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,7 +186,7 @@ CREATE TABLE `semester` (
   `SEMESTER_ID` int(11) NOT NULL AUTO_INCREMENT,
   `SEMESTER_NAME` varchar(45) NOT NULL,
   PRIMARY KEY (`SEMESTER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=836 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,7 +240,7 @@ CREATE TABLE `student` (
   `STUDENT_FNAME` varchar(45) NOT NULL,
   `STUDENT_LNAME` varchar(45) NOT NULL,
   PRIMARY KEY (`STUDENT_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7533 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -291,4 +289,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-02-23 14:05:14
+-- Dump completed on 2017-03-22 12:20:25
