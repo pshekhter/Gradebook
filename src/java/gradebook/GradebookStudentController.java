@@ -57,7 +57,7 @@ public class GradebookStudentController implements Serializable {
     String lName;
     int courseID;
     String response;
-    String selectedEmail;
+    String selectedEmail = "";
 
     String email;
 
@@ -78,30 +78,37 @@ public class GradebookStudentController implements Serializable {
         courses = courseHelper.getCourses();
         UIViewRoot root = FacesContext.getCurrentInstance().getViewRoot();
         UIComponent selectedEmailComponent = findComponent(root, "modify_form_input_instructor");
-        selectedEmail = ((UIInput)selectedEmailComponent).getValue().toString();
-        
+        UIInput selectedEmailInput = (UIInput)selectedEmailComponent;
+
+        if (selectedEmailInput.getValue() != null) {
+            selectedEmail = selectedEmailInput.getValue().toString();
+        } else {
+            selectedEmail = null;
+        }
+
         if (selectedEmail != null) {
             instructorID = instructorHelper.getInstructor(selectedEmail).getInstructorId();
         }
-        
+
         gradebooks = gradebookHelper.getGradebooks(instructorID);
-        
+
         response = " ";
     }
-    
+
     /**
-     * Returns component containing the id string.
-     * Credit goes to http://illegalargumentexception.blogspot.ca/2009/02/jsf-working-with-component-ids.html
+     * Returns component containing the id string. Credit goes to
+     * http://illegalargumentexception.blogspot.ca/2009/02/jsf-working-with-component-ids.html
      * Author: McDowell (February 16, 2009)
+     *
      * @param c
      * @param id
-     * @return 
+     * @return
      */
     private UIComponent findComponent(UIComponent c, String id) {
         if (id.equals(c.getId())) {
-            return (UIInput)c;
+            return (UIInput) c;
         }
-        
+
         Iterator<UIComponent> children = c.getFacetsAndChildren();
         while (children.hasNext()) {
             UIComponent found = findComponent(children.next(), id);
