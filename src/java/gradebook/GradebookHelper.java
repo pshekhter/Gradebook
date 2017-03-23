@@ -55,7 +55,6 @@ public class GradebookHelper {
 
             // Binding parameters
             query.setParameter("ins", instructorId);
-            query.setParameter("end", 50);
 
             // Execute query
             gradebookList = (List<Gradebook>) query.list();

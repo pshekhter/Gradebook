@@ -5,9 +5,13 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
@@ -72,14 +76,40 @@ public class GradebookStudentController implements Serializable {
         students = studentHelper.getStudents();
         semesters = semesterHelper.getSemesters();
         courses = courseHelper.getCourses();
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        selectedEmail = ec.getRequestParameterMap().get("modify_book:modify_form_input_instructor");
+        UIViewRoot root = FacesContext.getCurrentInstance().getViewRoot();
+        UIComponent selectedEmailComponent = findComponent(root, "modify_form_input_instructor");
+        selectedEmail = ((UIInput)selectedEmailComponent).getValue().toString();
         
         if (selectedEmail != null) {
             instructorID = instructorHelper.getInstructor(selectedEmail).getInstructorId();
         }
         
+        gradebooks = gradebookHelper.getGradebooks(instructorID);
+        
         response = " ";
+    }
+    
+    /**
+     * Returns component containing the id string.
+     * Credit goes to http://illegalargumentexception.blogspot.ca/2009/02/jsf-working-with-component-ids.html
+     * Author: McDowell (February 16, 2009)
+     * @param c
+     * @param id
+     * @return 
+     */
+    private UIComponent findComponent(UIComponent c, String id) {
+        if (id.equals(c.getId())) {
+            return (UIInput)c;
+        }
+        
+        Iterator<UIComponent> children = c.getFacetsAndChildren();
+        while (children.hasNext()) {
+            UIComponent found = findComponent(children.next(), id);
+            if (found != null) {
+                return found;
+            }
+        }
+        return null;
     }
 
     public String getGradebook() {
