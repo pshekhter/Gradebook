@@ -28,6 +28,10 @@
                             </h:commandButton>
 
                             <h:commandButton value="Clear" type="reset" />
+                            
+                            <h:commandButton action="#{instructorController.selectSemester}" id="selectSemester" value="Next Page">
+                                <f:setPropertyActionListener target="#{semesterController.activeInstructorEmail}" value="#{instructorController.instructorEmail}" />
+                            </h:commandButton>
                             <h:inputHidden id="id" value="#{instructorController.instructorID}" />
                         </h:form>
                     </h:panelGrid>

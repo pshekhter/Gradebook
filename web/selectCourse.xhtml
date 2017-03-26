@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Select Semester" />
+        </ui:define>
+
+        <ui:define name="content">
+
+            <h:form id="selectCourseForm">
+
+
+                <h:panelGrid columns="1">
+                    <h:outputText value="Semester Name: " />
+                    <h:inputText id="semester_text" value="#{semesterController.semesterName}" disabled="true" />
+
+                    <h:outputText value="Active Instructor: " />
+                    <h:inputText id="select_form_input_instructor" value="#{courseController.activeInstructorEmail}" disabled="true" />
+
+                    <h:outputText value="Course Name: "/>
+                    <h:selectOneMenu value="#{courseController.courseId}"
+                                     valueChangeListener="#{courseController.courseIdValueChangedListener}"
+                                     onchange="submit()">
+                        <f:selectItems value="#{courseController.courseValues}" var="c"
+                                       itemLabel="#{c.courseName}" itemValue="#{c.courseId}" />
+                    </h:selectOneMenu>
+
+                </h:panelGrid>
+
+                <h:commandButton id="submit" value="Submit" action="addStudent">
+                    <f:setPropertyActionListener target="#{gradebookController.gradebookID}" value="#{courseController.activeGradebook.gradebookId}" />
+                </h:commandButton>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

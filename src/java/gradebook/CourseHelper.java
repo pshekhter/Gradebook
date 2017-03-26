@@ -93,5 +93,38 @@ public class CourseHelper {
         return result;
     }
 
+    public Gradebook getGradebook(int semesterId, int courseId, int instructorId) {
+
+        List<Gradebook> list = null;
+
+        String sql = "SELECT * FROM gradebook "
+                + "INNER JOIN semester ON semester.SEMESTER_ID = :sid "
+                + "INNER JOIN course ON course.COURSE_ID = cid "
+                + "WHERE INSTRUCTOR_ID = :ins";
+        try {
+            // Initialize transaction if not already initialized
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            SQLQuery query = session.createSQLQuery(sql);
+
+            query.addEntity(Course.class);
+
+            query.setParameter("sid", semesterId);
+            query.setParameter("cid", courseId);
+            query.setParameter("ins", instructorId);
+
+            list = (List<Gradebook>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (0 != list.size()) {
+            return list.get(0);
+        } else {
+            return null;
+        }
+    }
 
 }

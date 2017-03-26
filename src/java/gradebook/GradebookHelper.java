@@ -236,7 +236,7 @@ public class GradebookHelper {
 
         // Select the instructor name
         String sql = "SELECT * FROM gradebook "
-                + "WHERE SEMESTER_ID = :id";
+                + "WHERE SEMESTER_ID = :id LIMIT 1";
         try {
             // Begin transaction if inactive
             if (!this.session.getTransaction().isActive()) {
@@ -400,7 +400,7 @@ public class GradebookHelper {
 
             // Add an entity
             query.addEntity(Gradebook.class);
-            
+
             query.setParameter("sid", sid);
             query.setParameter("cid", cid);
 
@@ -414,8 +414,8 @@ public class GradebookHelper {
         return gradebookList;
 
     }
-    
-        public List getGradebooksOfInstructor(int instructorId) {
+
+    public List getGradebooksOfInstructor(int instructorId) {
         // Create the list
         List<Gradebook> gradebookList = null;
 
@@ -432,7 +432,7 @@ public class GradebookHelper {
 
             // Add an entity
             query.addEntity(Gradebook.class);
-            
+
             query.setParameter("id", instructorId);
 
             // Execute query
@@ -445,5 +445,5 @@ public class GradebookHelper {
         return gradebookList;
 
     }
-
+    
 }
