@@ -22,17 +22,22 @@
 
                     <h:outputText value="Course Name: "/>
                     <h:selectOneMenu value="#{courseController.courseId}"
-                                     valueChangeListener="#{courseController.courseIdValueChangedListener}"
-                                     onchange="submit()">
+                                     valueChangeListener="#{courseController.courseIdValueChangedListener}">
                         <f:selectItems value="#{courseController.courseValues}" var="c"
                                        itemLabel="#{c.courseName}" itemValue="#{c.courseId}" />
                     </h:selectOneMenu>
 
                 </h:panelGrid>
 
-                <h:commandButton id="submit" value="Submit" action="addStudent">
+                <h:commandButton id="submit" value="Submit" action="#{courseController.submit}">
+                    <f:setPropertyActionListener target="#{gradebookController.gradebookID}" value="#{courseController.activeGradebookId}" />
+                </h:commandButton>
+
+                <h:commandButton id="next" value="Next Page" action="addStudent">
                     <f:setPropertyActionListener target="#{gradebookController.gradebookID}" value="#{courseController.activeGradebook.gradebookId}" />
                 </h:commandButton>
+                
+                <h:outputText value="#{courseController.gradebookResponse}" />
 
             </h:form>
         </ui:define>

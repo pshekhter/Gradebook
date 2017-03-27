@@ -26,7 +26,7 @@
                 </h:panelGrid>
 
                 <h:commandButton id="submit" value="Submit" action="#{courseController.selectCourse}">
-                    <f:setPropertyActionListener target="#{courseController.activeSemesterId}" value="#{semesterController.semesterId}" />
+                    <f:setPropertyActionListener target="#{courseController.semesterName}" value="#{semesterController.semesterName}" />
                     <f:setPropertyActionListener target="#{courseController.activeInstructorId}" value="#{semesterController.activeInstructorId}" />
                 </h:commandButton>
 

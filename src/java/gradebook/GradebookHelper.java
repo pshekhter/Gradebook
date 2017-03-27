@@ -383,11 +383,11 @@ public class GradebookHelper {
 
     }
 
-    public List getGradebooksAtSemesterAndCourseId(int sid, int cid) {
+    public Gradebook getGradebookAtSemesterAndCourseId(int sid, int cid, int ins) {
         // Create the list
         List<Gradebook> gradebookList = null;
 
-        String sql = "SELECT * FROM gradebook WHERE SEMESTER_ID = :sid AND COURSE_ID = :cid";
+        String sql = "SELECT * FROM gradebook WHERE SEMESTER_ID = :sid AND COURSE_ID = :cid AND INSTRUCTOR_ID = :ins";
 
         try {
             // Begin new transaction if we have an inactive one
@@ -403,6 +403,7 @@ public class GradebookHelper {
 
             query.setParameter("sid", sid);
             query.setParameter("cid", cid);
+            query.setParameter("ins", ins);
 
             // Execute query
             gradebookList = (List<Gradebook>) query.list();
@@ -410,8 +411,11 @@ public class GradebookHelper {
             e.printStackTrace();
         }
 
-        // Return gradebooks
-        return gradebookList;
+        if (gradebookList.size() != 0) {
+            return (Gradebook) gradebookList.get(0);
+        } else {
+            return null;
+        }
 
     }
 
