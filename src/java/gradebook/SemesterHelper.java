@@ -88,4 +88,33 @@ public class SemesterHelper {
         return null;
     }
 
+    public Semester getSemester(String semesterName) {
+        // Create course list
+        List semesterList = null;
+
+        // Get all courses in table
+        String sql = "SELECT * FROM semester WHERE SEMESTER_NAME = :sem";
+
+        try {
+            // Initialize transaction if not already initialized
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            SQLQuery query = session.createSQLQuery(sql);
+
+            query.addEntity(Semester.class);
+            query.setParameter("sem", semesterName);
+
+            semesterList = (List<Semester>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (semesterList.size() != 0) {
+            return (Semester) semesterList.get(0);
+        } else {
+            return null;
+        }
+    }
+
 }

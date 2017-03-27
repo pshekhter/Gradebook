@@ -127,4 +127,33 @@ public class CourseHelper {
         }
     }
 
+    public Course getCourse(String courseName) {
+        // Create course list
+        List courseList = null;
+
+        // Get all courses in table
+        String sql = "SELECT * FROM course WHERE COURSE_NAME = :course";
+
+        try {
+            // Initialize transaction if not already initialized
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            SQLQuery query = session.createSQLQuery(sql);
+
+            query.addEntity(Course.class);
+            query.setParameter("course", courseName);
+
+            courseList = (List<Course>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (courseList.size() != 0) {
+            return (Course) courseList.get(0);
+        } else {
+            return null;
+        }
+    }
+
 }

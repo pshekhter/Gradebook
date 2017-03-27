@@ -25,6 +25,7 @@
                             <h:inputText id="login_email" value="#{instructorController.instructorEmail}" />
                             <h:commandButton action="#{instructorController.submit}" id="instructor_submit" value="Submit">
                                 <f:setPropertyActionListener target="#{gradebookController.selectedEmail}" value="#{instructorController.instructorEmail}" />
+                                <f:setPropertyActionListener target="#{courseController.activeInstructorEmail}" value="#{instructorController.instructorEmail}" />
                             </h:commandButton>
 
                             <h:commandButton value="Clear" type="reset" />

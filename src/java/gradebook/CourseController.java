@@ -28,18 +28,23 @@ public class CourseController implements Serializable {
     CourseHelper courseHelper;
     GradebookHelper gradebookHelper;
     InstructorHelper instructorHelper;
+    SemesterHelper semesterHelper;
 
     // Map to components
     Course course;
     String courseName;
     String response;
+    String gradebookResponse;
     List<Course> courses;
     int courseId;
 
     int activeSemesterId;
     int activeInstructorId;
     Gradebook activeGradebook;
-    
+    int activeGradebookId;
+
+    String semesterName;
+
     String activeInstructorEmail;
 
     String selectedEmail;
@@ -51,8 +56,8 @@ public class CourseController implements Serializable {
         courseHelper = new CourseHelper();
         gradebookHelper = new GradebookHelper();
         instructorHelper = new InstructorHelper();
+        semesterHelper = new SemesterHelper();
         courses = courseHelper.getCourses();
-
 
     }
 
@@ -165,12 +170,66 @@ public class CourseController implements Serializable {
             return instructorHelper.getInstructor(activeInstructorId).getInstructorEmail();
         } else {
             return "";
-        }    }
+        }
+    }
 
     public void setActiveInstructorEmail(String activeInstructorEmail) {
         this.activeInstructorEmail = activeInstructorEmail;
     }
 
-    
+    public String getGradebookResponse() {
+        if ((activeInstructorEmail != null) && (courseName != null) && (semesterName != null)) {
 
+            courseId = courseHelper.getCourse(courseName).getCourseId();
+            activeSemesterId = semesterHelper.getSemester(semesterName).getSemesterId();
+            activeInstructorId = instructorHelper.getInstructor(activeInstructorEmail).getInstructorId();
+
+            if (gradebookHelper.getGradebookAtSemesterAndCourseId(courseId, activeSemesterId, activeInstructorId) != null) {
+                activeGradebook = (Gradebook) gradebookHelper.getGradebookAtSemesterAndCourseId(courseId, activeSemesterId, activeInstructorId);
+                activeGradebookId = activeGradebook.getGradebookId();
+                courseName = null;
+                courseId = 0;
+                activeSemesterId = 0;
+                response = "Gradebook Found: "
+                        + activeGradebookId + "\n"
+                        + activeGradebook.getCourse().getCourseName() + "\n"
+                        + activeGradebook.getSemester().getSemesterName();
+            } else {
+                courseName = null;
+                courseId = 0;
+                activeSemesterId = 0;
+                response = "Gradebook not found.";
+            }
+        } else {
+            // Don't display message
+            response = " ";
+        }
+        return "gradebookResponse";
+    }
+
+    public void setGradebookResponse(String gradebookResponse) {
+        this.gradebookResponse = gradebookResponse;
+    }
+
+    public String submit() {
+        return "selectCourse";
+    }
+
+    public String getSemesterName() {
+        return semesterName;
+    }
+
+    public void setSemesterName(String semesterName) {
+        this.semesterName = semesterName;
+    }
+
+    public int getActiveGradebookId() {
+        return activeGradebookId;
+    }
+
+    public void setActiveGradebookId(int activeGradebookId) {
+        this.activeGradebookId = activeGradebookId;
+    }
+
+    
 }
