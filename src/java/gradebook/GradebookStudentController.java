@@ -37,6 +37,7 @@ public class GradebookStudentController implements Serializable {
     SemesterHelper semesterHelper;
     CourseHelper courseHelper;
     InstructorHelper instructorHelper;
+    GradebookStudentHelper gradebookStudentHelper;
 
     // Lists
     List<Gradebook> gradebooks;
@@ -62,6 +63,7 @@ public class GradebookStudentController implements Serializable {
     String email;
 
     List<Gradebook> matchingGradebooks;
+    
 
     /**
      * Creates a new instance of GradebookStudentController
@@ -299,8 +301,10 @@ public class GradebookStudentController implements Serializable {
 
     public String getResponse() {
         if (fName != null && lName != null) {
-
-            if (studentHelper.insertStudent(studentName, studentName) == 1) {
+           
+            Student student = new Student(fName, lName);
+            
+            if (gradebookStudentHelper.insertStudentToGradebook(studentID, gradebookID) == 1) {
                 fName = null;
                 lName = null;
                 response = "Student Added.";
