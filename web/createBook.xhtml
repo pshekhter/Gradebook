@@ -29,16 +29,11 @@
                                        itemLabel="#{s.semesterName}" itemValue="#{s.semesterId}" />
                     </h:selectOneMenu>
 
-                    <h:outputText value="Instructor" />
-                    <h:inputText id="instructor_text" value="#{gradebookController.selectedEmail}" disabled="true" />
-                </h:panelGrid>
-                <h:commandButton id="createBook" value="Submit" action="#{gradebookController.createBook}" />
-                <h:inputHidden id="hidden_createGradebook" value="#{instructorController.instructorID}" />
-                <h:inputHidden id="hidden_instructor" value="#{gradebookController.instructorID}" />
+                  </h:panelGrid>
             </h:form>
             <h:outputText escape="false" value="#{gradebookController.response}" />
 
-
+                 
         </ui:define>
     </ui:composition>
 </html>

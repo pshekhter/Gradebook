@@ -12,7 +12,17 @@
         <ui:define name="content">
 
         <h:form id="createAssignmentForm">
-            <h:panelGrid columns="2">
+
+        <h:outputText value="Gradebook:" />
+
+            
+        <h:outputText value="Semester: 637" />
+        
+        
+        <h:outputText value="Course: 300" />
+        
+        
+            <!--<h:panelGrid columns="2">
                 <h:outputText value="Assignment Name: "/>
                 <h:inputText id="Name" value="#{assignmentController.assignmentName}" size="50" maxlength="255"
                              required="true" label="Name" />
@@ -39,7 +49,7 @@
                     
                 </h:panelGrid>
                 <h:commandButton id="submit" value="Submit" action="createAssignment" />
-                <h:commandButton value="Clear" type="reset" />
+                <h:commandButton value="Clear" type="reset" />-->
             </h:form>
 
     </ui:composition>

@@ -291,6 +291,22 @@ public class GradebookStudentController implements Serializable {
     }
 
     public String getResponse() {
+        if (fName != null && lName != null) {
+
+            if (studentHelper.insertStudent(studentName, studentName) == 1) {
+                fName = null;
+                lName = null;
+                response = "Student Added.";
+
+            } else {
+                fName = null;
+                lName = null;
+                response = "Student Not Added.";
+            }
+
+        } else {
+            response = " ";
+        }
         return response;
     }
 
