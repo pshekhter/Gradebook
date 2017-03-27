@@ -30,6 +30,16 @@
                     </h:selectOneMenu>
 
                   </h:panelGrid>
+                    <h:outputText value="Instructor" />
+                    <h:inputText id="instructor_text" value="#{gradebookController.selectedEmail}" disabled="true" />
+                <h:commandButton id="createBook" value="Submit" action="#{gradebookController.createBook}" />
+                <h:panelGrid columns="2">
+                    <h:outputText value="Next Step: " />
+                    <h:commandButton id="selectSemester" value="Select Semester" action="#{semesterController.selectSemester}" />
+                </h:panelGrid>
+                <h:inputHidden id="hidden_createGradebook" value="#{instructorController.instructorID}" />
+                <h:inputHidden id="hidden_instructor" value="#{gradebookController.instructorID}" />
+
             </h:form>
             <h:outputText escape="false" value="#{gradebookController.response}" />
 
