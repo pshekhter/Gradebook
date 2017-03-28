@@ -63,7 +63,6 @@ public class InstructorController implements Serializable {
 
     public void setInstructorEmail(String instructorEmail) {
         this.instructorEmail = instructorEmail;
-        this.instructorHelper.getInstructor(instructorEmail);
     }
 
     public int getInstructorID() {
