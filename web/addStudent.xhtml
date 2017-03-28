@@ -11,7 +11,10 @@
         <ui:define name="content">
             <h:form id="createStudentForm">
                 <h:panelGrid columns="1">
-              
+                    
+                <h:outputText id="modify_form_instructor" value="Instructor" />
+                        <h:inputText id="modify_form_input_instructor" value="#{gradebookController.selectedEmail}" disabled="true" />    
+                    
                 <h:outputText value="Gradebook" />
                 <h:inputText value="#{gradebookStudentController.gradebookID}" disabled="true" />
             
