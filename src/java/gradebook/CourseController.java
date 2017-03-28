@@ -190,7 +190,7 @@ public class CourseController implements Serializable {
                 courseName = null;
                 courseId = 0;
                 activeSemesterId = 0;
-                response = "Gradebook Found: "
+                gradebookResponse = "Gradebook Found: "
                         + activeGradebookId + "\n"
                         + activeGradebook.getCourse().getCourseName() + "\n"
                         + activeGradebook.getSemester().getSemesterName();
@@ -198,13 +198,13 @@ public class CourseController implements Serializable {
                 courseName = null;
                 courseId = 0;
                 activeSemesterId = 0;
-                response = "Gradebook not found.";
+                gradebookResponse = "Gradebook not found.";
             }
         } else {
             // Don't display message
-            response = " ";
+            gradebookResponse = " ";
         }
-        return "gradebookResponse";
+        return gradebookResponse;
     }
 
     public void setGradebookResponse(String gradebookResponse) {
@@ -231,5 +231,7 @@ public class CourseController implements Serializable {
         this.activeGradebookId = activeGradebookId;
     }
 
-    
+    public String addStudent() {
+        return "addStudent";
+    }
 }
