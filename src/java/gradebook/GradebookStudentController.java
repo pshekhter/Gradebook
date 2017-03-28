@@ -309,17 +309,19 @@ public class GradebookStudentController implements Serializable {
                 fName = null;
                 lName = null;
                 response = "Student Added.";
+                return response;
 
             } else {
                 fName = null;
                 lName = null;
                 response = "Student Not Added.";
+                return response;
             }
 
         } else {
             response = " ";
+            return response;
         }
-        return response;
     }
 
     public void setResponse(String response) {

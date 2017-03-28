@@ -33,7 +33,7 @@
                     <f:setPropertyActionListener target="#{gradebookController.gradebookID}" value="#{courseController.activeGradebookId}" />
                 </h:commandButton>
 
-                <h:commandButton id="next" value="Next Page" action="addStudent">
+                <h:commandButton id="next" value="Next Page" action="#{courseController.addStudent}">
                     <f:setPropertyActionListener target="#{gradebookController.gradebookID}" value="#{courseController.activeGradebook.gradebookId}" />
                 </h:commandButton>
                 
