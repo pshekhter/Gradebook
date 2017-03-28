@@ -34,7 +34,7 @@
                 </h:commandButton>
 
                 <h:commandButton id="next" value="Next Page" action="#{courseController.addStudent}">
-                    <f:setPropertyActionListener target="#{gradebookController.gradebookID}" value="#{courseController.activeGradebook.gradebookId}" />
+                    <f:setPropertyActionListener target="#{gradebookStudentController.gradebookID}" value="#{courseController.activeGradebook.gradebookId}" />
                 </h:commandButton>
                 
                 <h:outputText value="#{courseController.gradebookResponse}" />

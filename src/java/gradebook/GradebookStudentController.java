@@ -78,6 +78,7 @@ public class GradebookStudentController implements Serializable {
         students = studentHelper.getStudents();
         semesters = semesterHelper.getSemesters();
         courses = courseHelper.getCourses();
+        /**
         UIViewRoot root = FacesContext.getCurrentInstance().getViewRoot();
         UIComponent selectedEmailComponent = findComponent(root, "modify_form_input_instructor");
         UIInput selectedEmailInput = (UIInput)selectedEmailComponent;
@@ -91,6 +92,7 @@ public class GradebookStudentController implements Serializable {
         if (selectedEmail != null) {
             instructorID = instructorHelper.getInstructor(selectedEmail).getInstructorId();
         }
+        */
 
         gradebooks = gradebookHelper.getGradebooks(instructorID);
 
