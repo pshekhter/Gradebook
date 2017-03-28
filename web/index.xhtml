@@ -25,18 +25,38 @@
                             <h:inputText id="login_email" value="#{instructorController.instructorEmail}" />
                             <h:commandButton action="#{instructorController.submit}" id="instructor_submit" value="Submit">
                                 <f:setPropertyActionListener target="#{gradebookController.selectedEmail}" value="#{instructorController.instructorEmail}" />
-                                <f:setPropertyActionListener target="#{courseController.activeInstructorEmail}" value="#{instructorController.instructorEmail}" />
                             </h:commandButton>
 
                             <h:commandButton value="Clear" type="reset" />
                             
                             <h:commandButton action="#{instructorController.selectSemester}" id="selectSemester" value="Next Page">
-                                <f:setPropertyActionListener target="#{semesterController.activeInstructorEmail}" value="#{instructorController.instructorEmail}" />
+                                <f:setPropertyActionListener target="#{semesterController.activeInstructorEmail}" value="#{gradebookController.selectedEmail}" />
                             </h:commandButton>
                             <h:inputHidden id="id" value="#{instructorController.instructorID}" />
                         </h:form>
                     </h:panelGrid>
                     <h:outputText value="#{instructorController.selectResponse}" />
+                </div>
+                
+                <div id="displayBooksTable">
+                    <h:dataTable value="#{gradebookController.instructorGradebooks}" var="gId"
+                                 styleClass="table">
+                        <h:column>
+                            <f:facet name="header">ID</f:facet>
+                            #{gId.gradebookId}
+                        </h:column>
+                        
+                        <h:column>
+                            <f:facet name="header">Semester</f:facet>
+                            #{gId.semester.semesterName}
+                        </h:column>
+                        
+                        <h:column>
+                            <f:facet name="header">Course</f:facet>
+                            #{gId.course.courseName}
+                        </h:column>
+                        
+                    </h:dataTable>
                 </div>
             </div>
         </ui:define>
