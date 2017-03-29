@@ -166,11 +166,7 @@ public class CourseController implements Serializable {
     }
 
     public String getActiveInstructorEmail() {
-        if (activeInstructorId > 0) {
-            return instructorHelper.getInstructor(activeInstructorId).getInstructorEmail();
-        } else {
-            return "";
-        }
+        return activeInstructorEmail;
     }
 
     public void setActiveInstructorEmail(String activeInstructorEmail) {
@@ -194,17 +190,19 @@ public class CourseController implements Serializable {
                 courseId = 0;
                 activeSemesterId = 0;
                 gradebookResponse = gradebookResponse + "\nGradebook Found";
+                return gradebookResponse;
             } else {
                 courseName = null;
                 courseId = 0;
                 activeSemesterId = 0;
                 gradebookResponse = "Gradebook not found.";
+                return gradebookResponse;
             }
         } else {
             // Don't display message
             gradebookResponse = " ";
+            return gradebookResponse;
         }
-        return gradebookResponse;
     }
 
     public void setGradebookResponse(String gradebookResponse) {
