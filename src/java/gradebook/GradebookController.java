@@ -383,9 +383,14 @@ public class GradebookController implements Serializable {
     }
 
     public List<Gradebook> getInstructorGradebooks() {
-        if (selectedEmail == null) return null;
-        int insId = instructorHelper.getInstructor(selectedEmail).getInstructorId();
+        if (selectedEmail == null) {
+            return null;
+        }
+        int insId = 0;
         if (instructorHelper.getInstructor(selectedEmail) != null) {
+            insId = instructorHelper.getInstructor(selectedEmail).getInstructorId();
+        }
+        if (insId != 0) {
             return gradebookHelper.getGradebooks(insId);
         } else {
             return null;
