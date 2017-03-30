@@ -305,7 +305,7 @@ public class GradebookStudentController implements Serializable {
             Student student = new Student(fName, lName);
             // gradebookID = getGradebookID();
             
-            if (gradebookStudentHelper.insertStudentToGradebook(2385, 4414) == 1) {
+            if (gradebookStudentHelper.insertStudentToGradebook(studentID, 4414) == 1) {
                 fName = null;
                 lName = null;
                 response = "Student Added.";
