@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Create Gradebook" />
+        </ui:define>
+
+        <ui:define name="content">
+
+            <h:form id="inputGradesForm">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Gradebook ID" />
+                    <h:inputText id="inputGrades_gradebookId" value="#{gradebookStudentController.gradebookID}" />
+
+                    <h:outputText value="Assignment" />
+                    <h:selectOneMenu value="#{gradebookAssignmentController.assignmentId}"
+                                     valueChangeListener="#{gradebookController.semesterNameValueChangedListener}"
+                                     onchange="submit()">
+                        <f:selectItems value="#{gradebookController.semesterValues}" var="s"
+                                       itemLabel="#{s.semesterName}" itemValue="#{s.semesterId}" />
+                    </h:selectOneMenu>
+
+                  </h:panelGrid>
+                    <h:outputText value="Instructor" />
+                    <h:inputText id="instructor_text" value="#{gradebookController.selectedEmail}" disabled="true" />
+                <h:commandButton id="createBook" value="Submit" action="#{gradebookController.createBook}" />
+                <h:panelGrid columns="2">
+                    <h:outputText value="Next Step: " />
+                    <h:commandButton id="selectSemester" value="Select Semester" action="#{semesterController.selectSemester}" />
+                </h:panelGrid>
+                <h:inputHidden id="hidden_createGradebook" value="#{instructorController.instructorID}" />
+                <h:inputHidden id="hidden_instructor" value="#{gradebookController.instructorID}" />
+
+            </h:form>
+            <h:outputText escape="false" value="#{gradebookController.response}" />
+
+                 
+        </ui:define>
+    </ui:composition>
+</html>
+
