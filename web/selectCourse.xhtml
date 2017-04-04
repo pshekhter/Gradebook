@@ -5,7 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Select Semester" />
+            <h:outputText value="Select Course and Create Gradebook" />
         </ui:define>
 
         <ui:define name="content">
@@ -34,7 +34,7 @@
                 </h:commandButton>
 
                 <h:commandButton id="next" value="Next Page" action="#{courseController.addStudent}">
-                    <f:setPropertyActionListener target="#{gradebookController.gradebookID}" value="#{courseController.activeGradebook.gradebookId}" />
+                    <f:setPropertyActionListener target="#{gradebookStudentController.gradebookID}" value="#{courseController.activeGradebook.gradebookId}" />
                 </h:commandButton>
                 
                 <h:outputText value="#{courseController.gradebookResponse}" />

@@ -449,5 +449,39 @@ public class GradebookHelper {
         return gradebookList;
 
     }
-    
+
+    public Gradebook getGradebookById(int gradebookId) {
+        // Create the list
+        List<Gradebook> gradebookList = null;
+
+        String sql = "SELECT * FROM gradebook WHERE gradebookId = :id";
+
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(Gradebook.class);
+
+            query.setParameter("id", gradebookId);
+
+            // Execute query
+            gradebookList = (List<Gradebook>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return gradebooks
+        if (gradebookList.size() != 0) {
+            return gradebookList.get(0);
+        } else {
+            return null;
+        }
+    }
+
 }

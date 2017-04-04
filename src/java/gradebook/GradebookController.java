@@ -43,6 +43,7 @@ public class GradebookController implements Serializable {
     List<Semester> semesters;
     List<Instructor> instructors;
     List<Gradebook> gradebooks;
+    List<Gradebook> instructorGradebooks;
 
     // Stores the currently selected gradebook ID for passing
     int gradebookID;
@@ -347,6 +348,65 @@ public class GradebookController implements Serializable {
         } catch (NumberFormatException nfe) {
             nfe.printStackTrace();
         }
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    public List<Semester> getSemesters() {
+        return semesters;
+    }
+
+    public void setSemesters(List<Semester> semesters) {
+        this.semesters = semesters;
+    }
+
+    public List<Instructor> getInstructors() {
+        return instructors;
+    }
+
+    public void setInstructors(List<Instructor> instructors) {
+        this.instructors = instructors;
+    }
+
+    public List<Gradebook> getGradebooks() {
+        return gradebooks;
+    }
+
+    public void setGradebooks(List<Gradebook> gradebooks) {
+        this.gradebooks = gradebooks;
+    }
+
+    public List<Gradebook> getInstructorGradebooks() {
+        if (selectedEmail == null) {
+            return null;
+        }
+        int insId = 0;
+        if (instructorHelper.getInstructor(selectedEmail) != null) {
+            insId = instructorHelper.getInstructor(selectedEmail).getInstructorId();
+        }
+        if (insId != 0) {
+            return gradebookHelper.getGradebooks(insId);
+        } else {
+            return null;
+        }
+    }
+
+    public void setInstructorGradebooks(List<Gradebook> instructorGradebooks) {
+        this.instructorGradebooks = instructorGradebooks;
+    }
+
+    public String getInstructorEmail() {
+        return instructorEmail;
+    }
+
+    public void setInstructorEmail(String instructorEmail) {
+        this.instructorEmail = instructorEmail;
     }
 
 }

@@ -54,8 +54,8 @@ public class GradebookStudentController implements Serializable {
     int gradebookID;
     String studentName;
     int studentID;
-    String fName;
-    String lName;
+    String firstName;
+    String lastName;
     int courseID;
     String response;
     String selectedEmail = "";
@@ -63,7 +63,6 @@ public class GradebookStudentController implements Serializable {
     String email;
 
     List<Gradebook> matchingGradebooks;
-    
 
     /**
      * Creates a new instance of GradebookStudentController
@@ -78,19 +77,19 @@ public class GradebookStudentController implements Serializable {
         students = studentHelper.getStudents();
         semesters = semesterHelper.getSemesters();
         courses = courseHelper.getCourses();
-        UIViewRoot root = FacesContext.getCurrentInstance().getViewRoot();
-        UIComponent selectedEmailComponent = findComponent(root, "modify_form_input_instructor");
-        UIInput selectedEmailInput = (UIInput)selectedEmailComponent;
-
-        if (selectedEmailInput.getValue() != null) {
-            selectedEmail = selectedEmailInput.getValue().toString();
-        } else {
-            selectedEmail = null;
-        }
-
-        if (selectedEmail != null) {
-            instructorID = instructorHelper.getInstructor(selectedEmail).getInstructorId();
-        }
+        /**
+         * UIViewRoot root = FacesContext.getCurrentInstance().getViewRoot();
+         * UIComponent selectedEmailComponent = findComponent(root,
+         * "modify_form_input_instructor"); UIInput selectedEmailInput =
+         * (UIInput)selectedEmailComponent;
+         *
+         * if (selectedEmailInput.getValue() != null) { selectedEmail =
+         * selectedEmailInput.getValue().toString(); } else { selectedEmail =
+         * null; }
+         *
+         * if (selectedEmail != null) { instructorID =
+         * instructorHelper.getInstructor(selectedEmail).getInstructorId(); }
+         */
 
         gradebooks = gradebookHelper.getGradebooks(instructorID);
 
@@ -300,21 +299,28 @@ public class GradebookStudentController implements Serializable {
     }
 
     public String getResponse() {
-        if (fName != null && lName != null) {
-           
-            Student student = new Student(fName, lName);
-            // gradebookID = getGradebookID();
-            
-            if (gradebookStudentHelper.insertStudentToGradebook(studentID, 4414) == 1) {
-                fName = null;
-                lName = null;
-                response = "Student Added.";
-                return response;
+        if (firstName != null && lastName != null) {
+
+            if (studentHelper.insertStudent(firstName, lastName) == 1) {
+                firstName = null;
+                lastName = null;
+                studentID = studentHelper.getStudentID(firstName, lastName);
+
+                if (gradebookStudentHelper.insertStudentToGradebook(studentID, 4419) == 1) {
+                    response = "Student Added.";
+                    return response;
+
+                } else {
+                    firstName = null;
+                    lastName = null;
+                    response = "Student Not Added.";
+                    return response;
+                }
 
             } else {
-                fName = null;
-                lName = null;
-                response = "Student Not Added.";
+                response = "Insert student failed!";
+                firstName = null;
+                lastName = null;
                 return response;
             }
 
@@ -355,21 +361,22 @@ public class GradebookStudentController implements Serializable {
         this.selectedEmail = selectedEmail;
     }
 
-    public String getfName() {
-        return fName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setfName(String fName) {
-        this.fName = fName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getlName() {
-        return lName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setlName(String lName) {
-        this.lName = lName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
+    
     
 }

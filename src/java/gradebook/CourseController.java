@@ -166,11 +166,7 @@ public class CourseController implements Serializable {
     }
 
     public String getActiveInstructorEmail() {
-        if (activeInstructorId > 0) {
-            return instructorHelper.getInstructor(activeInstructorId).getInstructorEmail();
-        } else {
-            return "";
-        }
+        return activeInstructorEmail;
     }
 
     public void setActiveInstructorEmail(String activeInstructorEmail) {
@@ -180,31 +176,33 @@ public class CourseController implements Serializable {
     public String getGradebookResponse() {
         if ((activeInstructorEmail != null) && (courseName != null) && (semesterName != null)) {
 
-            courseId = courseHelper.getCourse(courseName).getCourseId();
-            activeSemesterId = semesterHelper.getSemester(semesterName).getSemesterId();
-            activeInstructorId = instructorHelper.getInstructor(activeInstructorEmail).getInstructorId();
+            Instructor ins = instructorHelper.getInstructor(activeInstructorEmail);
+            Course course = courseHelper.getCourse(courseName);
+            Semester sem = semesterHelper.getSemester(semesterName);
+            int res = gradebookHelper.insertGradebook(course, sem, ins);
 
-            if (gradebookHelper.getGradebookAtSemesterAndCourseId(courseId, activeSemesterId, activeInstructorId) != null) {
-                activeGradebook = (Gradebook) gradebookHelper.getGradebookAtSemesterAndCourseId(courseId, activeSemesterId, activeInstructorId);
+            if (res == 1) {
+                gradebookResponse = "Gradebook Created.";
+
+                activeGradebook = gradebookHelper.getGradebookAtSemesterAndCourseId(sem.getSemesterId(), course.getCourseId(), ins.getInstructorId());
                 activeGradebookId = activeGradebook.getGradebookId();
                 courseName = null;
                 courseId = 0;
                 activeSemesterId = 0;
-                gradebookResponse = "Gradebook Found: "
-                        + activeGradebookId + "\n"
-                        + activeGradebook.getCourse().getCourseName() + "\n"
-                        + activeGradebook.getSemester().getSemesterName();
+                gradebookResponse = gradebookResponse + "\nGradebook Found";
+                return gradebookResponse;
             } else {
                 courseName = null;
                 courseId = 0;
                 activeSemesterId = 0;
                 gradebookResponse = "Gradebook not found.";
+                return gradebookResponse;
             }
         } else {
             // Don't display message
             gradebookResponse = " ";
+            return gradebookResponse;
         }
-        return gradebookResponse;
     }
 
     public void setGradebookResponse(String gradebookResponse) {

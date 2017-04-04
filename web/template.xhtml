@@ -71,7 +71,7 @@
                         <h:panelGrid columns="2">
                             <h:form id="create_form">
                                 <h:outputText value="Instructor Name " />
-                                <h:inputText id="create_email" value="#{instructorController.createInstructorEmail}" />
+                                <h:inputText id="create_email" value="#{instructorController.createInstructorEmail}" required="true" />
                                 <h:commandButton id="instructor_create" value="Submit" />
                                 <h:commandButton value="Clear" type="reset" />
                             </h:form>

@@ -23,21 +23,24 @@ public class StudentController implements Serializable {
     String studentFName;
     String studentLName; 
     String response;
+    //String responseDelete;
     
-    StudentHelper helper;
+    StudentHelper studenthelper;
+    GradebookStudentHelper gradebookStudentHelper;
     
     Student student;
     
     public StudentController() {
         
-        helper = new StudentHelper();
+        studenthelper = new StudentHelper();
+        gradebookStudentHelper = new GradebookStudentHelper();
         
     }
 
     public DataModel getStudentValues() {
         
         if (studentValues == null) {
-            studentValues = new ListDataModel(helper.getStudents());
+            studentValues = new ListDataModel(studenthelper.getStudents());
         }
         
         return studentValues;
@@ -62,9 +65,11 @@ public class StudentController implements Serializable {
 
     public String getResponse() {
         if (studentFName != null && studentLName != null) {
+            
+            int studentID = studenthelper.getStudentID();
             student = new Student(studentFName, studentLName);
-
-            if (helper.insertStudent(studentFName, studentLName) == 1) {
+             
+            if (gradebookStudentHelper.insertStudentToGradebook(studentID, 4383) == 1) {
                 studentFName = null;
                 studentLName = null;
                 response = "Student Added.";
@@ -84,7 +89,5 @@ public class StudentController implements Serializable {
     public void setResponse(String response) {
         this.response = response;
     }
-    
-    
     
 }

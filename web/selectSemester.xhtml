@@ -27,7 +27,7 @@
 
                 <h:commandButton id="submit" value="Submit" action="#{courseController.selectCourse}">
                     <f:setPropertyActionListener target="#{courseController.semesterName}" value="#{semesterController.semesterName}" />
-                    <f:setPropertyActionListener target="#{courseController.activeInstructorId}" value="#{semesterController.activeInstructorId}" />
+                    <f:setPropertyActionListener target="#{courseController.activeInstructorEmail}" value="#{semesterController.activeInstructorEmail}" />
                 </h:commandButton>
 
             </h:form>
