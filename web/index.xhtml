@@ -28,7 +28,7 @@
                             </h:commandButton>
 
                             <h:commandButton value="Clear" type="reset" />
-                            
+
                             <h:commandButton action="#{instructorController.selectSemester}" id="selectSemester" value="Next Page">
                                 <f:setPropertyActionListener target="#{semesterController.activeInstructorEmail}" value="#{gradebookController.selectedEmail}" />
                             </h:commandButton>
@@ -37,27 +37,39 @@
                     </h:panelGrid>
                     <h:outputText value="#{instructorController.selectResponse}" />
                 </div>
-                
-                <div id="displayBooksTable">
-                    <h:dataTable value="#{gradebookController.instructorGradebooks}" var="gId"
-                                 styleClass="table">
-                        <h:column>
-                            <f:facet name="header">ID</f:facet>
-                            #{gId.gradebookId}
-                        </h:column>
-                        
-                        <h:column>
-                            <f:facet name="header">Semester</f:facet>
-                            #{gId.semester.semesterName}
-                        </h:column>
-                        
-                        <h:column>
-                            <f:facet name="header">Course</f:facet>
-                            #{gId.course.courseName}
-                        </h:column>
-                        
-                    </h:dataTable>
-                </div>
+
+                <h:form>
+                    <div id="displayBooksTable">
+                        <h:dataTable value="#{gradebookController.instructorGradebooks}" var="gId"
+                                     styleClass="table">
+                            <h:column>
+                                <f:facet name="header">ID</f:facet>
+                                    #{gId.gradebookId}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Semester</f:facet>
+                                    #{gId.semester.semesterName}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Course</f:facet>
+                                    #{gId.course.courseName}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">View Assignments</f:facet>
+                                <h:commandLink action="#{gradebookAssignmentController.viewAssignments}"
+                                               value="View #{gId.gradebookId} Assignments">
+                                    <f:setPropertyActionListener target="#{gradebookAssignmentController.gradebookId}"
+                                                                 value="#{gId.gradebookId}" />
+                                </h:commandLink>
+
+                            </h:column>
+
+                        </h:dataTable>
+                    </div>
+                </h:form>
             </div>
         </ui:define>
     </ui:composition>
