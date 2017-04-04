@@ -11,31 +11,33 @@
         </ui:define>
 
         <ui:define name="content">
-            <h:outputText value="Welcome to your gradebook! To get started, log in below." />
             <ui:define name="title">
                 <h:outputText value="View Assignments" />
             </ui:define>
             <div class="col-sm-4">
                 <div class="well">                                
-                    <h:outputText value="Displaying Assignments..." style="font-weight: bold" />
+                    <h:outputText value="Displaying Assignments of Gradebook #{gradebookAssignmentController.gradebookId}..." style="font-weight: bold" />
 
                     <h:panelGrid columns="2">
-                            <div id="displayAssignmentsTable">
-                                <h:dataTable value="#{gradebookAssignmentController.assignments}" var="aId"
-                                             styleClass="table">
-                                    <h:column>
-                                        <f:facet name="header">ID</f:facet>
-                                            #{aID.assignmentId}
-                                    </h:column>
+                        <div id="displayAssignmentsTable">
+                            <h:dataTable value="#{gradebookAssignmentController.instructorAssignments}" var="aId"
+                                         styleClass="table">
+                                
+                                
 
-                                    <h:column>
-                                        <f:facet name="header">Name</f:facet>
-                                            #{aID.assignmentName}
-                                    </h:column>
+                                <h:column>
+                                    <f:facet name="header">ID</f:facet>
+                                        #{aId.assignmentId}
+                                </h:column>
 
-                                </h:dataTable>
+                                <h:column>
+                                    <f:facet name="header">Name</f:facet>
+                                        #{aId.assignmentName}
+                                </h:column>
 
-                            </div>
+                            </h:dataTable>
+
+                        </div>
                     </h:panelGrid>
                 </div>
 

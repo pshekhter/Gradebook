@@ -22,11 +22,13 @@ public class GradebookAssignmentHelper {
         }
     }
 
-    public List<GradebookAssignment> getAssignmentsFromGradebook(int gid) {
+    public List<Assignment> getAssignmentsFromGradebook(int gid) {
         // Create the list
-        List<GradebookAssignment> gradebookAssignmentList = null;
+        List<Assignment> gradebookAssignmentList = null;
 
-        String sql = "SELECT * FROM gradebook_assignment WHERE GRADEBOOK_ID = :gid ";
+        String sql = "SELECT * FROM assignment "
+                + "INNER JOIN gradebook_assignment ON assignment.ASSIGNMENT_ID = gradebook_assignment.ASSIGNMENT_ID "
+                + "WHERE gradebook_assignment.GRADEBOOK_ID = :gid";
 
         try {
             // Begin new transaction if we have an inactive one
@@ -38,13 +40,13 @@ public class GradebookAssignmentHelper {
             SQLQuery query = session.createSQLQuery(sql);
 
             // Add an entity
-            query.addEntity(GradebookAssignment.class);
+            query.addEntity(Assignment.class);
 
             // Binding parameters
             query.setParameter("gid", gid);
 
             // Execute query
-            gradebookAssignmentList = (List<GradebookAssignment>) query.list();
+            gradebookAssignmentList = (List<Assignment>) query.list();
         } catch (Exception e) {
             e.printStackTrace();
         }
