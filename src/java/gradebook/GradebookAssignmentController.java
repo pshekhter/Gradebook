@@ -37,11 +37,13 @@ public class GradebookAssignmentController implements Serializable {
 
     // Stores response
     String response;
-    
+
     GradebookAssignment selected;
-    
+
     // Stores assignment grade
     int assignmentGrade;
+
+    List<Assignment> instructorAssignments;
 
     /**
      * Creates a new instance of GradebookAssignmentController
@@ -110,4 +112,17 @@ public class GradebookAssignmentController implements Serializable {
     public String viewAssignments() {
         return "viewAssignments";
     }
+
+    public List<Assignment> getInstructorAssignments() {
+        if (gradebookAssignmentHelper.getAssignmentsFromGradebook(gradebookId) != null) {
+            return gradebookAssignmentHelper.getAssignmentsFromGradebook(gradebookId);
+        } else {
+            return null;
+        }
+    }
+
+    public void setInstructorAssignments(List<Assignment> instructorAssignments) {
+        this.instructorAssignments = instructorAssignments;
+    }
+
 }
