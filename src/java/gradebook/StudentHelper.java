@@ -82,10 +82,9 @@ public class StudentHelper {
     }
 
     public int getStudentID() {
-        Student student = null;
         int studentID = 0;
 
-        String sql = "select * from student where student_id = :id";
+        String sql = "select * from student where student_id = :id ORDER BY STUDENT_ID DESC LIMIT 1";
 
         try {
 
@@ -100,7 +99,7 @@ public class StudentHelper {
 
             q.setParameter("id", studentID);
 
-            student = (Student) q.uniqueResult();
+            studentID = (int) q.uniqueResult();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,11 +108,15 @@ public class StudentHelper {
     }
 
     public int getStudentID(String fName, String lName) {
-        Student student = null;
+        
+        Student student;
         int studentID = 0;
 
-        String sql = "select * from student where student_fname = :f and student_lname =:l";
-
+        //String sql = "SELECT * FROM STUDENT WHERE STUDENT_"
+        
+        String sql = "SELECT STUDENT_ID FROM STUDENT WHERE student_FName = :fname AND student_LName = :lname "
+                + "ORDER BY STUDENT_ID DESC LIMIT 1";
+        
         try {
 
             //3 lines of code are always consistant 
@@ -123,14 +126,14 @@ public class StudentHelper {
 
             SQLQuery q = session.createSQLQuery(sql);
 
-            q.addEntity(Student.class);
-
-            q.setParameter("f", fName);
-            q.setParameter("l", lName);
-
+            q.addEntity(Student.class);    
+            
+            q.setParameter("fname", fName);
+            q.setParameter("lname", lName);
+            
             student = (Student) q.uniqueResult();
             studentID = student.getStudentId();
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -139,7 +142,6 @@ public class StudentHelper {
 
     public int insertStudent(String studentFName, String studentLName) {
         int result = 0;
-        int studentID = 0;
 
         String sql = "insert into student(student_FName, student_LName)"
                 + "values (:studentFName, :studentLName)";
