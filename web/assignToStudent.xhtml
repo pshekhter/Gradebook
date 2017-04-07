@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Assign #{studentAssignmentController.assignment} To Student" />
+        </ui:define>
+
+        <ui:define name="content">
+
+            <h:form id="assignToStudentForm">
+                <h:panelGrid columns="2">
+
+                    <h:outputText value="Assignment Name: " />
+                    <h:inputText id="assignment" value="#{studentAssignmentController.assignmentName}" disabled="true" />
+
+                    <h:outputText value="Student: " />
+                    <h:selectOneMenu value="#{studentAssignmentController.student}"
+                                     valueChangeListener="#{studentAssignmentController.studentIdValueChanged}"
+                                     onchange="submit()">
+                        <f:selectItems value="#{studentAssignmentController.studentValues}" var="s"
+                                       itemLabel="#{s.studentId}" itemValue="#{s.studentId}" />
+                    </h:selectOneMenu>
+
+                </h:panelGrid>
+
+                <h:commandButton id="submit" value="Submit" action="#{courseController.selectCourse}">
+                    <f:setPropertyActionListener target="#{courseController.semesterName}" value="#{semesterController.semesterName}" />
+                    <f:setPropertyActionListener target="#{courseController.activeInstructorEmail}" value="#{semesterController.activeInstructorEmail}" />
+                </h:commandButton>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

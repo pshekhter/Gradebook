@@ -15,7 +15,8 @@
                 <h:outputText value="View Assignments" />
             </ui:define>
             <div class="col-sm-4">
-                <div class="well">                                
+                <div class="well">
+                    <h:form id="viewAssignments">
                     <h:outputText value="Displaying Assignments of Gradebook #{gradebookAssignmentController.gradebookId}..." style="font-weight: bold" />
 
                     <h:panelGrid columns="2">
@@ -23,22 +24,31 @@
                             <h:dataTable value="#{gradebookAssignmentController.instructorAssignments}" var="aId"
                                          styleClass="table">
                                 
-                                
-
-                                <h:column>
-                                    <f:facet name="header">ID</f:facet>
-                                        #{aId.assignmentId}
-                                </h:column>
-
                                 <h:column>
                                     <f:facet name="header">Name</f:facet>
                                         #{aId.assignmentName}
+                                </h:column>
+                                
+                                
+                                <h:column>
+                                    <f:facet name="header">View Students</f:facet>
+                                    <h:commandLink action="#{gradebookAssignmentController.viewStudents}" value="View Students">
+                                        <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{aId.assignmentId}" />
+                                    </h:commandLink>
+                                </h:column>
+                                
+                                <h:column>
+                                    <f:facet name="header">Add Students</f:facet>
+                                    <h:commandLink action="#{studentAssignmentController.assignToStudent}" value="Assign To Student">
+                                        <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{aId.assignmentId}" />
+                                    </h:commandLink>
                                 </h:column>
 
                             </h:dataTable>
 
                         </div>
                     </h:panelGrid>
+                    </h:form>
                 </div>
 
             </div>

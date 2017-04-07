@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <ui:composition template="template.xhtml">
+
+        <ui:define name="title">
+            <h:outputText value="Welcome to Gradebook!" />
+        </ui:define>
+
+        <ui:define name="content">
+            <ui:define name="title">
+                <h:outputText value="View Students" />
+            </ui:define>
+            <div class="col-sm-4">
+                <div class="well">                                
+                    <h:outputText value="Assignment: #{studentAssignmentController.assignment} Gradebook: #{gradebookAssignmentController.gradebookId}" style="font-weight: bold" />
+
+                    <h:panelGrid columns="2">
+                        <div id="displayStudentsTable">
+                            <h:dataTable value="#{studentAssignmentController.assignmentStudents}" var="sId"
+                                         styleClass="table">
+
+                                <h:column>
+                                    <f:facet name="header">Student First Name</f:facet>
+                                    <h:outputText id="stf" value="#{sId.studentFname}" />
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Student Last Name</f:facet>
+                                    <h:outputText id="stl" value="#{sId.studentLname}" />
+                                </h:column>
+
+                            </h:dataTable>
+
+                        </div>
+                    </h:panelGrid>
+                </div>
+
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+
