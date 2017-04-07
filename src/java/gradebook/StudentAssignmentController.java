@@ -189,7 +189,7 @@ public class StudentAssignmentController implements Serializable {
     }
     
     public String submitAssignToStudent() {
-        return "assignToStudent";
+        return "viewStudents";
     }
 
 }

@@ -24,7 +24,9 @@
                                        itemLabel="#{s.studentFname} #{s.studentLname}" itemValue="#{s.studentId}" />
                     </h:selectOneMenu>
 
-                    <h:commandButton action="#{studentAssignmentController.submitAssignToStudent}" id="assignToStudentBtn" value="Submit" />
+                    <h:commandButton action="#{studentAssignmentController.submitAssignToStudent}" id="assignToStudentBtn" value="Return To Student List">
+                        <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
+                    </h:commandButton>
                     
                     <h:outputText id="assignToStudentText" value="#{studentAssignmentController.response}" />
 
