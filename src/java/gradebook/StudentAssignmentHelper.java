@@ -137,6 +137,40 @@ public class StudentAssignmentHelper {
 
     }
 
+    public List<Student> getStudentsExcludeAtAid(int aid) {
+        // Create the list
+        List<Student> studentAssignmentList = null;
+
+        String sql = "SELECT * FROM student "
+                + "LEFT JOIN student_assignment ON student.student_id = student_assignment.student_id "
+                + "WHERE student_assignment.assignment_id = :aid";
+
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(Student.class);
+
+            // Binding parameters
+            query.setParameter("aid", aid);
+
+            // Execute query
+            studentAssignmentList = (List<Student>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return gradebooks
+        return studentAssignmentList;
+
+    }
+
     public List<Assignment> getAssignmentAtID(int aid) {
 
         List<Assignment> assignmentList = null;

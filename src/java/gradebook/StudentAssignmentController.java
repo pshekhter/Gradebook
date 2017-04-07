@@ -120,7 +120,7 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public String getResponse() {
-        
+
         if (student != 0) {
 
             if (helper.insertStudentToAssignment(student, assignment) == 1) {
@@ -175,7 +175,7 @@ public class StudentAssignmentController implements Serializable {
         }
 
     }
-    
+
     public String assignToStudent() {
         return "assignToStudent";
     }
@@ -188,7 +188,8 @@ public class StudentAssignmentController implements Serializable {
         this.studentName = studentName;
     }
     
-    
-
+    public String submitAssignToStudent() {
+        return "assignToStudent";
+    }
 
 }
