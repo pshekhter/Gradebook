@@ -39,6 +39,8 @@ public class StudentAssignmentController implements Serializable {
     String studentLName;
     String assignmentName;
     String response;
+    
+    boolean readyToSubmit;
 
     // String for addStudentAssignment form
     String studentName;
@@ -49,6 +51,7 @@ public class StudentAssignmentController implements Serializable {
         helper = new StudentAssignmentHelper();
         sh = new StudentHelper();
         assignmentStudents = helper.getStudentsFromAssignment(assignment);
+        readyToSubmit = false;
     }
 
     public DataModel getStudentValues() {
@@ -120,9 +123,9 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public String getResponse() {
-
-        if (student != 0) {
-
+        
+        if ((student != 0) && (readyToSubmit)) {
+            
             if (helper.insertStudentToAssignment(student, assignment) == 1) {
                 studentName = null;
                 student = 0;
@@ -167,6 +170,7 @@ public class StudentAssignmentController implements Serializable {
                 if (assignmentStudents.get(studentCounter).getStudentId() == student) {
                     stu = assignmentStudents.get(studentCounter);
                     studentName = stu.getStudentFname() + stu.getStudentLname();
+                    readyToSubmit = false;
                 }
             }
 
@@ -189,11 +193,22 @@ public class StudentAssignmentController implements Serializable {
     }
     
     public String submitAssignToStudent() {
-        return "viewStudents";
+        readyToSubmit = true;
+        return "assignToStudent";
     }
     
     public String returnToAssignment() {
         return "viewAssignments";
     }
+
+    public boolean isReadyToSubmit() {
+        return readyToSubmit;
+    }
+
+    public void setReadyToSubmit(boolean readyToSubmit) {
+        this.readyToSubmit = readyToSubmit;
+    }
+    
+    
 
 }

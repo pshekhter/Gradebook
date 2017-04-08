@@ -24,10 +24,14 @@
                                        itemLabel="#{s.studentFname} #{s.studentLname}" itemValue="#{s.studentId}" />
                     </h:selectOneMenu>
 
-                    <h:commandButton action="#{studentAssignmentController.submitAssignToStudent}" id="assignToStudentBtn" value="Return To Student List">
+                    <h:commandButton action="#{studentAssignmentController.submitAssignToStudent}" id="assignToStudentBtn" value="Submit">
+                        <f:setPropertyActionListener target="#{studentAssignmentController.readyToSubmit}" value="false" />
+                    </h:commandButton>
+
+                    <h:commandButton action="#{studentAssignmentController.returnToAssignment}" id="returnToAssignmentsBtn" value="Return To Assignment List">
                         <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
                     </h:commandButton>
-                    
+
                     <h:outputText id="assignToStudentText" value="#{studentAssignmentController.response}" />
 
                 </h:panelGrid>
