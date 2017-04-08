@@ -191,5 +191,9 @@ public class StudentAssignmentController implements Serializable {
     public String submitAssignToStudent() {
         return "viewStudents";
     }
+    
+    public String returnToAssignment() {
+        return "viewAssignments";
+    }
 
 }

@@ -18,25 +18,29 @@
                 <div class="well">                                
                     <h:outputText value="Assignment: #{studentAssignmentController.assignment} Gradebook: #{gradebookAssignmentController.gradebookId}" style="font-weight: bold" />
 
-                    <h:panelGrid columns="2">
-                        <div id="displayStudentsTable">
-                            <h:dataTable value="#{studentAssignmentController.assignmentStudents}" var="sId"
-                                         styleClass="table">
+                    <h:form id="displayStudentsTable">
+                        <h:panelGrid columns="2">
+                            <div id="displayStudentsTable">
+                                <h:dataTable value="#{studentAssignmentController.assignmentStudents}" var="sId"
+                                             styleClass="table">
 
-                                <h:column>
-                                    <f:facet name="header">Student First Name</f:facet>
-                                    <h:outputText id="stf" value="#{sId.studentFname}" />
-                                </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Student First Name</f:facet>
+                                        <h:outputText id="stf" value="#{sId.studentFname}" />
+                                    </h:column>
 
-                                <h:column>
-                                    <f:facet name="header">Student Last Name</f:facet>
-                                    <h:outputText id="stl" value="#{sId.studentLname}" />
-                                </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Student Last Name</f:facet>
+                                        <h:outputText id="stl" value="#{sId.studentLname}" />
+                                    </h:column>
 
-                            </h:dataTable>
+                                </h:dataTable>
 
-                        </div>
-                    </h:panelGrid>
+                            </div>
+                            <h:commandLink value="Return to Assignment" action="#{studentAssignmentController.returnToAssignment}" />
+
+                        </h:panelGrid>
+                    </h:form>
                 </div>
 
             </div>
