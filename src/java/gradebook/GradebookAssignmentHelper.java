@@ -55,4 +55,31 @@ public class GradebookAssignmentHelper {
         return gradebookAssignmentList;
 
     }
+
+    public int insertStudentToGradebook(int sid, int gid) {
+        int result = 0;
+
+        String sql = "INSERT INTO Gradebook_Assignment(STUDENT_ID, GRADEBOOK_ID) "
+                + "VALUES (:sid, :gid)";
+
+        try {
+
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(GradebookStudent.class);
+            query.setParameter("sid", sid);
+            query.setParameter("gid", gid);
+
+            result = query.executeUpdate();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+
+    }
 }

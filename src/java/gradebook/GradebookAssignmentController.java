@@ -51,6 +51,7 @@ public class GradebookAssignmentController implements Serializable {
     public GradebookAssignmentController() {
         studentHelper = new StudentHelper();
         gradebookAssignmentHelper = new GradebookAssignmentHelper();
+        instructorAssignments = gradebookAssignmentHelper.getAssignmentsFromGradebook(gradebookId);
     }
 
     public DataModel getAssignments() {
@@ -123,6 +124,10 @@ public class GradebookAssignmentController implements Serializable {
 
     public void setInstructorAssignments(List<Assignment> instructorAssignments) {
         this.instructorAssignments = instructorAssignments;
+    }
+
+    public String viewStudents() {
+        return "viewStudents";
     }
 
 }

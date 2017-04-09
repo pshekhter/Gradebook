@@ -10,7 +10,10 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 
 /**
  *
@@ -27,6 +30,7 @@ public class StudentAssignmentController implements Serializable {
     DataModel assignmentValues;
 
     StudentAssignmentHelper helper;
+    StudentHelper sh;
 
     int studentID;
     int student;
@@ -35,13 +39,26 @@ public class StudentAssignmentController implements Serializable {
     String studentLName;
     String assignmentName;
     String response;
+    
+    boolean readyToSubmit;
+
+    // String for addStudentAssignment form
+    String studentName;
+
+    List<Student> assignmentStudents;
 
     public StudentAssignmentController() {
-
         helper = new StudentAssignmentHelper();
+        sh = new StudentHelper();
+        assignmentStudents = helper.getStudentsFromAssignment(assignment);
+        readyToSubmit = false;
     }
 
     public DataModel getStudentValues() {
+        if (studentValues == null) {
+            studentValues = new ListDataModel(assignmentStudents);
+        }
+
         return studentValues;
     }
 
@@ -98,7 +115,7 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public String getAssignmentName() {
-        return assignmentName;
+        return helper.getAssignmentAtID(assignment).get(0).getAssignmentName();
     }
 
     public void setAssignmentName(String assignmentName) {
@@ -107,12 +124,91 @@ public class StudentAssignmentController implements Serializable {
 
     public String getResponse() {
         
-        return response;
+        if ((student != 0) && (readyToSubmit)) {
+            
+            if (helper.insertStudentToAssignment(student, assignment) == 1) {
+                studentName = null;
+                student = 0;
+                response = "Student added to assignment";
+                return response;
+            } else {
+                studentName = null;
+                student = 0;
+                response = "Student not added to response.";
+                return response;
+            }
+        } else {
+            response = " ";
+            return response;
+        }
+
     }
 
     public void setResponse(String response) {
         this.response = response;
     }
+
+    public List<Student> getAssignmentStudents() {
+        if (helper.getStudentsFromAssignment(assignment) != null) {
+            return helper.getStudentsFromAssignment(assignment);
+        } else {
+            return null;
+        }
+
+    }
+
+    public void setAssignmentStudents(List<Student> assignmentStudents) {
+        this.assignmentStudents = assignmentStudents;
+    }
+
+    public void studentIdValueChanged(ValueChangeEvent e) {
+        String newVal = e.getNewValue().toString();
+        try {
+            this.student = Integer.parseInt(newVal);
+            Student stu = assignmentStudents.get(0);
+            for (int studentCounter = 0; studentCounter < assignmentStudents.size(); studentCounter++) {
+                if (assignmentStudents.get(studentCounter).getStudentId() == student) {
+                    stu = assignmentStudents.get(studentCounter);
+                    studentName = stu.getStudentFname() + stu.getStudentLname();
+                    readyToSubmit = false;
+                }
+            }
+
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+        }
+
+    }
+
+    public String assignToStudent() {
+        return "assignToStudent";
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+    
+    public String submitAssignToStudent() {
+        readyToSubmit = true;
+        return "assignToStudent";
+    }
+    
+    public String returnToAssignment() {
+        return "viewAssignments";
+    }
+
+    public boolean isReadyToSubmit() {
+        return readyToSubmit;
+    }
+
+    public void setReadyToSubmit(boolean readyToSubmit) {
+        this.readyToSubmit = readyToSubmit;
+    }
     
     
+
 }
