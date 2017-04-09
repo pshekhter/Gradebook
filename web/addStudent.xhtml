@@ -23,12 +23,12 @@
                 
                 
                 <h:outputText value="Student First Name: "/>
-                <h:inputText id="First" value="#{gradebookStudentControllerNew.firstName}" size="50" maxlength="255"
+                <h:inputText id="First" value="#{gradebookStudentController.firstName}" size="50" maxlength="255"
                              required="true" label="First Name"/>
                 <h:message for="First" style="color: red; font-size: 0.7em" />
                 
                 <h:outputText value="Student Last Name: "/>
-                <h:inputText id="Last" value="#{gradebookStudentControllerNew.lastName}" size="50" maxlength="255"
+                <h:inputText id="Last" value="#{gradebookStudentController.lastName}" size="50" maxlength="255"
                              required="true" label="Last Name" />
                 <h:message for="Last" style="color: red; font-size: 0.7em" />
                
@@ -36,7 +36,7 @@
             <h:commandButton value="Clear" type="reset" />
             
             
-            <h:outputText escape="false" value="#{gradebookStudentControllerNew.response}" />
+            <h:outputText escape="false" value="#{gradebookStudentController.response}" />
             
                 </h:panelGrid>
             </h:form> 
