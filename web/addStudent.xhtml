@@ -12,23 +12,23 @@
             <h:form id="createStudentForm">
                 <h:panelGrid columns="1">
                     
-                <h:outputText id="modify_form_instructor" value="Instructor" />
+                <!--<h:outputText id="modify_form_instructor" value="Instructor" />
                         <h:inputText id="modify_form_input_instructor" value="#{gradebookController.selectedEmail}" disabled="true" />    
                     
-                <!--<h:outputText value="Gradebook" />
-                <h:inputText value="#{gradebookStudentController.gradebookID}" disabled="true" />-->
+                <h:outputText value="Gradebook" />
+                <h:inputText value="#{gradebookStudentControllerNew.gradebookID}" disabled="true" />-->
                 
                 
                 <h:outputText value="Create Student"/>
                 
                 
                 <h:outputText value="Student First Name: "/>
-                <h:inputText id="First" value="#{gradebookStudentController.firstName}" size="50" maxlength="255"
+                <h:inputText id="First" value="#{gradebookStudentControllerNew.firstName}" size="50" maxlength="255"
                              required="true" label="First Name"/>
                 <h:message for="First" style="color: red; font-size: 0.7em" />
                 
                 <h:outputText value="Student Last Name: "/>
-                <h:inputText id="Last" value="#{gradebookStudentController.lastName}" size="50" maxlength="255"
+                <h:inputText id="Last" value="#{gradebookStudentControllerNew.lastName}" size="50" maxlength="255"
                              required="true" label="Last Name" />
                 <h:message for="Last" style="color: red; font-size: 0.7em" />
                
@@ -36,7 +36,7 @@
             <h:commandButton value="Clear" type="reset" />
             
             
-            <h:outputText escape="false" value="#{gradebookStudentController.response}" />
+            <h:outputText escape="false" value="#{gradebookStudentControllerNew.response}" />
             
                 </h:panelGrid>
             </h:form> 

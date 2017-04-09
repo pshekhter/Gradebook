@@ -111,10 +111,9 @@ public class StudentHelper {
         
         Student student;
         int studentID = 0;
-
-        //String sql = "SELECT * FROM STUDENT WHERE STUDENT_"
         
-        String sql = "SELECT STUDENT_ID FROM STUDENT WHERE student_FName = :fname AND student_LName = :lname "
+        
+        String sql = "SELECT * FROM STUDENT WHERE student_FName = :fname AND student_LName = :lname "
                 + "ORDER BY STUDENT_ID DESC LIMIT 1";
         
         try {
@@ -164,10 +163,6 @@ public class StudentHelper {
             e.printStackTrace();
         }
 
-        //New Helper method to get student ID that was just inserted
-        //studentID = getStudentID();
-        //Call method that inserts row into gradebook student
-        //gradebookStudentHelper.insertStudentToGradebook(studentID, 4383);
         return result;
     }
 

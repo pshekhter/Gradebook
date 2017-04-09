@@ -51,7 +51,7 @@ public class GradebookStudentHelper {
         int result = 0;
 
         String sql = "INSERT INTO Gradebook_Student(STUDENT_ID, GRADEBOOK_ID) "
-                + "VALUES (:sid, :gid)";
+                + "VALUES (:student_ID, :gradebook_ID)";
 
         try {
 
@@ -61,8 +61,8 @@ public class GradebookStudentHelper {
 
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(GradebookStudent.class);
-            query.setParameter("sid", studentID);
-            query.setParameter("gid", gradebookID);
+            query.setParameter("student_ID", studentID);
+            query.setParameter("gradebook_ID", gradebookID);
 
             result = query.executeUpdate();
 

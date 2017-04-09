@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package gradebook;
 
 import javax.inject.Named;
@@ -20,63 +25,43 @@ import javax.faces.event.ValueChangeEvent;
 
 /**
  *
- * @author Pavel Shekhter
+ * @author allis
  */
-@Named(value = "gradebookStudentController")
+@Named(value = "gradebookStudentControllerNew")
 @SessionScoped
-public class GradebookStudentController implements Serializable {
+public class GradebookStudentControllerNew implements Serializable {
 
-    // Mapping values
-    DataModel semesterValues;
-    DataModel studentValues;
-    DataModel courseValues;
-
+    
     // Helpers
     GradebookHelper gradebookHelper;
     StudentHelper studentHelper;
-    SemesterHelper semesterHelper;
-    CourseHelper courseHelper;
     InstructorHelper instructorHelper;
     GradebookStudentHelper gradebookStudentHelper;
 
     // Lists
     List<Gradebook> gradebooks;
     List<Student> students;
-    List<Semester> semesters;
-    List<Course> courses;
 
-    // Components
-    String gradebookName;
-
+    // Components]
     int instructorID;
-    String semesterName;
-    String courseName;
     int gradebookID;
-    String studentName;
     int studentID;
     String firstName;
     String lastName;
-    int courseID;
     String response;
     String selectedEmail = "";
-
-    String email;
-
-    List<Gradebook> matchingGradebooks;
-
+ 
+    
     /**
-     * Creates a new instance of GradebookStudentController
+     * Creates a new instance of GradebookStudentControllerNew
      */
-    public GradebookStudentController() {
+    public GradebookStudentControllerNew() {
+        
         instructorHelper = new InstructorHelper();
         gradebookHelper = new GradebookHelper();
         studentHelper = new StudentHelper();
-        semesterHelper = new SemesterHelper();
-        courseHelper = new CourseHelper();
         instructorID = 0;
         students = studentHelper.getStudents();
-        semesters = semesterHelper.getSemesters();
-        courses = courseHelper.getCourses();
         /**
          * UIViewRoot root = FacesContext.getCurrentInstance().getViewRoot();
          * UIComponent selectedEmailComponent = findComponent(root,
@@ -92,10 +77,10 @@ public class GradebookStudentController implements Serializable {
          */
 
         gradebooks = gradebookHelper.getGradebooks(instructorID);
-
         response = " ";
+        
     }
-
+    
     /**
      * Returns component containing the id string. Credit goes to
      * http://illegalargumentexception.blogspot.ca/2009/02/jsf-working-with-component-ids.html
@@ -120,14 +105,6 @@ public class GradebookStudentController implements Serializable {
         return null;
     }
 
-    public String getGradebook() {
-        return gradebookName;
-    }
-
-    public void setGradebook(String gradebookName) {
-        this.gradebookName = gradebookName;
-    }
-
     public int getGradebookID() {
         return gradebookID;
     }
@@ -135,15 +112,7 @@ public class GradebookStudentController implements Serializable {
     public void setGradebookID(int gradebookID) {
         this.gradebookID = gradebookID;
     }
-
-    public String getStudent() {
-        return studentName;
-    }
-
-    public void setStudent(String studentName) {
-        this.studentName = studentName;
-    }
-
+    
     public int getStudentID() {
         return studentID;
     }
@@ -160,8 +129,7 @@ public class GradebookStudentController implements Serializable {
             for (int gradebookCounter = 0; gradebookCounter < gradebooks.size(); gradebookCounter++) {
                 if (gradebooks.get(gradebookCounter).getGradebookId() == gradebookID) {
                     gradebook = gradebooks.get(gradebookCounter);
-                    gradebookName = gradebooks.get(gradebookCounter).getCourse().getCourseName() + " " + gradebooks.get(gradebookCounter).getSemester().getSemesterName();
-                }
+                    }
             }
 
         } catch (NumberFormatException nfe) {
@@ -178,8 +146,7 @@ public class GradebookStudentController implements Serializable {
             for (int studentCounter = 0; studentCounter < students.size(); studentCounter++) {
                 if (students.get(studentCounter).getStudentId() == studentID) {
                     student = students.get(studentCounter);
-                    studentName = students.get(studentCounter).getStudentFname() + " " + students.get(studentCounter).getStudentLname();
-                }
+                   }
             }
 
         } catch (NumberFormatException nfe) {
@@ -188,30 +155,7 @@ public class GradebookStudentController implements Serializable {
 
     }
 
-    public DataModel getSemesterValues() {
-        if (semesterValues == null) {
-            semesterValues = new ListDataModel(gradebookHelper.getSemesters());
-        }
-
-        return semesterValues;
-    }
-
-    public void setSemesterValues(DataModel semesterValues) {
-        this.semesterValues = semesterValues;
-    }
-
-    public DataModel getStudentValues() {
-        if (studentValues == null) {
-            studentValues = new ListDataModel(studentHelper.getStudents());
-        }
-
-        return studentValues;
-    }
-
-    public void setStudentValues(DataModel studentValues) {
-        this.studentValues = studentValues;
-    }
-
+   
     public List<Gradebook> getGradebooks() {
         return gradebooks;
     }
@@ -226,76 +170,6 @@ public class GradebookStudentController implements Serializable {
 
     public void setStudents(List<Student> students) {
         this.students = students;
-    }
-
-    public String getGradebookName() {
-        return gradebookName;
-    }
-
-    public void setGradebookName(String gradebookName) {
-        this.gradebookName = gradebookName;
-    }
-
-    public String getStudentName() {
-        return studentName;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public DataModel getCourseValues() {
-        if (courseValues == null) {
-            courseValues = new ListDataModel(gradebookHelper.getCourses());
-        }
-
-        return courseValues;
-    }
-
-    public void setCourseValues(DataModel courseValues) {
-        this.courseValues = courseValues;
-    }
-
-    public int getCourseID() {
-        return courseID;
-    }
-
-    public void setCourseID(int courseID) {
-        this.courseID = courseID;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public void courseNameValueChangedListener(ValueChangeEvent e) {
-        String newVal = e.getNewValue().toString();
-        try {
-            this.courseID = Integer.parseInt(newVal);
-            Course course = courses.get(0);
-            for (int courseCounter = 0; courseCounter < courses.size(); courseCounter++) {
-                if (courses.get(courseCounter).getCourseId() == courseID) {
-                    course = courses.get(courseCounter);
-                    courseName = course.getCourseName();
-                }
-            }
-
-        } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
-        }
-    }
-
-    public String modifyBook() {
-
-        if ((courseName != null) && (semesterName != null) && (email != null)) {
-
-        }
-
-        return "modifyBook";
     }
 
     public String getResponse() {
@@ -336,33 +210,6 @@ public class GradebookStudentController implements Serializable {
         this.response = response;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getInstructorID() {
-        if (email != null) {
-            instructorID = instructorHelper.getInstructor(email).getInstructorId();
-        }
-        return instructorID;
-    }
-
-    public void setInstructorID(int instructorID) {
-        this.instructorID = instructorID;
-    }
-
-    public String getSelectedEmail() {
-        return selectedEmail;
-    }
-
-    public void setSelectedEmail(String selectedEmail) {
-        this.selectedEmail = selectedEmail;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -378,7 +225,8 @@ public class GradebookStudentController implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
+    
+    
     
     
 }
