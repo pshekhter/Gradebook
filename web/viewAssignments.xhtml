@@ -40,9 +40,11 @@
                                 <h:column>
                                     <f:facet name="header">Add Students</f:facet>
                                     <h:commandLink action="#{studentAssignmentController.assignToStudent}" value="Assign To Student">
+                                        <f:setPropertyActionListener target="#{studentAssignmentController.assignmentName}" value="#{aId.assignmentName}" />
                                         <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{aId.assignmentId}" />
-                                        <f:setPropertyActionListener target="#{studentAssignmentController.assignmentStudents}" value="#{gradebookStudentController.students}" />
-                                        <f:setPropertyActionListener target="#{studentAssignmentController.studentValues}" value="#{gradebookStudentController.studentValues}" />
+                                        <f:setPropertyActionListener target="#{studentAssignmentController.gradebookStudents}" value="#{gradebookStudentController.students}" />
+                                        <f:setPropertyActionListener target="#{studentAssignmentController.studentSubmissionValues}" value="#{gradebookStudentController.studentValues}" />
+                                        <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{gradebookStudentController.gradebookID}" />
                                     </h:commandLink>
                                 </h:column>
 

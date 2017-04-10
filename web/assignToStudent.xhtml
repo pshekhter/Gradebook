@@ -20,7 +20,7 @@
                     <h:selectOneMenu value="#{studentAssignmentController.studentID}"
                                      valueChangeListener="#{studentAssignmentController.studentIdValueChanged}"
                                      onchange="submit()">
-                        <f:selectItems value="#{studentAssignmentController.studentValues}" var="s"
+                        <f:selectItems value="#{studentAssignmentController.studentSubmissionValues}" var="s"
                                        itemLabel="#{s.studentFname} #{s.studentLname}" itemValue="#{s.studentId}" />
                     </h:selectOneMenu>
 

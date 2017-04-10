@@ -60,7 +60,7 @@ public class GradebookAssignmentHelper {
         int result = 0;
 
         String sql = "INSERT INTO Gradebook_Assignment(ASSIGNMENT_ID, GRADEBOOK_ID) "
-                + "VALUES (:sid, :gid)";
+                + "VALUES (:aid, :gid)";
 
         try {
 

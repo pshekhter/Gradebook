@@ -78,7 +78,7 @@ public class StudentAssignmentHelper {
 
     public List<Student> getStudentsFromAssignment(int aid) {
         // Create the list
-        List<Student> studentAssignmentList = null;
+        List<Student> studentList = null;
 
         String sql = "SELECT * FROM student "
                 + "INNER JOIN student_assignment ON student.student_id = student_assignment.student_id "
@@ -100,13 +100,13 @@ public class StudentAssignmentHelper {
             query.setParameter("aid", aid);
 
             // Execute query
-            studentAssignmentList = (List<Student>) query.list();
+            studentList = (List<Student>) query.list();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // Return gradebooks
-        return studentAssignmentList;
+        return studentList;
 
     }
 
@@ -171,7 +171,7 @@ public class StudentAssignmentHelper {
 
     }
 
-    public List<Assignment> getAssignmentAtID(int aid) {
+    public Assignment getAssignmentAtID(int aid) {
 
         List<Assignment> assignmentList = null;
 
@@ -195,10 +195,44 @@ public class StudentAssignmentHelper {
         }
 
         if (assignmentList.size() != 0) {
-            return assignmentList;
+            return assignmentList.get(0);
         } else {
             return null;
         }
+    }
+
+    public List<Student> getStudentsFromGradebook(int gid) {
+        // Create the list
+        List<Student> studentList = null;
+
+        String sql = "SELECT * FROM student "
+                + "INNER JOIN gradebook_student ON student.student_id = gradebook_student.student_id "
+                + "WHERE gradebook_student.gradebook_id = :gid";
+
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(Student.class);
+
+            // Binding parameters
+            query.setParameter("gid", gid);
+
+            // Execute query
+            studentList = (List<Student>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return gradebooks
+        return studentList;
+
     }
 
 }

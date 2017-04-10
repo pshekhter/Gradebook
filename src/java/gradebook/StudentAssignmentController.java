@@ -28,6 +28,7 @@ public class StudentAssignmentController implements Serializable {
      */
     DataModel studentValues;
     DataModel assignmentValues;
+    DataModel studentSubmissionValues;
 
     StudentAssignmentHelper helper;
     StudentHelper sh;
@@ -39,13 +40,16 @@ public class StudentAssignmentController implements Serializable {
     String studentLName;
     String assignmentName;
     String response;
-    
+
+    int gradebookId;
+
     boolean readyToSubmit;
 
     // String for addStudentAssignment form
     String studentName;
 
     List<Student> assignmentStudents;
+    List<Student> gradebookStudents;
 
     public StudentAssignmentController() {
         helper = new StudentAssignmentHelper();
@@ -115,17 +119,22 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public String getAssignmentName() {
-        return helper.getAssignmentAtID(assignment).get(0).getAssignmentName();
+        if (helper.getAssignmentAtID(assignment) != null) {
+            return helper.getAssignmentAtID(assignment).getAssignmentName();
+        }
+        return "";
     }
+
+    
 
     public void setAssignmentName(String assignmentName) {
         this.assignmentName = assignmentName;
     }
 
     public String getResponse() {
-        
+
         if ((student != 0) && (readyToSubmit)) {
-            
+
             if (helper.insertStudentToAssignment(student, assignment) == 1) {
                 studentName = null;
                 student = 0;
@@ -165,10 +174,10 @@ public class StudentAssignmentController implements Serializable {
         String newVal = e.getNewValue().toString();
         try {
             this.student = Integer.parseInt(newVal);
-            Student stu = assignmentStudents.get(0);
-            for (int studentCounter = 0; studentCounter < assignmentStudents.size(); studentCounter++) {
-                if (assignmentStudents.get(studentCounter).getStudentId() == student) {
-                    stu = assignmentStudents.get(studentCounter);
+            Student stu = gradebookStudents.get(0);
+            for (int studentCounter = 0; studentCounter < gradebookStudents.size(); studentCounter++) {
+                if (gradebookStudents.get(studentCounter).getStudentId() == student) {
+                    stu = gradebookStudents.get(studentCounter);
                     studentName = stu.getStudentFname() + stu.getStudentLname();
                     readyToSubmit = false;
                 }
@@ -191,12 +200,12 @@ public class StudentAssignmentController implements Serializable {
     public void setStudentName(String studentName) {
         this.studentName = studentName;
     }
-    
+
     public String submitAssignToStudent() {
         readyToSubmit = true;
         return "assignToStudent";
     }
-    
+
     public String returnToAssignment() {
         return "viewAssignments";
     }
@@ -208,7 +217,37 @@ public class StudentAssignmentController implements Serializable {
     public void setReadyToSubmit(boolean readyToSubmit) {
         this.readyToSubmit = readyToSubmit;
     }
-    
-    
+
+    public DataModel getStudentSubmissionValues() {
+        if (studentSubmissionValues == null) {
+            studentSubmissionValues = new ListDataModel(gradebookStudents);
+        }
+
+        return studentSubmissionValues;
+    }
+
+    public void setStudentSubmissionValues(DataModel studentSubmissionValues) {
+        this.studentSubmissionValues = studentSubmissionValues;
+    }
+
+    public List<Student> getGradebookStudents() {
+        if ((helper.getStudentsFromGradebook(gradebookId)) != null) {
+            return helper.getStudentsFromGradebook(gradebookId);
+        } else {
+            return null;
+        }
+    }
+
+    public void setGradebookStudents(List<Student> gradebookStudents) {
+        this.gradebookStudents = gradebookStudents;
+    }
+
+    public int getGradebookId() {
+        return gradebookId;
+    }
+
+    public void setGradebookId(int gradebookId) {
+        this.gradebookId = gradebookId;
+    }
 
 }

@@ -58,6 +58,15 @@
                             </h:column>
                             
                             <h:column>
+                                <f:facet name="header">Add Assignments</f:facet>
+                                <h:commandLink action="#{gradebookController.addAssignments}"
+                                               value="Add Assignments">
+                                    <f:setPropertyActionListener target="#{gradebookAssignmentController.gradebookId}"
+                                                                 value="#{gId.gradebookId}" />
+                                </h:commandLink>
+                            </h:column>
+                            
+                            <h:column>
                                 <f:facet name="header">View Assignments</f:facet>
                                 <h:commandLink action="#{gradebookAssignmentController.viewAssignments}"
                                                value="View Assignments from Gradebook #{gId.gradebookId}">

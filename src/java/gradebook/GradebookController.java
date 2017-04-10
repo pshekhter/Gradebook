@@ -412,5 +412,9 @@ public class GradebookController implements Serializable {
     public String addStudents() {
         return "addStudent";
     }
+    
+    public String addAssignments() {
+        return "createAssignment";
+    }
 
 }

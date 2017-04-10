@@ -106,7 +106,7 @@ public class GradebookAssignmentController implements Serializable {
             if (assignmentHelper.insertAssignment(assignmentName) == 1) {
                 
                 assignmentId = assignmentHelper.getAssignmentID(assignmentName).getAssignmentId();
-                gradebookId = 4419;
+                // gradebookId = 4419;
 
                 if (gradebookAssignmentHelper.insertAssignmentToGradebook(assignmentId, gradebookId) == 1) {
                     assignmentName = null;
