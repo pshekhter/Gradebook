@@ -73,6 +73,62 @@ public class AssignmentHelper {
         
         return assignmentList.size();
     }
+    
+    public int getAssignmentID() {
+        int assignmentID = 0;
+
+        String sql = "select * from assignment where assignment_id = :id ORDER BY ASSIGNMENT_ID DESC LIMIT 1";
+
+        try {
+
+            //3 lines of code are always consistant 
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            SQLQuery q = session.createSQLQuery(sql);
+
+            q.addEntity(Student.class);
+
+            q.setParameter("id", assignmentID);
+
+            assignmentID = (int) q.uniqueResult();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return assignmentID;
+    }
+    
+    public Assignment getAssignmentID(String assignmentName) {
+
+        Assignment assignment = null;
+        int assignmentID = 0;
+        
+        
+        String sql = "SELECT * FROM ASSIGNMENT WHERE ASSIGNMENT_NAME = :aName  "
+                + "ORDER BY ASSIGNMENT_ID DESC LIMIT 1";
+
+        try {
+
+            //3 lines of code are always consistant 
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            SQLQuery q = session.createSQLQuery(sql);
+
+            q.addEntity(Student.class);
+
+            q.setParameter("aName", assignmentName);
+
+            assignment = (Assignment) q.uniqueResult();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return assignment;
+    }
 
     public int insertAssignment(String assignmentName) {
         int result = 0;

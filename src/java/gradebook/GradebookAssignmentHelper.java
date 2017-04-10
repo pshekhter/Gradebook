@@ -56,10 +56,10 @@ public class GradebookAssignmentHelper {
 
     }
 
-    public int insertStudentToGradebook(int sid, int gid) {
+    public int insertAssignmentToGradebook(int aid, int gid) {
         int result = 0;
 
-        String sql = "INSERT INTO Gradebook_Assignment(STUDENT_ID, GRADEBOOK_ID) "
+        String sql = "INSERT INTO Gradebook_Assignment(ASSIGNMENT_ID, GRADEBOOK_ID) "
                 + "VALUES (:sid, :gid)";
 
         try {
@@ -70,7 +70,7 @@ public class GradebookAssignmentHelper {
 
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(GradebookStudent.class);
-            query.setParameter("sid", sid);
+            query.setParameter("aid", aid);
             query.setParameter("gid", gid);
 
             result = query.executeUpdate();

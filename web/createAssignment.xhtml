@@ -13,18 +13,10 @@
 
         <h:form id="createAssignmentForm">
 
-        <h:outputText value="Gradebook:" />
-
-            
-        <h:outputText value="Semester: 637" />
         
-        
-        <h:outputText value="Course: 300" />
-        
-        
-            <!--<h:panelGrid columns="2">
+            <h:panelGrid columns="2">
                 <h:outputText value="Assignment Name: "/>
-                <h:inputText id="Name" value="#{assignmentController.assignmentName}" size="50" maxlength="255"
+                <h:inputText id="Name" value="#{gradebookAssignmentController.assignmentName}" size="50" maxlength="255"
                              required="true" label="Name" />
                 <h:message for="Name" style="color: red; font-size: 0.7em" /> 
               
@@ -33,24 +25,10 @@
         <h:commandButton id="submit" value="Submit" action="createAssignment" />
             <h:commandButton value="Clear" type="reset" />
         
-        <h:outputText escape="false" value="#{assignmentController.response}" />
+        <h:outputText escape="false" value="#{gradebookAssignmentController.response}" />
          </h:form>
     </ui:define>
 
-
-            <h:form id="createAssignmentForm">
-                <h:panelGrid columns="3">
-                    <h:outputText value="Assignment" />
-                    <h:selectOneMenu value="#{assignmentController.assignmentName}">
-                        <f:selectItems value="#{assignmentController.assignmentValues}" var="a"
-                                       itemLabel="#{a.assignmentName}" itemValue="#{a.assignmentId}" />
-                    </h:selectOneMenu>
-                    
-                    
-                </h:panelGrid>
-                <h:commandButton id="submit" value="Submit" action="createAssignment" />
-                <h:commandButton value="Clear" type="reset" />-->
-            </h:form>
 
     </ui:composition>
 </html>

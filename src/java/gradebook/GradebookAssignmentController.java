@@ -23,6 +23,7 @@ public class GradebookAssignmentController implements Serializable {
 
     // Helpers
     StudentHelper studentHelper;
+    AssignmentHelper assignmentHelper;
     GradebookAssignmentHelper gradebookAssignmentHelper;
 
     // Lists
@@ -34,6 +35,9 @@ public class GradebookAssignmentController implements Serializable {
 
     // Stores assignmentId for passing
     int assignmentId;
+    
+    // Store the assignment's name
+    String assignmentName;
 
     // Stores response
     String response;
@@ -50,6 +54,7 @@ public class GradebookAssignmentController implements Serializable {
      */
     public GradebookAssignmentController() {
         studentHelper = new StudentHelper();
+        assignmentHelper = new AssignmentHelper();
         gradebookAssignmentHelper = new GradebookAssignmentHelper();
         instructorAssignments = gradebookAssignmentHelper.getAssignmentsFromGradebook(gradebookId);
     }
@@ -95,7 +100,35 @@ public class GradebookAssignmentController implements Serializable {
     }
 
     public String getResponse() {
-        return response;
+        
+        if (assignmentName != null) {
+
+            if (assignmentHelper.insertAssignment(assignmentName) == 1) {
+                
+                assignmentId = assignmentHelper.getAssignmentID(assignmentName).getAssignmentId();
+                gradebookId = 4419;
+
+                if (gradebookAssignmentHelper.insertAssignmentToGradebook(assignmentId, gradebookId) == 1) {
+                    assignmentName = null;
+                    response = "Assignment Added.";
+                    return response;
+
+                } else {
+                    assignmentName = null;
+                    response = "Assignment Not Added.";
+                    return response;
+                }
+
+            } else {
+                response = "Insert assignment failed!";
+                assignmentName = null;
+                return response;
+            }
+
+        } else {
+            response = " ";
+            return response;
+        }
     }
 
     public void setResponse(String response) {
@@ -129,5 +162,15 @@ public class GradebookAssignmentController implements Serializable {
     public String viewStudents() {
         return "viewStudents";
     }
+
+    public String getAssignmentName() {
+        return assignmentName;
+    }
+
+    public void setAssignmentName(String assignmentName) {
+        this.assignmentName = assignmentName;
+    }
+    
+    
 
 }
