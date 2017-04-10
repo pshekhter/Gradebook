@@ -107,15 +107,14 @@ public class StudentHelper {
         return studentID;
     }
 
-    public int getStudentID(String fName, String lName) {
-        
-        Student student;
-        int studentID = 0;
-        
-        
-        String sql = "SELECT * FROM STUDENT WHERE student_FName = :fname AND student_LName = :lname "
+    public Student getStudentID(String fName, String lName) {
+
+        Student student = null;
+        // int studentID = 0;
+
+        String sql = "SELECT * FROM STUDENT WHERE STUDENT_FNAME = :fname AND STUDENT_LNAME = :lname "
                 + "ORDER BY STUDENT_ID DESC LIMIT 1";
-        
+
         try {
 
             //3 lines of code are always consistant 
@@ -125,38 +124,45 @@ public class StudentHelper {
 
             SQLQuery q = session.createSQLQuery(sql);
 
-            q.addEntity(Student.class);    
-            
+            q.addEntity(Student.class);
+
             q.setParameter("fname", fName);
             q.setParameter("lname", lName);
-            
+
             student = (Student) q.uniqueResult();
-            studentID = student.getStudentId();
-            
+            // studentID = student.getStudentId();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return studentID;
+        return student;
     }
 
-    public int insertStudent(String studentFName, String studentLName) {
+    public int insertStudent(String fname, String lname) {
+
+        // Initialize result value
         int result = 0;
 
-        String sql = "insert into student(student_FName, student_LName)"
-                + "values (:studentFName, :studentLName)";
+        // Insert student
+        String sql = "INSERT INTO Student "
+                + "(student_fname, student_lname) "
+                + "VALUES (:fname, :lname)";
 
         try {
-
+            // Initialize transaction if none initialized
             if (!this.session.getTransaction().isActive()) {
                 session.beginTransaction();
             }
 
-            SQLQuery q = session.createSQLQuery(sql);
-            q.addEntity(Student.class);
-            q.setParameter("studentFName", studentFName);
-            q.setParameter("studentLName", studentLName);
+            // Create SQL query
+            SQLQuery query = session.createSQLQuery(sql);
 
-            result = q.executeUpdate();
+            query.addEntity(Student.class);
+
+            query.setParameter("fname", fname);
+            query.setParameter("lname", lname);
+
+            result = query.executeUpdate();
 
             session.getTransaction().commit();
         } catch (Exception e) {

@@ -409,6 +409,8 @@ public class GradebookController implements Serializable {
         this.instructorEmail = instructorEmail;
     }
     
-
+    public String addStudents() {
+        return "addStudent";
+    }
 
 }

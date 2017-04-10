@@ -48,21 +48,27 @@ public class GradebookStudentHelper {
 
     // Insert student into gradebook
     public int insertStudentToGradebook(int studentID, int gradebookID) {
+
+        // Initialize result value
         int result = 0;
 
-        String sql = "INSERT INTO Gradebook_Student(STUDENT_ID, GRADEBOOK_ID) "
-                + "VALUES (:student_ID, :gradebook_ID)";
+        // Insert student
+        String sql = "INSERT INTO Gradebook_Student (STUDENT_ID, GRADEBOOK_ID) "
+                + "VALUES (:student_id, :gradebook_id)";
 
         try {
-
+            // Initialize transaction if none initialized
             if (!this.session.getTransaction().isActive()) {
                 session.beginTransaction();
             }
 
+            // Create SQL query
             SQLQuery query = session.createSQLQuery(sql);
+
             query.addEntity(GradebookStudent.class);
-            query.setParameter("student_ID", studentID);
-            query.setParameter("gradebook_ID", gradebookID);
+
+            query.setParameter("student_id", studentID);
+            query.setParameter("gradebook_id", gradebookID);
 
             result = query.executeUpdate();
 
@@ -70,6 +76,7 @@ public class GradebookStudentHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return result;
     }
 

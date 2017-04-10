@@ -56,15 +56,24 @@
                                 <f:facet name="header">Course</f:facet>
                                     #{gId.course.courseName}
                             </h:column>
-
+                            
                             <h:column>
                                 <f:facet name="header">View Assignments</f:facet>
                                 <h:commandLink action="#{gradebookAssignmentController.viewAssignments}"
-                                               value="View #{gId.gradebookId} Assignments">
+                                               value="View Assignments from Gradebook #{gId.gradebookId}">
                                     <f:setPropertyActionListener target="#{gradebookAssignmentController.gradebookId}"
                                                                  value="#{gId.gradebookId}" />
                                 </h:commandLink>
 
+                            </h:column>
+                            
+                            <h:column>
+                                <f:facet name="header">Add Student</f:facet>
+                                <h:commandLink action="#{gradebookController.addStudents}"
+                                               value="Add Students">
+                                    <f:setPropertyActionListener target="#{gradebookStudentController.gradebookID}"
+                                                                 value="#{gId.gradebookId}" />
+                                </h:commandLink>
                             </h:column>
 
                         </h:dataTable>
