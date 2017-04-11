@@ -88,7 +88,7 @@ public class AssignmentHelper {
 
             SQLQuery q = session.createSQLQuery(sql);
 
-            q.addEntity(Student.class);
+            q.addEntity(Assignment.class);
 
             q.setParameter("id", assignmentID);
 
