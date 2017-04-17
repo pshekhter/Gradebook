@@ -76,13 +76,14 @@ public class StudentAssignmentHelper {
         return assignmentList;
     }
 
-    public List<Student> getStudentsFromAssignment(int aid) {
+    public List<Student> getStudentsFromAssignment(int aid, int gaid) {
         // Create the list
         List<Student> studentList = null;
 
         String sql = "SELECT * FROM student "
                 + "INNER JOIN student_assignment ON student.student_id = student_assignment.student_id "
-                + "WHERE student_assignment.assignment_id = :aid";
+                + "INNER JOIN gradebook_assignment ON student_assignment.gradebook_assignment_id = :gaid "
+                + "WHERE gradebook_assignment.assignment_id = :aid";
 
         try {
             // Begin new transaction if we have an inactive one
@@ -98,6 +99,7 @@ public class StudentAssignmentHelper {
 
             // Binding parameters
             query.setParameter("aid", aid);
+            query.setParameter("gaid", gaid);
 
             // Execute query
             studentList = (List<Student>) query.list();
@@ -110,11 +112,11 @@ public class StudentAssignmentHelper {
 
     }
 
-    public int insertStudentToAssignment(int sid, int aid) {
+    public int insertStudentToAssignment(int sid, int gaid) {
         int result = 0;
 
-        String sql = "INSERT INTO Student_Assignment(STUDENT_ID, ASSIGNMENT_ID) "
-                + "VALUES (:sid, :aid)";
+        String sql = "INSERT INTO Student_Assignment (STUDENT_ID, GRADEBOOK_ASSIGNMENT_ID) "
+                + "VALUES (:sid, :gaid)";
 
         try {
 
@@ -125,7 +127,7 @@ public class StudentAssignmentHelper {
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(StudentAssignment.class);
             query.setParameter("sid", sid);
-            query.setParameter("aid", aid);
+            query.setParameter("gaid", gaid);
 
             result = query.executeUpdate();
 
@@ -206,8 +208,8 @@ public class StudentAssignmentHelper {
         List<Student> studentList = null;
 
         String sql = "SELECT * FROM student "
-                + "INNER JOIN gradebook_student ON student.student_id = gradebook_student.student_id "
-                + "WHERE gradebook_student.gradebook_id = :gid";
+                + "INNER JOIN gradebook_student ON student.STUDENT_ID = gradebook_student.STUDENT_ID "
+                + "WHERE gradebook_student.GRADEBOOK_ID = :gid";
 
         try {
             // Begin new transaction if we have an inactive one
@@ -233,6 +235,95 @@ public class StudentAssignmentHelper {
         // Return gradebooks
         return studentList;
 
+    }
+
+    public int getStudentAssignmentId(int sid, int aid) {
+
+        List<StudentAssignment> gs = null;
+
+        String sql = "SELECT * FROM Student_Assignment WHERE student_id = :sid AND assignment_id = :aid";
+
+        try {
+            if (!this.session.getTransaction().isActive()) {
+                this.session.beginTransaction();
+            }
+
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(StudentAssignment.class);
+
+            query.setParameter("sid", sid);
+            query.setParameter("aid", aid);
+
+            gs = (List<StudentAssignment>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (gs.size() != 0) {
+            return gs.get(0).getStudentAssignmentId();
+        } else {
+            return 0;
+        }
+    }
+
+    public int changeGrade(int said, int grade) {
+
+        int result = 0;
+
+        String sql = "UPDATE Student_Assignment SET Student_Assignment_Grade = :grade WHERE Student_Assignment_ID = :said";
+
+        try {
+            if (!this.session.getTransaction().isActive()) {
+                this.session.beginTransaction();
+            }
+
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(StudentAssignment.class);
+
+            query.setParameter("grade", grade);
+            query.setParameter("said", said);
+
+            result = query.executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public int getGrade(int said) {
+        // Create the list
+        List<StudentAssignment> list = null;
+
+        String sql = "SELECT * FROM Student_assignment WHERE Student_Assignment_ID = :said";
+
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(StudentAssignment.class);
+
+            // Binding parameters
+            query.setParameter("said", said);
+
+            // Execute query
+            list = (List<StudentAssignment>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (list.size() != 0) {
+            return list.get(0).getStudentAssignmentGrade();
+        } else {
+            return 0;
+        }
     }
 
 }

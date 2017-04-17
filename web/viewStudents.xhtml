@@ -16,7 +16,7 @@
             </ui:define>
             <div class="col-sm-4">
                 <div class="well">                                
-                    <h:outputText value="Assignment: #{studentAssignmentController.assignment} Gradebook: #{gradebookAssignmentController.gradebookId}" style="font-weight: bold" />
+                    <h:outputText value="Assignment: #{studentAssignmentController.assignmentName}, ID: #{studentAssignmentController.assignment} Gradebook: #{gradebookAssignmentController.gradebookId}" style="font-weight: bold" />
 
                     <h:form id="displayStudentsTable">
                         <h:panelGrid columns="2">
@@ -32,6 +32,11 @@
                                     <h:column>
                                         <f:facet name="header">Student Last Name</f:facet>
                                         <h:outputText id="stl" value="#{sId.studentLname}" />
+                                    </h:column>
+                                    
+                                    <h:column>
+                                        <f:facet name="header">Grade</f:facet>
+                                        #{studentAssignmentController.grade}
                                     </h:column>
 
                                 </h:dataTable>

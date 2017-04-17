@@ -417,4 +417,11 @@ public class GradebookController implements Serializable {
         return "createAssignment";
     }
 
+    public String returnHome() {
+        return "index";
+    }
+    
+    public String displayBook() {
+        return "displayBook";
+    }
 }

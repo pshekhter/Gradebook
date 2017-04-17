@@ -8,11 +8,14 @@
             <column name="STUDENT_ASSIGNMENT_ID" />
             <generator class="identity" />
         </id>
-        <many-to-one name="assignment" class="gradebook.Assignment" fetch="select">
-            <column name="ASSIGNMENT_ID" not-null="true" />
+        <many-to-one name="assignment" class="gradebook.GradebookAssignment" fetch="select">
+            <column name="GRADEBOOK_ASSIGNMENT_ID" not-null="true" />
         </many-to-one>
         <many-to-one name="student" class="gradebook.Student" fetch="select">
             <column name="STUDENT_ID" not-null="true" />
+        </many-to-one>
+        <many-to-one name="gradebook" class="gradebook.Gradebook" fetch="select">
+            <column name="GRADEBOOK_ID" not-null="true" />
         </many-to-one>
         <property name="studentAssignmentGrade" type="int">
             <column name="STUDENT_ASSIGNMENT_GRADE" not-null="true" />

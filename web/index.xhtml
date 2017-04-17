@@ -40,6 +40,7 @@
 
                 <h:form>
                     <div id="displayBooksTable">
+                        <h:outputText value="Currently Selected Instructor: #{gradebookController.selectedEmail}" />
                         <h:dataTable value="#{gradebookController.instructorGradebooks}" var="gId"
                                      styleClass="table">
                             <h:column>
@@ -81,6 +82,17 @@
                                 <h:commandLink action="#{gradebookController.addStudents}"
                                                value="Add Students">
                                     <f:setPropertyActionListener target="#{gradebookStudentController.gradebookID}"
+                                                                 value="#{gId.gradebookId}" />
+                                </h:commandLink>
+                            </h:column>
+                            
+                            <h:column>
+                                <f:facet name="header">Display Gradebook</f:facet>
+                                <h:commandLink action="#{gradebookController.displayBook}"
+                                               value="Display Gradebook">
+                                    <f:setPropertyActionListener target="#{gradebookAssignmentController.gradebookId}"
+                                                                 value="#{gId.gradebookId}" />
+                                    <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}"
                                                                  value="#{gId.gradebookId}" />
                                 </h:commandLink>
                             </h:column>
