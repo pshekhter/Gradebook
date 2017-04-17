@@ -76,14 +76,14 @@ public class StudentAssignmentHelper {
         return assignmentList;
     }
 
-    public List<Student> getStudentsFromAssignment(int aid, int gaid) {
+    public List<Student> getStudentsFromAssignment(int gaid) {
         // Create the list
         List<Student> studentList = null;
 
         String sql = "SELECT * FROM student "
-                + "INNER JOIN student_assignment ON student.student_id = student_assignment.student_id "
-                + "INNER JOIN gradebook_assignment ON student_assignment.gradebook_assignment_id = :gaid "
-                + "WHERE gradebook_assignment.assignment_id = :aid";
+                + "INNER JOIN gradebook_student ON student.student_id = gradebook_student.student_id "
+                + "INNER JOIN student_assignment ON student_assignment.STUDENT_ID = gradebook_student.STUDENT_ID "
+                + "WHERE student_assignment.GRADEBOOK_ASSIGNMENT_ID = :gaid";
 
         try {
             // Begin new transaction if we have an inactive one
@@ -98,7 +98,6 @@ public class StudentAssignmentHelper {
             query.addEntity(Student.class);
 
             // Binding parameters
-            query.setParameter("aid", aid);
             query.setParameter("gaid", gaid);
 
             // Execute query
@@ -203,13 +202,15 @@ public class StudentAssignmentHelper {
         }
     }
 
-    public List<Student> getStudentsFromGradebook(int gid) {
+    public List<Student> getStudentsFromGradebookAssignment(int gaid) {
         // Create the list
         List<Student> studentList = null;
 
         String sql = "SELECT * FROM student "
-                + "INNER JOIN gradebook_student ON student.STUDENT_ID = gradebook_student.STUDENT_ID "
-                + "WHERE gradebook_student.GRADEBOOK_ID = :gid";
+                + "INNER JOIN gradebook_student ON gradebook_student.STUDENT_ID = student.student_ID "
+                + "INNER JOIN gradebook_assignment ON gradebook_student.GRADEBOOK_ID = gradebook_assignment.GRADEBOOK_ID "
+                + "INNER JOIN student_assignment ON gradebook_assignment.GRADEBOOK_ASSIGNMENT_ID = student_assignment.GRADEBOOK_ASSIGNMENT_ID "
+                + "WHERE student_assignment.GRADEBOOK_ASSIGNMENT_ID = :gaid";
 
         try {
             // Begin new transaction if we have an inactive one
@@ -224,7 +225,7 @@ public class StudentAssignmentHelper {
             query.addEntity(Student.class);
 
             // Binding parameters
-            query.setParameter("gid", gid);
+            query.setParameter("gaid", gaid);
 
             // Execute query
             studentList = (List<Student>) query.list();
@@ -237,11 +238,11 @@ public class StudentAssignmentHelper {
 
     }
 
-    public int getStudentAssignmentId(int sid, int aid) {
+    public int getStudentAssignmentId(int sid, int gaid) {
 
         List<StudentAssignment> gs = null;
 
-        String sql = "SELECT * FROM Student_Assignment WHERE student_id = :sid AND assignment_id = :aid";
+        String sql = "SELECT * FROM Student_Assignment WHERE student_id = :sid AND gradebook_assignment_id = :gaid";
 
         try {
             if (!this.session.getTransaction().isActive()) {
@@ -252,7 +253,7 @@ public class StudentAssignmentHelper {
             query.addEntity(StudentAssignment.class);
 
             query.setParameter("sid", sid);
-            query.setParameter("aid", aid);
+            query.setParameter("gaid", gaid);
 
             gs = (List<StudentAssignment>) query.list();
         } catch (Exception e) {
@@ -324,6 +325,107 @@ public class StudentAssignmentHelper {
         } else {
             return 0;
         }
+    }
+
+    public int getGradebookAssignmentId(int gid, int aid) {
+        // Create the list
+        List<GradebookAssignment> gal = null;
+
+        String sql = "SELECT * FROM gradebook_assignment WHERE GRADEBOOK_ID = :gid AND ASSIGNMENT_ID = :aid";
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(GradebookAssignment.class);
+
+            // Binding parameters
+            query.setParameter("gid", gid);
+            query.setParameter("aid", aid);
+
+            // Execute query
+            gal = (List<GradebookAssignment>) query.list();
+            if (gal.size() != 0) {
+                int gaid = gal.get(0).getGradebookAssignmentId();
+                return gaid;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return gradebooks
+        return 0;
+
+    }
+
+    public List<StudentAssignment> getStudentAssignmentList(int gaid) {
+        // Create the list
+        List<StudentAssignment> sal = null;
+
+        String sql = "SELECT * FROM student_assignment WHERE GRADEBOOK_ASSIGNMENT_ID = :gaid";
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(StudentAssignment.class);
+
+            // Binding parameters
+            query.setParameter("gaid", gaid);
+
+            // Execute query
+            sal = (List<StudentAssignment>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return gradebooks
+        return sal;
+
+    }
+
+    public List<Student> getStudentsFromGradebook(int gid) {
+        // Create the list
+        List<Student> studentList = null;
+
+        String sql = "SELECT * FROM student "
+                + "INNER JOIN gradebook_student ON gradebook_student.STUDENT_ID = student.student_ID "
+                + "WHERE gradebook_student.GRADEBOOK_ID = :gid";
+
+        try {
+            // Begin new transaction if we have an inactive one
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create an SQL query from the SQL string
+            SQLQuery query = session.createSQLQuery(sql);
+
+            // Add an entity
+            query.addEntity(Student.class);
+
+            // Binding parameters
+            query.setParameter("gid", gid);
+
+            // Execute query
+            studentList = (List<Student>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Return gradebooks
+        return studentList;
+
     }
 
 }

@@ -29,9 +29,10 @@
                     </h:commandButton>
 
                     <h:commandButton action="#{studentAssignmentController.returnToAssignment}" id="returnToAssignmentsBtn" value="Return To Assignment List">
-                        <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
+                        <f:setPropertyActionListener target="#{gradebookAssignmentController.gradebookId}" value="#{studentAssignmentController.gradebookId}" />
+                        <f:setPropertyActionListener target="#{studentAssignmentController.previousGradebookId}" value="#{studentAssignmentController.previousGradebookId}" />
                     </h:commandButton>
-
+                    
                     <h:outputText id="assignToStudentText" value="#{studentAssignmentController.response}" />
 
                 </h:panelGrid>

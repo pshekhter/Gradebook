@@ -38,7 +38,8 @@
                                                                  value="#{gradebookController.instructorGradebooks}" />
                                     <f:setPropertyActionListener target="#{instructorController.instructorEmail}"
                                                                  value="#{instructorController.instructorEmail}"/>
-                                                                 
+                                    <f:setPropertyActionListener target="#{studentAssignmentController.previousGradebookId}"
+                                                                 value="#{studentAssignmentController.previousGradebookId}" />
                                 </h:commandLink>
                             </li>
                         </h:form>

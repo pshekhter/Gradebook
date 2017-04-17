@@ -14,9 +14,6 @@
         <many-to-one name="student" class="gradebook.Student" fetch="select">
             <column name="STUDENT_ID" not-null="true" />
         </many-to-one>
-        <many-to-one name="gradebook" class="gradebook.Gradebook" fetch="select">
-            <column name="GRADEBOOK_ID" not-null="true" />
-        </many-to-one>
         <property name="studentAssignmentGrade" type="int">
             <column name="STUDENT_ASSIGNMENT_GRADE" not-null="true" />
         </property>

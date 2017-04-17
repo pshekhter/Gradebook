@@ -51,7 +51,7 @@ public class GradebookAssignmentController implements Serializable {
     List<Assignment> instructorAssignments;
     List<GradebookAssignment> gradebookAssignments;
     List<Student> assignmentStudents;
-
+    
     /**
      * Creates a new instance of GradebookAssignmentController
      */
@@ -187,8 +187,11 @@ public class GradebookAssignmentController implements Serializable {
     }
 
     public List<Student> getAssignmentStudents() {
-        if (studentAssignmentHelper.getStudentsFromGradebook(gradebookId) != null) {
-            this.assignmentStudents = studentAssignmentHelper.getStudentsFromGradebook(gradebookId);
+        int gaid = studentAssignmentHelper.getGradebookAssignmentId(gradebookId, assignmentId);
+        if (gaid != 0) {
+            if (studentAssignmentHelper.getStudentsFromGradebookAssignment(gaid) != null) {
+                this.assignmentStudents = studentAssignmentHelper.getStudentsFromGradebookAssignment(gaid);
+            }
         }
         return null;
     }

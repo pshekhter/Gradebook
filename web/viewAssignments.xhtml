@@ -34,6 +34,7 @@
                                         <f:facet name="header">Students</f:facet>
                                         <h:commandLink action="#{gradebookAssignmentController.viewStudents}" value="View Student Submission">
                                             <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{aId.assignmentId}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{gradebookAssignmentController.gradebookId}" />
                                         </h:commandLink>
                                     </h:column>
 
@@ -42,8 +43,6 @@
                                         <h:commandLink action="#{studentAssignmentController.assignToStudent}" value="Assign To Student">
                                             <f:setPropertyActionListener target="#{studentAssignmentController.assignmentName}" value="#{aId.assignmentName}" />
                                             <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{aId.assignmentId}" />
-                                            <f:setPropertyActionListener target="#{studentAssignmentController.gradebookStudents}" value="#{gradebookStudentController.students}" />
-                                            <f:setPropertyActionListener target="#{studentAssignmentController.gradebookStudentValues}" value="#{gradebookStudentController.studentValues}" />
                                             <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{gradebookAssignmentController.gradebookId}" />
                                         </h:commandLink>
                                     </h:column>
