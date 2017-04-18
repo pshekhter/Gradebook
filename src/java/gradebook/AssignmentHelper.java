@@ -154,4 +154,30 @@ public class AssignmentHelper {
         }
         return result;
     }
+    
+    public int deleteAssignment(String assignmentName) {
+        int result = 0;
+
+        String sql = "delete from assignment"
+                + "where assignmentName = :aName";
+
+        try {
+
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            SQLQuery q = session.createSQLQuery(sql);
+            q.addEntity(Assignment.class);
+            q.setParameter("aName", assignmentName);
+
+            result = q.executeUpdate();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
 }

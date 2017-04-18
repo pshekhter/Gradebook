@@ -23,6 +23,7 @@ public class AssignmentController implements Serializable {
     String assignmentName;
 
     String response;
+    String responseDelete;
 
   
     AssignmentHelper helper;
@@ -66,5 +67,29 @@ public class AssignmentController implements Serializable {
     public void setResponse(String response) {
         this.response = response;
     }
+
+    public String getResponseDelete() {
+        if (assignmentName != null) {
+            
+            if (helper.deleteAssignment(assignmentName) == 1) {
+                assignmentName = null;
+                responseDelete = "Assignment Deleted.";
+
+            } else {
+                assignmentName = null;
+                responseDelete = "Assignment Not Deleted.";
+            }
+
+        } else {
+            responseDelete = " ";
+        }
+        return responseDelete;
+    }
+
+    public void setResponseDelete(String responseDelete) {
+        this.responseDelete = responseDelete;
+    }
+    
+    
     
 }

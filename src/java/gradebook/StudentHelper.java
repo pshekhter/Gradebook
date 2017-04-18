@@ -171,5 +171,32 @@ public class StudentHelper {
 
         return result;
     }
+    
+    public int deleteStudent(String fName, String lName) {
+        int result = 0;
+
+        String sql = "delete from student"
+                + "where fName = :fName and lName = :lName";
+
+        try {
+
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            SQLQuery q = session.createSQLQuery(sql);
+            q.addEntity(Student.class);
+            q.setParameter("fName", fName);
+            q.setParameter("lName", lName);
+
+
+            result = q.executeUpdate();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 }
