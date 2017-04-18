@@ -44,6 +44,8 @@ public class StudentAssignmentController implements Serializable {
     String assignmentName;
     String response;
     int grade;
+    
+    String gradeResponse;
 
     int gradebookId;
     int previousGradebookId = 0;
@@ -52,6 +54,8 @@ public class StudentAssignmentController implements Serializable {
 
     // String for addStudentAssignment form
     String studentName;
+    
+    int gaid;
 
     List<Student> assignmentStudents;
     List<Student> gradebookStudents;
@@ -122,6 +126,9 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public String getStudentFName() {
+        if (sh.getStudent(studentID) != null) {
+            studentFName = sh.getStudent(studentID).getStudentFname();
+        }
         return studentFName;
     }
 
@@ -130,6 +137,9 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public String getStudentLName() {
+        if (sh.getStudent(studentID) != null) {
+            studentLName = sh.getStudent(studentID).getStudentLname();
+        }
         return studentLName;
     }
 
@@ -153,7 +163,7 @@ public class StudentAssignmentController implements Serializable {
         if ((student != 0) && (readyToSubmit)) {
 
             if ((gah.getGradebookAssignmentsFromGradebookId(gradebookId) != null) && (gah.getGradebookAssignmentsFromGradebookId(gradebookId).size() != 0)) {
-                int gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+                gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
                 if (gaid != 0) {
                     if (helper.insertStudentToAssignment(student, gaid) == 1) {
                         studentName = null;
@@ -186,7 +196,7 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public List<Student> getAssignmentStudents() {
-        int gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+        gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
         if (gaid != 0) {
             List<StudentAssignment> stua = helper.getStudentAssignmentList(gaid);
             List<Student> studentList = null;
@@ -295,7 +305,7 @@ public class StudentAssignmentController implements Serializable {
 
     public int getGrade() {
         if (helper.getStudentAssignmentId(student, grade) != 0) {
-            int gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+            gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
             grade = helper.getGrade(helper.getStudentAssignmentId(student, gaid));
         }
         return grade;
@@ -319,6 +329,27 @@ public class StudentAssignmentController implements Serializable {
 
     public void setPreviousGradebookId(int previousGradebookId) {
         this.previousGradebookId = previousGradebookId;
+    }
+
+    public String getGradeResponse() {
+        return gradeResponse;
+    }
+
+    public void setGradeResponse(String gradeResponse) {
+        this.gradeResponse = gradeResponse;
+    }
+
+    public int getGaid() {
+        setGaid(helper.getGradebookAssignmentId(gradebookId, assignment));
+        return gaid;
+    }
+
+    public void setGaid(int gaid) {
+        this.gaid = gaid;
+    }
+    
+    public String viewModifyGrade() {
+        return "inputGrades";
     }
 
 }

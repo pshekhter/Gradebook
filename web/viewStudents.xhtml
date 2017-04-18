@@ -33,10 +33,14 @@
                                         <f:facet name="header">Student Last Name</f:facet>
                                         <h:outputText id="stl" value="#{sId.studentLname}" />
                                     </h:column>
-                                    
+                                                                        
                                     <h:column>
                                         <f:facet name="header">Grade</f:facet>
-                                        #{studentAssignmentController.grade}
+                                        <h:commandLink id="viewModifyGrade" value="View/Modify Grade" action="#{studentAssignmentController.viewModifyGrade}">
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{studentAssignmentController.gradebookId}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.studentID}" value="#{sId.studentId}" />
+                                        </h:commandLink>
                                     </h:column>
 
                                 </h:dataTable>

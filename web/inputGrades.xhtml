@@ -6,39 +6,27 @@
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Create Gradebook" />
+            <h:outputText value="Input Grades" />
         </ui:define>
 
         <ui:define name="content">
 
             <h:form id="inputGradesForm">
                 <h:panelGrid columns="2">
-                    <h:outputText value="Gradebook ID" />
-                    <h:inputText id="inputGrades_gradebookId" value="#{gradebookStudentController.gradebookID}" />
+                    <h:outputText id="assignmentText" value="Assignment" />
+                    <h:inputText id="assignment" value="#{studentAssignmentController.assignmentName}" disabled="true" />
+                    
+                    <h:outputText id="studentText" value="Student" />
+                    <h:inputText id="student" value="#{studentAssignmentController.studentFName} #{studentAssignmentController.studentLName}" disabled="true" />
 
-                    <h:outputText value="Assignment" />
-                    <h:selectOneMenu value="#{gradebookAssignmentController.assignmentId}"
-                                     valueChangeListener="#{gradebookController.semesterNameValueChangedListener}"
-                                     onchange="submit()">
-                        <f:selectItems value="#{gradebookController.semesterValues}" var="s"
-                                       itemLabel="#{s.semesterName}" itemValue="#{s.semesterId}" />
-                    </h:selectOneMenu>
-
-                  </h:panelGrid>
-                    <h:outputText value="Instructor" />
-                    <h:inputText id="instructor_text" value="#{gradebookController.selectedEmail}" disabled="true" />
-                <h:commandButton id="createBook" value="Submit" action="#{gradebookController.createBook}" />
-                <h:panelGrid columns="2">
-                    <h:outputText value="Next Step: " />
-                    <h:commandButton id="selectSemester" value="Select Semester" action="#{semesterController.selectSemester}" />
+                    <h:outputText id="gradeText" value="Grade" />
+                    <h:inputText id="grade" value="#{studentAssignmentController.grade}" />
                 </h:panelGrid>
-                <h:inputHidden id="hidden_createGradebook" value="#{instructorController.instructorID}" />
-                <h:inputHidden id="hidden_instructor" value="#{gradebookController.instructorID}" />
-
+                <h:commandButton id="gradeSubmit" value="Submit Grades" action="#" />
             </h:form>
-            <h:outputText escape="false" value="#{gradebookController.response}" />
+            <h:outputText escape="false" value="#{studentAssignmentController.gradeResponse}" />
 
-                 
+
         </ui:define>
     </ui:composition>
 </html>
