@@ -25,6 +25,7 @@ public class GradebookAssignmentController implements Serializable {
     StudentHelper studentHelper;
     AssignmentHelper assignmentHelper;
     GradebookAssignmentHelper gradebookAssignmentHelper;
+    StudentAssignmentHelper studentAssignmentHelper;
 
     // Lists
     DataModel assignments;
@@ -35,7 +36,7 @@ public class GradebookAssignmentController implements Serializable {
 
     // Stores assignmentId for passing
     int assignmentId;
-    
+
     // Store the assignment's name
     String assignmentName;
 
@@ -48,11 +49,14 @@ public class GradebookAssignmentController implements Serializable {
     int assignmentGrade;
 
     List<Assignment> instructorAssignments;
-
+    List<GradebookAssignment> gradebookAssignments;
+    List<Student> assignmentStudents;
+    
     /**
      * Creates a new instance of GradebookAssignmentController
      */
     public GradebookAssignmentController() {
+        studentAssignmentHelper = new StudentAssignmentHelper();
         studentHelper = new StudentHelper();
         assignmentHelper = new AssignmentHelper();
         gradebookAssignmentHelper = new GradebookAssignmentHelper();
@@ -100,11 +104,11 @@ public class GradebookAssignmentController implements Serializable {
     }
 
     public String getResponse() {
-        
+
         if (assignmentName != null) {
 
             if (assignmentHelper.insertAssignment(assignmentName) == 1) {
-                
+
                 assignmentId = assignmentHelper.getAssignmentID(assignmentName).getAssignmentId();
                 //gradebookId = 4419;
 
@@ -170,7 +174,30 @@ public class GradebookAssignmentController implements Serializable {
     public void setAssignmentName(String assignmentName) {
         this.assignmentName = assignmentName;
     }
-    
-    
+
+    public List<GradebookAssignment> getGradebookAssignments() {
+        if (gradebookAssignmentHelper.getGradebookAssignmentsFromGradebookId(gradebookId) != null) {
+            this.gradebookAssignments = gradebookAssignmentHelper.getGradebookAssignmentsFromGradebookId(gradebookId);
+        }
+        return null;
+    }
+
+    public void setGradebookAssignments(List<GradebookAssignment> gradebookAssignments) {
+        this.gradebookAssignments = gradebookAssignments;
+    }
+
+    public List<Student> getAssignmentStudents() {
+        int gaid = studentAssignmentHelper.getGradebookAssignmentId(gradebookId, assignmentId);
+        if (gaid != 0) {
+            if (studentAssignmentHelper.getStudentsFromGradebookAssignment(gaid) != null) {
+                this.assignmentStudents = studentAssignmentHelper.getStudentsFromGradebookAssignment(gaid);
+            }
+        }
+        return null;
+    }
+
+    public void setAssignmentStudents(List<Student> assignmentStudents) {
+        this.assignmentStudents = assignmentStudents;
+    }
 
 }

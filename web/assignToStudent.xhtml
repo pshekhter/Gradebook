@@ -20,7 +20,7 @@
                     <h:selectOneMenu value="#{studentAssignmentController.studentID}"
                                      valueChangeListener="#{studentAssignmentController.studentIdValueChanged}"
                                      onchange="submit()">
-                        <f:selectItems value="#{studentAssignmentController.studentSubmissionValues}" var="s"
+                        <f:selectItems value="#{studentAssignmentController.gradebookStudentValues}" var="s"
                                        itemLabel="#{s.studentFname} #{s.studentLname}" itemValue="#{s.studentId}" />
                     </h:selectOneMenu>
 
@@ -29,9 +29,10 @@
                     </h:commandButton>
 
                     <h:commandButton action="#{studentAssignmentController.returnToAssignment}" id="returnToAssignmentsBtn" value="Return To Assignment List">
-                        <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
+                        <f:setPropertyActionListener target="#{gradebookAssignmentController.gradebookId}" value="#{studentAssignmentController.gradebookId}" />
+                        <f:setPropertyActionListener target="#{studentAssignmentController.previousGradebookId}" value="#{studentAssignmentController.previousGradebookId}" />
                     </h:commandButton>
-
+                    
                     <h:outputText id="assignToStudentText" value="#{studentAssignmentController.response}" />
 
                 </h:panelGrid>

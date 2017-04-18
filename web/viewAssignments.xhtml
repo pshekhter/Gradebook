@@ -17,41 +17,40 @@
             <div class="col-sm-4">
                 <div class="well">
                     <h:form id="viewAssignments">
-                    <h:outputText value="Displaying Assignments of Gradebook #{gradebookAssignmentController.gradebookId}..." style="font-weight: bold" />
+                        <h:outputText value="Displaying Assignments of Gradebook #{gradebookAssignmentController.gradebookId}..." style="font-weight: bold" />
 
-                    <h:panelGrid columns="2">
-                        <div id="displayAssignmentsTable">
-                            <h:dataTable value="#{gradebookAssignmentController.instructorAssignments}" var="aId"
-                                         styleClass="table">
-                                
-                                <h:column>
-                                    <f:facet name="header">Name</f:facet>
-                                        #{aId.assignmentName}
-                                </h:column>
-                                
-                                
-                                <h:column>
-                                    <f:facet name="header">View Students</f:facet>
-                                    <h:commandLink action="#{gradebookAssignmentController.viewStudents}" value="View Students">
-                                        <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{aId.assignmentId}" />
-                                    </h:commandLink>
-                                </h:column>
-                                
-                                <h:column>
-                                    <f:facet name="header">Add Students</f:facet>
-                                    <h:commandLink action="#{studentAssignmentController.assignToStudent}" value="Assign To Student">
-                                        <f:setPropertyActionListener target="#{studentAssignmentController.assignmentName}" value="#{aId.assignmentName}" />
-                                        <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{aId.assignmentId}" />
-                                        <f:setPropertyActionListener target="#{studentAssignmentController.gradebookStudents}" value="#{gradebookStudentController.students}" />
-                                        <f:setPropertyActionListener target="#{studentAssignmentController.studentSubmissionValues}" value="#{gradebookStudentController.studentValues}" />
-                                        <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{gradebookStudentController.gradebookID}" />
-                                    </h:commandLink>
-                                </h:column>
+                        <h:panelGrid columns="2">
+                            <div id="displayAssignmentsTable">
+                                <h:dataTable id="instructorAssignmentTable" value="#{gradebookAssignmentController.instructorAssignments}" var="aId"
+                                             styleClass="table">
 
-                            </h:dataTable>
+                                    <h:column>
+                                        <f:facet name="header">Name</f:facet>
+                                            #{aId.assignmentName}
+                                    </h:column>
 
-                        </div>
-                    </h:panelGrid>
+
+                                    <h:column>
+                                        <f:facet name="header">Students</f:facet>
+                                        <h:commandLink action="#{gradebookAssignmentController.viewStudents}" value="View Student Submission">
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{aId.assignmentId}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{gradebookAssignmentController.gradebookId}" />
+                                        </h:commandLink>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Add Students</f:facet>
+                                        <h:commandLink action="#{studentAssignmentController.assignToStudent}" value="Assign To Student">
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.assignmentName}" value="#{aId.assignmentName}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{aId.assignmentId}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{gradebookAssignmentController.gradebookId}" />
+                                        </h:commandLink>
+                                    </h:column>
+
+                                </h:dataTable>
+
+                            </div>
+                        </h:panelGrid>
                     </h:form>
                 </div>
 
