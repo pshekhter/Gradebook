@@ -33,13 +33,22 @@
                                         <f:facet name="header">Student Last Name</f:facet>
                                         <h:outputText id="stl" value="#{sId.studentLname}" />
                                     </h:column>
-                                                                        
+                                    
                                     <h:column>
                                         <f:facet name="header">Grade</f:facet>
-                                        <h:commandLink id="viewModifyGrade" value="View/Modify Grade" action="#{studentAssignmentController.viewModifyGrade}">
+                                        <h:outputText id="grade" value="#{studentAssignmentController.returnStudentGrade(sId.studentId)}" />
+                                    </h:column>
+                                                                        
+                                    <h:column>
+                                        <f:facet name="header">Modify Grade</f:facet>
+                                        <h:commandLink id="viewModifyGrade" value="Modify Grade" action="#{studentAssignmentController.viewModifyGrade}">
                                             <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{studentAssignmentController.gradebookId}" />
                                             <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
-                                            <f:setPropertyActionListener target="#{studentAssignmentController.studentID}" value="#{sId.studentId}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.student}" value="#{sId.studentId}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.readyToRefresh}" value="false" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.modifyGrade}" value="#{studentAssignmentController.modifyGrade}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.firstRun}" value="#{studentAssignmentController.firstRun}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.grade}" value="#{studentAssignmentController.grade}" />
                                         </h:commandLink>
                                     </h:column>
 

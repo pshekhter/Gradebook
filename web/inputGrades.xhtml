@@ -15,14 +15,32 @@
                 <h:panelGrid columns="2">
                     <h:outputText id="assignmentText" value="Assignment" />
                     <h:inputText id="assignment" value="#{studentAssignmentController.assignmentName}" disabled="true" />
-                    
+
                     <h:outputText id="studentText" value="Student" />
                     <h:inputText id="student" value="#{studentAssignmentController.studentFName} #{studentAssignmentController.studentLName}" disabled="true" />
 
-                    <h:outputText id="gradeText" value="Grade" />
-                    <h:inputText id="grade" value="#{studentAssignmentController.grade}" />
+                    <h:outputText id="gradeText" value="Current Grade" />
+                    <h:inputText id="grade" value="#{studentAssignmentController.grade}" disabled="true" />
+
+                    <h:outputText id="newGradeText" value="New Grade" />
+                    <h:inputText id="ngrad" value="#{studentAssignmentController.modifyGrade}" />
+
                 </h:panelGrid>
-                <h:commandButton id="gradeSubmit" value="Submit Grades" action="#" />
+                <h:commandButton id="gradeSubmit" value="Submit Grades" action="#{studentAssignmentController.inputGrade}">
+                    <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{studentAssignmentController.gradebookId}" />
+                    <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
+                    <f:setPropertyActionListener target="#{studentAssignmentController.student}" value="#{studentAssignmentController.student}" />
+                    <f:setPropertyActionListener target="#{studentAssignmentController.readyToRefresh}" value="true" />
+                </h:commandButton>
+
+                <h:commandButton id="returnToStudents" value="Return to Student List" action="#{studentAssignmentController.returnToStudentList}">
+                    <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{studentAssignmentController.gradebookId}" />
+                    <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
+                    <f:setPropertyActionListener target="#{studentAssignmentController.readyToRefresh}" value="true" />
+                    <f:setPropertyActionListener target="#{studentAssignmentController.modifyGrade}" value="#{studentAssignmentController.modifyGrade}" />
+                    <f:setPropertyActionListener target="#{studentAssignmentController.firstRun}" value="#{studentAssignmentController.firstRun}" />
+                    <f:setPropertyActionListener target="#{studentAssignmentController.grade}" value="#{studentAssignmentController.grade}" />
+                </h:commandButton>
             </h:form>
             <h:outputText escape="false" value="#{studentAssignmentController.gradeResponse}" />
 

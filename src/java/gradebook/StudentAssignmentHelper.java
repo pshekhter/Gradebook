@@ -238,7 +238,7 @@ public class StudentAssignmentHelper {
 
     }
 
-    public int getStudentAssignmentId(int sid, int gaid) {
+    public StudentAssignment getStudentAssignment(int sid, int gaid) {
 
         List<StudentAssignment> gs = null;
 
@@ -261,9 +261,9 @@ public class StudentAssignmentHelper {
         }
 
         if (gs.size() != 0) {
-            return gs.get(0).getStudentAssignmentId();
+            return gs.get(0);
         } else {
-            return 0;
+            return null;
         }
     }
 
@@ -293,11 +293,11 @@ public class StudentAssignmentHelper {
         return result;
     }
 
-    public int getGrade(int said) {
+    public StudentAssignment getGrade(int said) {
         // Create the list
         List<StudentAssignment> list = null;
 
-        String sql = "SELECT * FROM Student_assignment WHERE Student_Assignment_ID = :said";
+        String sql = "SELECT * FROM Student_assignment WHERE STUDENT_ASSIGNMENT_ID = :said";
 
         try {
             // Begin new transaction if we have an inactive one
@@ -319,11 +319,11 @@ public class StudentAssignmentHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        
         if (list.size() != 0) {
-            return list.get(0).getStudentAssignmentGrade();
+            return list.get(0);
         } else {
-            return 0;
+            return null;
         }
     }
 

@@ -17,7 +17,7 @@
                     <h:inputText id="assignment" value="#{studentAssignmentController.assignmentName}" disabled="true" />
 
                     <h:outputText value="Student: " />
-                    <h:selectOneMenu value="#{studentAssignmentController.studentID}"
+                    <h:selectOneMenu value="#{studentAssignmentController.student}"
                                      valueChangeListener="#{studentAssignmentController.studentIdValueChanged}"
                                      onchange="submit()">
                         <f:selectItems value="#{studentAssignmentController.gradebookStudentValues}" var="s"

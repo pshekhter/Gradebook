@@ -13,7 +13,7 @@ public class StudentAssignment  implements java.io.Serializable {
      private GradebookAssignment assignment;
      private Student student;
      private Integer gradebookAssignmentId;
-     private int studentAssignmentGrade;
+     private Integer studentAssignmentGrade;
 
     public StudentAssignment() {
     }
@@ -45,11 +45,11 @@ public class StudentAssignment  implements java.io.Serializable {
     public void setStudent(Student student) {
         this.student = student;
     }
-    public int getStudentAssignmentGrade() {
+    public Integer getStudentAssignmentGrade() {
         return this.studentAssignmentGrade;
     }
     
-    public void setStudentAssignmentGrade(int studentAssignmentGrade) {
+    public void setStudentAssignmentGrade(Integer studentAssignmentGrade) {
         this.studentAssignmentGrade = studentAssignmentGrade;
     }
 
