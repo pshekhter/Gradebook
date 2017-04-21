@@ -90,4 +90,7 @@ public class StudentController implements Serializable {
         this.response = response;
     }
     
+    public String goHome() {
+        return "index";
+    }
 }

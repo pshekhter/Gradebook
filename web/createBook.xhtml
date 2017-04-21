@@ -35,7 +35,9 @@
                 <h:commandButton id="createBook" value="Submit" action="#{gradebookController.createBook}" />
                 <h:panelGrid columns="2">
                     <h:outputText value="Next Step: " />
-                    <h:commandButton id="selectSemester" value="Add Students" action="#{semesterController.selectSemester}" />
+                    <h:commandButton id="selectSemester" value="Return Home" action="#{studentController.goHome()}">
+                        <f:setPropertyActionListener target="#{gradebookController.selectedEmail}" value="#{gradebookController.selectedEmail}" />
+                    </h:commandButton>
                 </h:panelGrid>
 
             </h:form>
