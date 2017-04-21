@@ -33,12 +33,6 @@
                     <h:outputText value="Instructor" />
                     <h:inputText id="instructor_text" value="#{gradebookController.selectedEmail}" disabled="true" />
                 <h:commandButton id="createBook" value="Submit" action="#{gradebookController.createBook}" />
-                <h:panelGrid columns="2">
-                    <h:outputText value="Next Step: " />
-                    <h:commandButton id="selectSemester" value="Return Home" action="#{studentController.goHome()}">
-                        <f:setPropertyActionListener target="#{gradebookController.selectedEmail}" value="#{gradebookController.selectedEmail}" />
-                    </h:commandButton>
-                </h:panelGrid>
 
             </h:form>
             <h:outputText escape="false" value="#{gradebookController.response}" />

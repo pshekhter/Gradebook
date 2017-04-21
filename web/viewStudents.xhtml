@@ -55,9 +55,9 @@
                                 </h:dataTable>
 
                             </div>
-                            <h:commandLink value="Return to Assignment" action="#{studentAssignmentController.returnToAssignment}">
+                            <h:commandButton value="Return to Assignment" action="#{studentAssignmentController.returnToAssignment}">
                                 <f:setPropertyActionListener target="#{studentAssignmentController.readyToRefresh}" value="true" />
-                            </h:commandLink>
+                            </h:commandButton>
 
                         </h:panelGrid>
                     </h:form>

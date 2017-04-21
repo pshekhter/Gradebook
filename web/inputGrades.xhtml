@@ -13,6 +13,9 @@
 
             <h:form id="inputGradesForm">
                 <h:panelGrid columns="2">
+                    <h:outputText id="gradebookText" value="Gradebook ID: " />
+                    <h:inputText id="gradebookInput" value="#{studentAssignmentController.gradebookId}" disabled="true" />
+                                  
                     <h:outputText id="assignmentText" value="Assignment" />
                     <h:inputText id="assignment" value="#{studentAssignmentController.assignmentName}" disabled="true" />
 

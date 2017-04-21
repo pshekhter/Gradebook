@@ -10,27 +10,21 @@
 
         <ui:define name="content">
             <h:form id="createStudentForm">
-                <h:panelGrid columns="1">
+                <h:panelGrid columns="2">
 
                     <h:outputText id="modify_form_instructor" value="Instructor" />
                             <h:inputText id="modify_form_input_instructor" value="#{gradebookController.selectedEmail}" disabled="true" />    
                         
-                    <h:outputText value="Gradebook" />
-                    <h:outputText value="Adding to Gradebook #{gradebookStudentController.gradebookID}..." style="font-weight: bold" />
-
-
-                    <h:outputText value="Create Student"/>
-
+                    <h:outputText value="Adding to Gradebook: " />
+                    <h:inputText id="gradebookInput" value="#{gradebookStudentController.gradebookID}" disabled="true "/>
 
                     <h:outputText value="Student First Name: "/>
                     <h:inputText id="First" value="#{gradebookStudentController.firstName}" size="50" maxlength="255"
                                  required="true" label="First Name"/>
-                    <h:message for="First" style="color: red; font-size: 0.7em" />
 
                     <h:outputText value="Student Last Name: "/>
                     <h:inputText id="Last" value="#{gradebookStudentController.lastName}" size="50" maxlength="255"
                                  required="true" label="Last Name" />
-                    <h:message for="Last" style="color: red; font-size: 0.7em" />
 
                     <h:commandButton id="submit" value="Submit" action="addStudent" />
                     <h:commandButton value="Clear" type="reset" />
