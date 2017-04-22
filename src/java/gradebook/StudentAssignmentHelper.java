@@ -111,11 +111,11 @@ public class StudentAssignmentHelper {
 
     }
 
-    public int insertStudentToAssignment(int sid, int gaid) {
+    public int insertStudentToAssignment(int sid, int gaid, int grade) {
         int result = 0;
 
-        String sql = "INSERT INTO Student_Assignment (STUDENT_ID, GRADEBOOK_ASSIGNMENT_ID) "
-                + "VALUES (:sid, :gaid)";
+        String sql = "INSERT INTO Student_Assignment (STUDENT_ID, GRADEBOOK_ASSIGNMENT_ID, STUDENT_ASSIGNMENT_GRADE) "
+                + "VALUES (:sid, :gaid, :sag)";
 
         try {
 
@@ -127,6 +127,7 @@ public class StudentAssignmentHelper {
             query.addEntity(StudentAssignment.class);
             query.setParameter("sid", sid);
             query.setParameter("gaid", gaid);
+            query.setParameter("sag", grade);
 
             result = query.executeUpdate();
 

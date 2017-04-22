@@ -15,6 +15,9 @@
 
 
                 <h:panelGrid columns="2">
+                    <h:outputText id="gradebookText" value="Gradebook: " />
+                    <h:inputText id="gradebookInput" value="#{gradebookAssignmentController.gradebookId}" disabled="true" />
+
                     <h:outputText value="Assignment Name: "/>
                     <h:inputText id="Name" value="#{gradebookAssignmentController.assignmentName}" size="50" maxlength="255"
                                  required="true" label="Name" />
@@ -23,6 +26,10 @@
                 </h:panelGrid>
 
                 <h:commandButton id="submit" value="Submit" action="createAssignment" />
+                <h:commandButton id ="goToAddStudents" value="Add Students" action="#{gradebookController.addStudents}">
+                    <f:setPropertyActionListener target="#{gradebookStudentController.gradebookID}"
+                                                 value="#{gradebookAssignmentController.gradebookId}" />
+                </h:commandButton>
                 <h:commandButton value="Clear" type="reset" />
 
                 <h:outputText escape="false" value="#{gradebookAssignmentController.response}" />

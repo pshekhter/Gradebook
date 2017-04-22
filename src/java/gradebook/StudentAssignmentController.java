@@ -160,7 +160,7 @@ public class StudentAssignmentController implements Serializable {
             if ((gah.getGradebookAssignmentsFromGradebookId(gradebookId) != null) && (gah.getGradebookAssignmentsFromGradebookId(gradebookId).size() != 0)) {
                 gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
                 if (gaid != 0) {
-                    if (helper.insertStudentToAssignment(student, gaid) == 1) {
+                    if (helper.insertStudentToAssignment(student, gaid, grade) == 1) {
                         studentName = null;
                         student = 0;
                         response = "Student added to assignment";
@@ -265,15 +265,13 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public DataModel getGradebookStudentValues() {
-        if ((gradebookId != 0) && (gradebookId != previousGradebookId)) {
-            List<Student> stu = helper.getStudentsFromGradebook(gradebookId);
-            if (stu.size() != 0) {
-                if ((gradebookStudentValues == null) || !(stu.equals(gradebookStudents))) {
-                    gradebookStudents = stu;
-                    gradebookStudentValues = new ListDataModel(gradebookStudents);
-                }
+        List<Student> stu = helper.getStudentsFromGradebook(gradebookId);
+
+        if (stu.size() != 0) {
+            if ((gradebookStudentValues == null) || !(stu.equals(gradebookStudents))) {
+                gradebookStudents = stu;
+                gradebookStudentValues = new ListDataModel(gradebookStudents);
             }
-            previousGradebookId = gradebookId;
         }
         return gradebookStudentValues;
     }
@@ -305,11 +303,9 @@ public class StudentAssignmentController implements Serializable {
             StudentAssignment said = helper.getStudentAssignment(student, gaid);
             if (said != null) {
                 int saId = said.getStudentAssignmentId();
-                if (helper.getGrade(saId).getStudentAssignmentGrade() == null) {
-                    grade = 0;
-                } else {
-                    grade = helper.getGrade(saId).getStudentAssignmentGrade();
-                }
+                grade = helper.getGrade(saId).getStudentAssignmentGrade();
+                firstRun = false;
+                readyToRefresh = true;
             }
         }
         return grade;
@@ -345,6 +341,8 @@ public class StudentAssignmentController implements Serializable {
                     gradeResponse = "";
                 } else {
                     gradeResponse = "Grade updated.";
+                    readyToRefresh = false;
+                    firstRun = true;
                 }
             }
         } else {
@@ -433,5 +431,4 @@ public class StudentAssignmentController implements Serializable {
         this.firstRun = firstRun;
     }
 
-    
 }

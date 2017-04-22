@@ -13,6 +13,9 @@
 
             <h:form id="createGradebookForm">
                 <h:panelGrid columns="2">
+                    <h:outputText value="Instructor" />
+                    <h:inputText id="instructor_text" value="#{gradebookController.selectedEmail}" disabled="true" />
+
                     <h:outputText value="Course" />
                     <h:selectOneMenu value="#{gradebookController.course}"
                                      valueChangeListener="#{gradebookController.courseNameValueChangedListener}"
@@ -29,15 +32,13 @@
                                        itemLabel="#{s.semesterName}" itemValue="#{s.semesterId}" />
                     </h:selectOneMenu>
 
-                  </h:panelGrid>
-                    <h:outputText value="Instructor" />
-                    <h:inputText id="instructor_text" value="#{gradebookController.selectedEmail}" disabled="true" />
+                </h:panelGrid>
                 <h:commandButton id="createBook" value="Submit" action="#{gradebookController.createBook}" />
 
             </h:form>
             <h:outputText escape="false" value="#{gradebookController.response}" />
 
-                 
+
         </ui:define>
     </ui:composition>
 </html>
