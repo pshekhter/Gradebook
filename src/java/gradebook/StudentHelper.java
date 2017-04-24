@@ -172,11 +172,11 @@ public class StudentHelper {
         return result;
     }
     
-    public int deleteStudent(String fName, String lName) {
+    public int deleteStudent(int studentID) {
         int result = 0;
 
         String sql = "delete from student"
-                + "where fName = :fName and lName = :lName";
+                + "where studentID = :sid";
 
         try {
 
@@ -186,8 +186,7 @@ public class StudentHelper {
 
             SQLQuery q = session.createSQLQuery(sql);
             q.addEntity(Student.class);
-            q.setParameter("fName", fName);
-            q.setParameter("lName", lName);
+            q.setParameter("sid", studentID);
 
 
             result = q.executeUpdate();

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+        <ui:composition template="./template.xhtml">
+            
+            <ui:define name="title">
+                <h:outputText value="Email"></h:outputText>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                <h:panelGrid columns="3" >
+                    <h:outputText value='Email Address'/>
+                    <h:inputText id="email" value="#{gradebookController.emailAddress}" size="50" maxlength="100" required="true"/>
+                    <h:message for="email" style="color: red; font-size:0.07em"/>             
+                    </h:panelGrid>
+                <h:inputHidden id="hidden" value="#{gradebookController.gradebookID}" />
+                <h:commandButton id="submit" value="Submit" action="email"/>
+                <h:commandButton value="Clear" type="reset"/>
+                </h:form>
+                <h:outputText escape="false" value="#{gradebookController.emailResponse}"/>
+            </ui:define>
+
+        </ui:composition>
+
+</html>

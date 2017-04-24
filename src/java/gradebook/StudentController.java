@@ -24,6 +24,7 @@ public class StudentController implements Serializable {
     String studentLName; 
     String response;
     String responseDelete;
+    int studentID;
     
     StudentHelper studenthelper;
     GradebookStudentHelper gradebookStudentHelper;
@@ -63,6 +64,16 @@ public class StudentController implements Serializable {
         this.studentLName = studentLName;
     }
 
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
+    }
+    
+    
+
     public String getResponse() {
         if (studentFName != null && studentLName != null) {
             
@@ -93,18 +104,17 @@ public class StudentController implements Serializable {
     public String getResponseDelete() {
         if (studentFName != null && studentLName != null) {
             
-            int studentID = studenthelper.getStudentID();
-            student = new Student(studentFName, studentLName);
-             
-            if (gradebookStudentHelper.insertStudentToGradebook(studentID, 4383) == 1) {
+            studentID = studenthelper.getStudentID();
+            
+            if (studenthelper.deleteStudent(studentID) == 1) {
                 studentFName = null;
                 studentLName = null;
-                response = "Student Added.";
+                response = "Student Deleted.";
 
             } else {
                 studentFName = null;
                 studentLName = null;
-                response = "Student Not Added.";
+                response = "Student Not Deleted.";
             }
 
         } else {

@@ -37,7 +37,7 @@ public class GradebookController implements Serializable {
 
     // Create GradebookHelper instance
     GradebookHelper gradebookHelper;
-
+    
     // List of elements
     List<Course> courses;
     List<Semester> semesters;
@@ -61,6 +61,13 @@ public class GradebookController implements Serializable {
 
     // Tracks change
     boolean isReadyForSubmit = false;
+
+    //these fields map to components in the email.xhtml file
+    String emailAddress;
+    String emailResponse;
+
+    //this field is needed to get the id of the gradebook selected
+    private int selectedID;
 
     /**
      * Creates a new instance of GradebookController
@@ -408,11 +415,11 @@ public class GradebookController implements Serializable {
     public void setInstructorEmail(String instructorEmail) {
         this.instructorEmail = instructorEmail;
     }
-    
+
     public String addStudents() {
         return "addStudent";
     }
-    
+
     public String addAssignments() {
         return "createAssignment";
     }
@@ -420,8 +427,95 @@ public class GradebookController implements Serializable {
     public String returnHome() {
         return "index";
     }
-    
+
     public String displayBook() {
         return "displayBook";
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getEmailResponse() {
+        if (emailAddress != null) {
+            int result;
+
+            Gradebook gradebook = gradebookHelper.getGradebookID(gradebookID);
+
+            StringBuilder emailBody = new StringBuilder();
+            
+            emailBody.append("<table width=\"100%\" style=");
+            emailBody.append("\"background-color: transparent; border-spacing: 0; border-collapse:"
+                    + " collapse; border-top: 1px solid #ddd\"");
+            emailBody.append("><tbody>");
+            emailBody.append("<tr><td style=");
+            emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
+                    + "1px solid #ddd\"");
+            emailBody.append(">Gradebook ID</td><td style=");
+            emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
+                    + "1px solid #ddd\"");
+            emailBody.append(">");
+            emailBody.append(gradebook.getGradebookId());
+            emailBody.append("</td></tr>");
+            emailBody.append("<tr><td style=");
+            emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
+                    + "1px solid #ddd\"");
+            emailBody.append(">Semester</td><td style=");
+            emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
+                    + "1px solid #ddd\"");
+            emailBody.append(">");
+            emailBody.append(gradebook.getSemester());
+            emailBody.append("</td></tr>");
+            emailBody.append("<tr><td style=");
+            emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
+                    + "1px solid #ddd\"");
+            emailBody.append(">Course</td><td style=");
+            emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
+                    + "1px solid #ddd\"");
+            emailBody.append(">");
+            emailBody.append(gradebook.getCourse());
+            emailBody.append("</td></tr>");
+            emailBody.append("</tbody></table>");
+
+            String subject = " Gradebook Details";
+
+            HTMLEmailHelper emailHelper = new HTMLEmailHelper();
+
+            result = emailHelper.send(emailAddress, subject, emailBody.toString());
+
+            if (result == 1) {
+                emailAddress = null;
+                emailResponse = "Email Sent";
+                return emailResponse;
+            } else {
+
+                emailAddress = null;
+                emailResponse = "Email Not Sent";
+                return emailResponse;
+            }
+        }
+        return emailResponse;
+    }
+
+
+public void setEmailResponse(String emailResponse) {
+        this.emailResponse = emailResponse;
+    }
+
+    public int getSelectedID() {
+        return selectedID;
+    }
+
+    public void setSelectedID(int selectedID) {
+        this.selectedID = selectedID;
+    }
+    
+    public String prepareEmail(){
+        selectedID = getGradebookID();
+        return "email";
     }
 }

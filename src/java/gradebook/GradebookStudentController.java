@@ -58,6 +58,7 @@ public class GradebookStudentController implements Serializable {
     String lastName;
     int courseID;
     String response;
+    String responseDelete;
     String selectedEmail = "";
 
     String email;
@@ -303,9 +304,8 @@ public class GradebookStudentController implements Serializable {
         if (firstName != null && lastName != null) {
 
             if (studentHelper.insertStudent(firstName, lastName) == 1) {
-                
+
                 studentID = studentHelper.getStudentID(firstName, lastName).getStudentId();
-                //gradebookID = 4419;
 
                 if (gradebookStudentHelper.insertStudentToGradebook(studentID, gradebookID) == 1) {
                     firstName = null;
@@ -335,6 +335,38 @@ public class GradebookStudentController implements Serializable {
 
     public void setResponse(String response) {
         this.response = response;
+    }
+
+    public String getResponseDelete() {
+        
+        // Gets the student object and then the studentID of that student object
+        studentID = studentHelper.getStudentID(firstName, lastName).getStudentId();
+      
+            if (gradebookStudentHelper.deleteStudentFromGradebook(studentID, gradebookID) == 1) {
+
+                if (studentHelper.deleteStudent(studentID) == 1) {
+                    firstName = null;
+                    lastName = null;
+                    responseDelete = "Student Deleted.";
+                    return responseDelete;
+
+                } else {
+                    firstName = null;
+                    lastName = null;
+                    responseDelete = "Student Not Deleted.";
+                    return responseDelete;
+                }
+
+            } else {
+                responseDelete = "Delete student failed!";
+                firstName = null;
+                lastName = null;
+                return responseDelete;
+            }
+        }
+
+    public void setResponseDelete(String responseDelete) {
+        this.responseDelete = responseDelete;
     }
 
     public String getEmail() {
@@ -380,6 +412,4 @@ public class GradebookStudentController implements Serializable {
         this.lastName = lastName;
     }
 
-    
-    
 }

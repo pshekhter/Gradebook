@@ -80,5 +80,37 @@ public class GradebookStudentHelper {
         return result;
     }
 
+    public int deleteStudentFromGradebook(int studentID, int gradebookID) {
+
+        // Initialize result value
+        int result = 0;
+
+        // Delete student
+        String sql = "DELETE FROM Gradebook_Student "
+                + "WHERE studentID = :student_id and gradebookID = :gradebook_id)";
+
+        try {
+            // Initialize transaction if none initialized
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            // Create SQL query
+            SQLQuery query = session.createSQLQuery(sql);
+
+            query.addEntity(GradebookStudent.class);
+
+            query.setParameter("student_id", studentID);
+            query.setParameter("gradebook_id", gradebookID);
+
+            result = query.executeUpdate();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 
 }

@@ -19,7 +19,7 @@
                     <h:outputText value="Adding to Gradebook #{gradebookStudentController.gradebookID}..." style="font-weight: bold" />
 
 
-                   <h:outputText value="Create Student"/>
+                   <!--<h:outputText value="Create Student"/>
 
 
                     <h:outputText value="Student First Name: "/>
@@ -36,7 +36,23 @@
                     <h:commandButton value="Clear" type="reset" />
 
 
-                    <h:outputText escape="false" value="#{gradebookStudentController.response}" />
+                    <h:outputText escape="false" value="#{gradebookStudentController.response}" />-->
+                   
+                   <h:outputText value="Delete Student"/>
+
+
+                    <h:outputText value="Student Name: "/>
+                    <h:selectOneMenu value="#{gradebookStudentController.studentID}"
+                                     onchange="submit()">
+                        <f:selectItems value="#{gradebookStudentController.studentValues}" var="s"
+                                       itemLabel="#{s.studentFname} #{s.studentLname}" itemValue="#{s.studentId}" />
+                    </h:selectOneMenu>
+
+                    <h:commandButton id="submit" value="Submit" action="addStudent" />
+                    <h:commandButton value="Clear" type="reset" />
+
+
+                    <h:outputText escape="false" value="#{gradebookStudentController.responseDelete}" />
  
                 </h:panelGrid>
             </h:form> 
