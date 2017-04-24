@@ -129,6 +129,7 @@
                                                value="View Assignments from Gradebook #{gId.gradebookId}">
                                     <f:setPropertyActionListener target="#{gradebookAssignmentController.gradebookId}"
                                                                  value="#{gId.gradebookId}" />
+                                    <f:setPropertyActionListener target="#{studentAssignmentController.firstRun}" value="true" />
                                 </h:commandLink>
 
                             </h:column>

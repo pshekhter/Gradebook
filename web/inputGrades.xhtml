@@ -37,12 +37,9 @@
                 </h:commandButton>
 
                 <h:commandButton id="returnToStudents" value="Return to Student List" action="#{studentAssignmentController.returnToStudentList}">
-                    <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{studentAssignmentController.gradebookId}" />
-                    <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
                     <f:setPropertyActionListener target="#{studentAssignmentController.readyToRefresh}" value="true" />
-                    <f:setPropertyActionListener target="#{studentAssignmentController.modifyGrade}" value="#{studentAssignmentController.modifyGrade}" />
-                    <f:setPropertyActionListener target="#{studentAssignmentController.firstRun}" value="#{studentAssignmentController.firstRun}" />
-                    <f:setPropertyActionListener target="#{studentAssignmentController.grade}" value="#{studentAssignmentController.grade}" />
+                    <f:setPropertyActionListener target="#{studentAssignmentController.firstRun}" value="false" />
+                    <f:setPropertyActionListener target="#{studentAssignmentController.isModified}" value="true" />
                 </h:commandButton>
             </h:form>
             <h:outputText escape="false" value="#{studentAssignmentController.gradeResponse}" />

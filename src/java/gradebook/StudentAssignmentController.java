@@ -64,12 +64,14 @@ public class StudentAssignmentController implements Serializable {
 
     boolean readyToRefresh;
     boolean firstRun = true;
+    boolean isModified = false;
 
     public StudentAssignmentController() {
         helper = new StudentAssignmentHelper();
         sh = new StudentHelper();
         gah = new GradebookAssignmentHelper();
         modifyGrade = 0;
+        readyToRefresh = false;
     }
 
     public DataModel getStudentValues() {
@@ -297,16 +299,9 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public int getGrade() {
-        if ((readyToRefresh) || (firstRun)) {
+        if (firstRun || (readyToRefresh && isModified)) {
             gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
 
-            StudentAssignment said = helper.getStudentAssignment(student, gaid);
-            if (said != null) {
-                int saId = said.getStudentAssignmentId();
-                grade = helper.getGrade(saId).getStudentAssignmentGrade();
-                firstRun = false;
-                readyToRefresh = true;
-            }
         }
         return grade;
     }
@@ -332,19 +327,27 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public String getGradeResponse() {
-        if ((readyToRefresh) && (modifyGrade != grade)) {
+        if ((readyToRefresh) && (isModified)) {
             if ((modifyGrade < 0) || (modifyGrade > 100)) {
                 gradeResponse = "Error: invalid grade.";
             } else {
+                firstRun = true;
+
                 changeGradeResult = changeGrade(modifyGrade, student);
                 if (changeGradeResult == -1) {
                     gradeResponse = "";
+                    readyToRefresh = false;
                 } else {
                     gradeResponse = "Grade updated.";
                     readyToRefresh = false;
                     firstRun = true;
+                    if (isModified) {
+                        isModified = false;
+                    }
+
                 }
             }
+
         } else {
             gradeResponse = "";
         }
@@ -365,24 +368,28 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public String viewModifyGrade() {
+        gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+
+        StudentAssignment said = helper.getStudentAssignment(student, gaid);
+        if (said != null) {
+            int saId = said.getStudentAssignmentId();
+            grade = helper.getGrade(saId).getStudentAssignmentGrade();
+        }
+
         return "inputGrades";
     }
 
     public int returnStudentGrade(int student) {
-        if (readyToRefresh || firstRun) {
-            gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
-
-            StudentAssignment said = helper.getStudentAssignment(student, gaid);
-            if (said != null) {
-                int saId = said.getStudentAssignmentId();
-                if (helper.getGrade(saId).getStudentAssignmentGrade() == null) {
-                    grade = 0;
-                } else {
+        if (firstRun) {
+            grade = getInitialGrade(student);
+        } else {
+            if (readyToRefresh && isModified) {
+                gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+                StudentAssignment said = helper.getStudentAssignment(student, gaid);
+                if (said != null) {
+                    int saId = said.getStudentAssignmentId();
                     grade = helper.getGrade(saId).getStudentAssignmentGrade();
                 }
-            }
-            if (readyToRefresh) {
-                readyToRefresh = false;
             }
         }
         return grade;
@@ -392,12 +399,10 @@ public class StudentAssignmentController implements Serializable {
     public int changeGrade(int newGrade, int student) {
         gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
 
-        if ((modifyGrade != grade) && (readyToRefresh)) {
+        if (readyToRefresh) {
             StudentAssignment sa = helper.getStudentAssignment(student, gaid);
             int said = sa.getStudentAssignmentId();
             changeGradeResult = helper.changeGrade(said, modifyGrade);
-            grade = helper.getGrade(said).getStudentAssignmentGrade();
-            firstRun = false;
         } else {
             changeGradeResult = -1;
         }
@@ -406,6 +411,9 @@ public class StudentAssignmentController implements Serializable {
 
     public String inputGrade() {
         readyToRefresh = true;
+        firstRun = false;
+        isModified = true;
+        grade = modifyGrade;
         return "inputGrades";
     }
 
@@ -418,8 +426,7 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public String returnToStudentList() {
-        grade = 0;
-        modifyGrade = 0;
+        firstRun = true;
         return "viewStudents";
     }
 
@@ -429,6 +436,30 @@ public class StudentAssignmentController implements Serializable {
 
     public void setFirstRun(boolean firstRun) {
         this.firstRun = firstRun;
+    }
+
+    public boolean isIsModified() {
+        return isModified;
+    }
+
+    public void setIsModified(boolean isModified) {
+        this.isModified = isModified;
+    }
+
+    public int getInitialGrade(int sid) {
+        if ((readyToRefresh && isModified)) {
+            gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+
+            StudentAssignment said = helper.getStudentAssignment(sid, gaid);
+            if (said != null) {
+                int saId = said.getStudentAssignmentId();
+                grade = helper.getGrade(saId).getStudentAssignmentGrade();
+
+            }
+
+        }
+        return grade;
+
     }
 
 }

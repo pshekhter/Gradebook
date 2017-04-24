@@ -1,4 +1,6 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `gradebook` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `gradebook`;
+-- MySQL dump 10.13  Distrib 5.7.12, for Win32 (AMD64)
 --
 -- Host: 127.0.0.1    Database: gradebook
 -- ------------------------------------------------------
@@ -50,7 +52,7 @@ CREATE TABLE `course` (
   `COURSE_ID` int(11) NOT NULL AUTO_INCREMENT,
   `COURSE_NAME` varchar(45) NOT NULL,
   PRIMARY KEY (`COURSE_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=401 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=414 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,7 +61,7 @@ CREATE TABLE `course` (
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (284,'Database Design and Development'),(300,'Application Development and Design'),(400,'Histroy Trends and Ethics');
+INSERT INTO `course` VALUES (284,'Database Design and Development'),(300,'Application Development and Design'),(400,'Histroy Trends and Ethics'),(401,'Algorithms 1'),(402,'Algorithms 2'),(403,'Data Structures'),(404,'Introduction to Computer Science'),(405,'Introduction to C++'),(406,'Cybersecurity'),(407,'IPv6'),(408,'Networking'),(409,'Cryptography'),(410,'Computer Ethics'),(411,'Advanced Programming Techniques'),(412,'Research'),(413,'Seminar');
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,7 +140,7 @@ CREATE TABLE `gradebook_student` (
   KEY `STUDENT_GRADEBOOK_FK` (`GRADEBOOK_ID`),
   CONSTRAINT `GRADEBOOK_STUDENT_FK` FOREIGN KEY (`STUDENT_ID`) REFERENCES `student` (`STUDENT_ID`),
   CONSTRAINT `STUDENT_GRADEBOOK_FK` FOREIGN KEY (`GRADEBOOK_ID`) REFERENCES `gradebook` (`GRADEBOOK_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -147,7 +149,7 @@ CREATE TABLE `gradebook_student` (
 
 LOCK TABLES `gradebook_student` WRITE;
 /*!40000 ALTER TABLE `gradebook_student` DISABLE KEYS */;
-INSERT INTO `gradebook_student` VALUES (6,7588,4435),(7,7589,4435),(8,7590,4435),(9,7592,4439),(10,7593,4435),(11,7594,4435),(12,7595,4435),(13,7596,4435),(14,7597,4435),(15,7598,4435),(16,7599,4435),(17,7600,4435),(18,7601,4436),(19,7602,4455),(20,7603,4455),(21,7604,4455);
+INSERT INTO `gradebook_student` VALUES (6,7588,4435),(7,7589,4435),(8,7590,4435),(9,7592,4439),(10,7593,4435),(11,7594,4435),(12,7595,4435),(13,7596,4435),(14,7597,4435),(15,7598,4435),(16,7599,4435),(17,7600,4435),(18,7601,4436),(19,7602,4455),(20,7603,4455),(21,7604,4455),(22,7605,4439);
 /*!40000 ALTER TABLE `gradebook_student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,7 +242,7 @@ CREATE TABLE `student` (
   `STUDENT_FNAME` varchar(45) NOT NULL,
   `STUDENT_LNAME` varchar(45) NOT NULL,
   PRIMARY KEY (`STUDENT_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7605 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7606 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,7 +251,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (7588,'Pavel','Shekhter'),(7589,'Allison','Heuwetter'),(7590,'Kris','Matthews'),(7592,'Thomas','Unbar'),(7593,'Yuri','Gagarin'),(7594,'Kevin','Smith'),(7595,'Gregory','Powers'),(7596,'Ichigo','Miyamoto'),(7597,'Harry','Matthews'),(7598,'Ryan','Bolton'),(7599,'Kathleen','Smith'),(7600,'Hebu','Isu'),(7601,'Ben','Urun'),(7602,'First Name 1','Last Name 1'),(7603,'First Name 2','Last Name 2'),(7604,'First Name 3','Last Name 3');
+INSERT INTO `student` VALUES (7588,'Pavel','Shekhter'),(7589,'Allison','Heuwetter'),(7590,'Kris','Matthews'),(7592,'Thomas','Unbar'),(7593,'Yuri','Gagarin'),(7594,'Kevin','Smith'),(7595,'Gregory','Powers'),(7596,'Ichigo','Miyamoto'),(7597,'Harry','Matthews'),(7598,'Ryan','Bolton'),(7599,'Kathleen','Smith'),(7600,'Hebu','Isu'),(7601,'Ben','Urun'),(7602,'First Name 1','Last Name 1'),(7603,'First Name 2','Last Name 2'),(7604,'First Name 3','Last Name 3'),(7605,'Ulrich','Stern');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -272,7 +274,7 @@ CREATE TABLE `student_assignment` (
   CONSTRAINT `ASSIGNMENT_STUDENT_FK` FOREIGN KEY (`STUDENT_ID`) REFERENCES `student` (`STUDENT_ID`),
   CONSTRAINT `GRADEBOOK_ASSIGNMENT_ID` FOREIGN KEY (`GRADEBOOK_ASSIGNMENT_ID`) REFERENCES `gradebook_assignment` (`GRADEBOOK_ASSIGNMENT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `STUDENT_ID` FOREIGN KEY (`STUDENT_ID`) REFERENCES `gradebook_student` (`STUDENT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -281,7 +283,7 @@ CREATE TABLE `student_assignment` (
 
 LOCK TABLES `student_assignment` WRITE;
 /*!40000 ALTER TABLE `student_assignment` DISABLE KEYS */;
-INSERT INTO `student_assignment` VALUES (29,7589,0,8),(30,7588,0,8),(32,7590,0,8),(33,7602,80,17),(34,7603,0,17),(35,7604,0,17);
+INSERT INTO `student_assignment` VALUES (29,7589,0,8),(30,7588,0,8),(32,7590,0,8),(33,7602,80,17),(34,7603,0,17),(35,7604,0,17),(36,7592,85,16);
 /*!40000 ALTER TABLE `student_assignment` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -294,4 +296,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-20  9:13:07
+-- Dump completed on 2017-04-23 23:50:37
