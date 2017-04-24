@@ -198,4 +198,34 @@ public class StudentHelper {
         return result;
     }
 
+    public Student getStudent(int sid) {
+
+        List<Student> studentList = null;
+
+        String sql = "select * from student WHERE student_id = :sid";
+
+        try {
+
+            if (!this.session.getTransaction().isActive()) {
+                session.beginTransaction();
+            }
+
+            SQLQuery q = session.createSQLQuery(sql);
+
+            q.addEntity(Student.class);
+            q.setParameter("sid", sid);
+
+            studentList = (List<Student>) q.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(studentList.size() == 1) {
+            return studentList.get(0);
+        } else {
+            return null;
+        }
+    }
+
 }

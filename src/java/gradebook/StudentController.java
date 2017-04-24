@@ -129,4 +129,7 @@ public class StudentController implements Serializable {
     
     
     
+    public String goHome() {
+        return "index";
+    }
 }

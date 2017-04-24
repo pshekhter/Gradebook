@@ -10,9 +10,10 @@
 
         <ui:define name="content">
             <h:form id="createStudentForm">
-                <h:panelGrid columns="1">
+                <h:panelGrid columns="2">
 
                     <h:outputText id="modify_form_instructor" value="Instructor" />
+<<<<<<< HEAD
                             <h:inputText id="modify_form_input_instructor" value="#{gradebookController.selectedEmail}" disabled="true" />    
                         
                     <h:outputText value="Gradebook" />
@@ -20,20 +21,30 @@
 
 
                    <!--<h:outputText value="Create Student"/>
+=======
+                    <h:inputText id="modify_form_input_instructor" value="#{gradebookController.selectedEmail}" disabled="true" />    
+>>>>>>> 3c9c1d8a8e63683ae4ad02b3944d21250803d3a8
 
+                    <h:outputText value="Adding to Gradebook: " />
+                    <h:inputText id="gradebookInput" value="#{gradebookStudentController.gradebookID}" disabled="true" />
 
                     <h:outputText value="Student First Name: "/>
                     <h:inputText id="First" value="#{gradebookStudentController.firstName}" size="50" maxlength="255"
                                  required="true" label="First Name"/>
-                    <h:message for="First" style="color: red; font-size: 0.7em" />
 
                     <h:outputText value="Student Last Name: "/>
                     <h:inputText id="Last" value="#{gradebookStudentController.lastName}" size="50" maxlength="255"
                                  required="true" label="Last Name" />
-                    <h:message for="Last" style="color: red; font-size: 0.7em" />
 
                     <h:commandButton id="submit" value="Submit" action="addStudent" />
                     <h:commandButton value="Clear" type="reset" />
+
+                    <h:commandButton id="goToAssign" value="Assign to Student" action="#{studentAssignmentController.assignToStudent}">
+                        <f:setPropertyActionListener target="#{studentAssignmentController.assignmentName}" value="#{gradebookAssignmentController.assignmentName}" />
+                        <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
+                        <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{gradebookStudentController.gradebookID}" />
+                    </h:commandButton>
+
 
 
                     <h:outputText escape="false" value="#{gradebookStudentController.response}" />-->

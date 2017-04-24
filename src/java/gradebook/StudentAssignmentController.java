@@ -36,14 +36,18 @@ public class StudentAssignmentController implements Serializable {
     StudentHelper sh;
     GradebookAssignmentHelper gah;
 
-    int studentID;
     int student;
     int assignment;
+    int modifyGrade;
     String studentFName;
     String studentLName;
     String assignmentName;
     String response;
     int grade;
+
+    int changeGradeResult = 0;
+
+    String gradeResponse;
 
     int gradebookId;
     int previousGradebookId = 0;
@@ -53,16 +57,21 @@ public class StudentAssignmentController implements Serializable {
     // String for addStudentAssignment form
     String studentName;
 
+    int gaid;
+
     List<Student> assignmentStudents;
     List<Student> gradebookStudents;
 
     boolean readyToRefresh;
+    boolean firstRun = true;
+    boolean isModified = false;
 
     public StudentAssignmentController() {
         helper = new StudentAssignmentHelper();
         sh = new StudentHelper();
         gah = new GradebookAssignmentHelper();
-        readyToRefresh = true;
+        modifyGrade = 0;
+        readyToRefresh = false;
     }
 
     public DataModel getStudentValues() {
@@ -97,14 +106,6 @@ public class StudentAssignmentController implements Serializable {
         this.assignmentStudentValues = assignmentStudentValues;
     }
 
-    public int getStudentID() {
-        return studentID;
-    }
-
-    public void setStudentID(int studentID) {
-        this.studentID = studentID;
-    }
-
     public int getStudent() {
         return student;
     }
@@ -122,6 +123,9 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public String getStudentFName() {
+        if (sh.getStudent(student) != null) {
+            studentFName = sh.getStudent(student).getStudentFname();
+        }
         return studentFName;
     }
 
@@ -130,6 +134,9 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public String getStudentLName() {
+        if (sh.getStudent(student) != null) {
+            studentLName = sh.getStudent(student).getStudentLname();
+        }
         return studentLName;
     }
 
@@ -153,9 +160,9 @@ public class StudentAssignmentController implements Serializable {
         if ((student != 0) && (readyToSubmit)) {
 
             if ((gah.getGradebookAssignmentsFromGradebookId(gradebookId) != null) && (gah.getGradebookAssignmentsFromGradebookId(gradebookId).size() != 0)) {
-                int gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+                gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
                 if (gaid != 0) {
-                    if (helper.insertStudentToAssignment(student, gaid) == 1) {
+                    if (helper.insertStudentToAssignment(student, gaid, grade) == 1) {
                         studentName = null;
                         student = 0;
                         response = "Student added to assignment";
@@ -186,7 +193,7 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public List<Student> getAssignmentStudents() {
-        int gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+        gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
         if (gaid != 0) {
             List<StudentAssignment> stua = helper.getStudentAssignmentList(gaid);
             List<Student> studentList = null;
@@ -260,15 +267,13 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public DataModel getGradebookStudentValues() {
-        if ((gradebookId != 0) && (gradebookId != previousGradebookId)) {
-            List<Student> stu = helper.getStudentsFromGradebook(gradebookId);
-            if (stu.size() != 0) {
-                if ((gradebookStudentValues == null) || !(stu.equals(gradebookStudents))) {
-                    gradebookStudents = stu;
-                    gradebookStudentValues = new ListDataModel(gradebookStudents);
-                }
+        List<Student> stu = helper.getStudentsFromGradebook(gradebookId);
+
+        if (stu.size() != 0) {
+            if ((gradebookStudentValues == null) || !(stu.equals(gradebookStudents))) {
+                gradebookStudents = stu;
+                gradebookStudentValues = new ListDataModel(gradebookStudents);
             }
-            previousGradebookId = gradebookId;
         }
         return gradebookStudentValues;
     }
@@ -294,9 +299,9 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public int getGrade() {
-        if (helper.getStudentAssignmentId(student, grade) != 0) {
-            int gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
-            grade = helper.getGrade(helper.getStudentAssignmentId(student, gaid));
+        if (firstRun || (readyToRefresh && isModified)) {
+            gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+
         }
         return grade;
     }
@@ -319,6 +324,142 @@ public class StudentAssignmentController implements Serializable {
 
     public void setPreviousGradebookId(int previousGradebookId) {
         this.previousGradebookId = previousGradebookId;
+    }
+
+    public String getGradeResponse() {
+        if ((readyToRefresh) && (isModified)) {
+            if ((modifyGrade < 0) || (modifyGrade > 100)) {
+                gradeResponse = "Error: invalid grade.";
+            } else {
+                firstRun = true;
+
+                changeGradeResult = changeGrade(modifyGrade, student);
+                if (changeGradeResult == -1) {
+                    gradeResponse = "";
+                    readyToRefresh = false;
+                } else {
+                    gradeResponse = "Grade updated.";
+                    readyToRefresh = false;
+                    firstRun = true;
+                    if (isModified) {
+                        isModified = false;
+                    }
+
+                }
+            }
+
+        } else {
+            gradeResponse = "";
+        }
+        return this.gradeResponse;
+    }
+
+    public void setGradeResponse(String gradeResponse) {
+        this.gradeResponse = gradeResponse;
+    }
+
+    public int getGaid() {
+        setGaid(helper.getGradebookAssignmentId(gradebookId, assignment));
+        return gaid;
+    }
+
+    public void setGaid(int gaid) {
+        this.gaid = gaid;
+    }
+
+    public String viewModifyGrade() {
+        gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+
+        StudentAssignment said = helper.getStudentAssignment(student, gaid);
+        if (said != null) {
+            int saId = said.getStudentAssignmentId();
+            grade = helper.getGrade(saId).getStudentAssignmentGrade();
+        }
+
+        return "inputGrades";
+    }
+
+    public int returnStudentGrade(int student) {
+        if (firstRun) {
+            grade = getInitialGrade(student);
+        } else {
+            if (readyToRefresh && isModified) {
+                gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+                StudentAssignment said = helper.getStudentAssignment(student, gaid);
+                if (said != null) {
+                    int saId = said.getStudentAssignmentId();
+                    grade = helper.getGrade(saId).getStudentAssignmentGrade();
+                }
+            }
+        }
+        return grade;
+
+    }
+
+    public int changeGrade(int newGrade, int student) {
+        gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+
+        if (readyToRefresh) {
+            StudentAssignment sa = helper.getStudentAssignment(student, gaid);
+            int said = sa.getStudentAssignmentId();
+            changeGradeResult = helper.changeGrade(said, modifyGrade);
+        } else {
+            changeGradeResult = -1;
+        }
+        return changeGradeResult;
+    }
+
+    public String inputGrade() {
+        readyToRefresh = true;
+        firstRun = false;
+        isModified = true;
+        grade = modifyGrade;
+        return "inputGrades";
+    }
+
+    public int getModifyGrade() {
+        return modifyGrade;
+    }
+
+    public void setModifyGrade(int modifyGrade) {
+        this.modifyGrade = modifyGrade;
+    }
+
+    public String returnToStudentList() {
+        firstRun = true;
+        return "viewStudents";
+    }
+
+    public boolean isFirstRun() {
+        return firstRun;
+    }
+
+    public void setFirstRun(boolean firstRun) {
+        this.firstRun = firstRun;
+    }
+
+    public boolean isIsModified() {
+        return isModified;
+    }
+
+    public void setIsModified(boolean isModified) {
+        this.isModified = isModified;
+    }
+
+    public int getInitialGrade(int sid) {
+        if ((readyToRefresh && isModified)) {
+            gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+
+            StudentAssignment said = helper.getStudentAssignment(sid, gaid);
+            if (said != null) {
+                int saId = said.getStudentAssignmentId();
+                grade = helper.getGrade(saId).getStudentAssignmentGrade();
+
+            }
+
+        }
+        return grade;
+
     }
 
 }

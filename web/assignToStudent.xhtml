@@ -12,12 +12,18 @@
 
             <h:form id="assignToStudentForm">
                 <h:panelGrid columns="2">
+                    <h:outputText id="gradebookText" value="Gradebook ID: " />
+                    <h:inputText id="gradebookInput" value="#{studentAssignmentController.gradebookId}" disabled="true" />
+
 
                     <h:outputText value="Assignment Name: " />
                     <h:inputText id="assignment" value="#{studentAssignmentController.assignmentName}" disabled="true" />
+                    
+                    <h:outputText value="Grade: " />
+                    <h:inputText id="inputGrade" value="#{studentAssignmentController.grade}" />
 
                     <h:outputText value="Student: " />
-                    <h:selectOneMenu value="#{studentAssignmentController.studentID}"
+                    <h:selectOneMenu value="#{studentAssignmentController.student}"
                                      valueChangeListener="#{studentAssignmentController.studentIdValueChanged}"
                                      onchange="submit()">
                         <f:selectItems value="#{studentAssignmentController.gradebookStudentValues}" var="s"
@@ -32,7 +38,7 @@
                         <f:setPropertyActionListener target="#{gradebookAssignmentController.gradebookId}" value="#{studentAssignmentController.gradebookId}" />
                         <f:setPropertyActionListener target="#{studentAssignmentController.previousGradebookId}" value="#{studentAssignmentController.previousGradebookId}" />
                     </h:commandButton>
-                    
+
                     <h:outputText id="assignToStudentText" value="#{studentAssignmentController.response}" />
 
                 </h:panelGrid>

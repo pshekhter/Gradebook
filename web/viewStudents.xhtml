@@ -36,15 +36,27 @@
                                     
                                     <h:column>
                                         <f:facet name="header">Grade</f:facet>
-                                        #{studentAssignmentController.grade}
+                                        <h:outputText id="grade" value="#{studentAssignmentController.returnStudentGrade(sId.studentId)}" />
+                                    </h:column>
+                                                                        
+                                    <h:column>
+                                        <f:facet name="header">Modify Grade</f:facet>
+                                        <h:commandLink id="viewModifyGrade" value="Modify Grade" action="#{studentAssignmentController.viewModifyGrade}">
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{studentAssignmentController.gradebookId}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.student}" value="#{sId.studentId}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.readyToRefresh}" value="false" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.modifyGrade}" value="#{studentAssignmentController.modifyGrade}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.firstRun}" value="true" />
+                                        </h:commandLink>
                                     </h:column>
 
                                 </h:dataTable>
 
                             </div>
-                            <h:commandLink value="Return to Assignment" action="#{studentAssignmentController.returnToAssignment}">
+                            <h:commandButton value="Return to Assignment" action="#{studentAssignmentController.returnToAssignment}">
                                 <f:setPropertyActionListener target="#{studentAssignmentController.readyToRefresh}" value="true" />
-                            </h:commandLink>
+                            </h:commandButton>
 
                         </h:panelGrid>
                     </h:form>
