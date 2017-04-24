@@ -145,12 +145,10 @@
                             </h:column>
 
                             <h:column>
-                                <f:facet name="header">Display Gradebook</f:facet>
-                                <h:commandLink action="#{gradebookController.displayBook}"
-                                               value="Display Gradebook">
-                                    <f:setPropertyActionListener target="#{gradebookAssignmentController.gradebookId}"
-                                                                 value="#{gId.gradebookId}" />
-                                    <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}"
+                                <f:facet name="header">Email Gradebook</f:facet>
+                                <h:commandLink action="#{gradebookController.prepareEmail}"
+                                               value="Email">
+                                    <f:setPropertyActionListener target="#{gradebookController.gradebookID}"
                                                                  value="#{gId.gradebookId}" />
                                 </h:commandLink>
                             </h:column>

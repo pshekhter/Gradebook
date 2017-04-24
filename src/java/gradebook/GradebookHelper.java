@@ -487,7 +487,7 @@ public class GradebookHelper {
     public Gradebook getGradebookID (int gradebookID){
         Gradebook gradebook = null;
         
-        String sql = "SELECT * FROM gradebook WHERE gradebookId = :id";
+        String sql = "SELECT * FROM gradebook WHERE GRADEBOOK_ID = :id";
 
         try {
             // Begin new transaction if we have an inactive one
