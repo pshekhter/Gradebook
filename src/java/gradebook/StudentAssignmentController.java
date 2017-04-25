@@ -52,6 +52,7 @@ public class StudentAssignmentController implements Serializable {
     int gradebookId;
     int previousGradebookId = 0;
     int resultGrade;
+    int currentSaid;
 
     boolean readyToSubmit;
 
@@ -412,6 +413,7 @@ public class StudentAssignmentController implements Serializable {
         if (readyToRefresh) {
             StudentAssignment sa = helper.getStudentAssignment(student, gaid);
             int said = sa.getStudentAssignmentId();
+            currentSaid = said;
             changeGradeResult = helper.changeGrade(said, modifyGrade);
         } else {
             changeGradeResult = -1;
@@ -473,16 +475,26 @@ public class StudentAssignmentController implements Serializable {
     }
 
     public int getResultGrade(int student) {
-        if (firstRun) {
+        this.student = student;
+        return this.getResultGrade();
+    }
+
+    public int getResultGrade() {
+        if (firstRun || (readyToRefresh && isModified)) {
             resultGrade = returnStudentGrade(student);
             gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
 
             StudentAssignment said = helper.getStudentAssignment(student, gaid);
             if (said != null) {
-                int saId = said.getStudentAssignmentId();
-                int val = helper.getGrade(saId).getStudentAssignmentGrade();
-                if ((val != modifyGrade) && isModified) {
-                    resultGrade = modifyGrade;
+                if (said.getStudentAssignmentId() == currentSaid) {
+                    int saId = said.getStudentAssignmentId();
+                    int val = helper.getGrade(saId).getStudentAssignmentGrade();
+                    if ((val != modifyGrade) && isModified) {
+                        resultGrade = modifyGrade;
+                    }
+
+                    readyToRefresh = false;
+                    isModified = false;
                 }
             }
 
@@ -494,6 +506,14 @@ public class StudentAssignmentController implements Serializable {
 
     public void setResultGrade(int resultGrade) {
         this.resultGrade = resultGrade;
+    }
+
+    public int getCurrentSaid() {
+        return currentSaid;
+    }
+
+    public void setCurrentSaid(int currentSaid) {
+        this.currentSaid = currentSaid;
     }
 
 }
