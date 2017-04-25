@@ -44,12 +44,15 @@
                             </li>
                         </h:form>
                         <li><h:link value="Create Gradebook" outcome="createBook"></h:link></li>
+<<<<<<< HEAD
                         <li><h:link value="Modify Gradebook" outcome="modifyBook"></h:link></li>
                         <li><h:link value="Create Assignment" outcome="createAssignment"></h:link></li>
                         <li><h:link value="Email Grades" outcome="emailGrades"></h:link></li>
                         <li><h:link value="Email" outcome="email"></h:link></li>
                         <li><h:link value="Delete Students" outcome="deleteStudents"></h:link></li>
 
+=======
+>>>>>>> 5f1155dc548d4f4ac713cf9ed36ca5b10d680f40
                     </ul>
                 </div>
             </div>
@@ -147,12 +150,10 @@
                             </h:column>
 
                             <h:column>
-                                <f:facet name="header">Display Gradebook</f:facet>
-                                <h:commandLink action="#{gradebookController.displayBook}"
-                                               value="Display Gradebook">
-                                    <f:setPropertyActionListener target="#{gradebookAssignmentController.gradebookId}"
-                                                                 value="#{gId.gradebookId}" />
-                                    <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}"
+                                <f:facet name="header">Email Gradebook</f:facet>
+                                <h:commandLink action="#{gradebookController.prepareEmail}"
+                                               value="Email">
+                                    <f:setPropertyActionListener target="#{gradebookController.gradebookID}"
                                                                  value="#{gId.gradebookId}" />
                                 </h:commandLink>
                             </h:column>

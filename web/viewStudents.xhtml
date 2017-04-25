@@ -36,7 +36,7 @@
                                     
                                     <h:column>
                                         <f:facet name="header">Grade</f:facet>
-                                        <h:outputText id="grade" value="#{studentAssignmentController.returnStudentGrade(sId.studentId)}" />
+                                        <h:outputText id="grade" value="#{studentAssignmentController.getResultGrade(sId.studentId)}" />
                                     </h:column>
                                                                         
                                     <h:column>
@@ -46,8 +46,10 @@
                                             <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
                                             <f:setPropertyActionListener target="#{studentAssignmentController.student}" value="#{sId.studentId}" />
                                             <f:setPropertyActionListener target="#{studentAssignmentController.readyToRefresh}" value="false" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.isModified}" value="false" />
                                             <f:setPropertyActionListener target="#{studentAssignmentController.modifyGrade}" value="#{studentAssignmentController.modifyGrade}" />
                                             <f:setPropertyActionListener target="#{studentAssignmentController.firstRun}" value="true" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.grade}" value="#{studentAssignmentController.grade}" />
                                         </h:commandLink>
                                     </h:column>
 

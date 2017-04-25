@@ -482,11 +482,7 @@ public class GradebookController implements Serializable {
             emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
                     + "1px solid #ddd\"");
             emailBody.append(">");
-<<<<<<< HEAD
             emailBody.append(semesterName);
-=======
-            emailBody.append(gradebook.getSemester().getSemesterName());
->>>>>>> 5f1155dc548d4f4ac713cf9ed36ca5b10d680f40
             emailBody.append("</td></tr>");
             emailBody.append("<tr><td style=");
             emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
@@ -495,11 +491,7 @@ public class GradebookController implements Serializable {
             emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
                     + "1px solid #ddd\"");
             emailBody.append(">");
-<<<<<<< HEAD
             emailBody.append(courseName);
-=======
-            emailBody.append(gradebook.getCourse().getCourseName());
->>>>>>> 5f1155dc548d4f4ac713cf9ed36ca5b10d680f40
             emailBody.append("</td></tr>");
             emailBody.append("</tbody></table>");
 
