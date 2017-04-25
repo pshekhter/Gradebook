@@ -338,9 +338,9 @@ public class GradebookStudentController implements Serializable {
     }
 
     public String getResponseDelete() {
-        
+     
         // Gets the student object and then the studentID of that student object
-        studentID = studentHelper.getStudentID(firstName, lastName).getStudentId();
+        studentID = studentHelper.getStudentID();
       
             if (gradebookStudentHelper.deleteStudentFromGradebook(studentID, gradebookID) == 1) {
 

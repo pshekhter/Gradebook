@@ -44,6 +44,7 @@ public class GradebookController implements Serializable {
     List<Instructor> instructors;
     List<Gradebook> gradebooks;
     List<Gradebook> instructorGradebooks;
+    List<Student> students;
 
     // Stores the currently selected gradebook ID for passing
     int gradebookID;
@@ -174,6 +175,16 @@ public class GradebookController implements Serializable {
     public void setSemester(String semester) {
         this.semesterName = semester;
     }
+
+    public String getSemesterName() {
+        return semesterName;
+    }
+
+    public void setSemesterName(String semesterName) {
+        this.semesterName = semesterName;
+    }
+    
+    
 
     /**
      * Get all instructors.
@@ -431,6 +442,10 @@ public class GradebookController implements Serializable {
     public String displayBook() {
         return "displayBook";
     }
+    
+    public String deleteStudents() {
+        return "deleteStudents";
+    }
 
     public String getEmailAddress() {
         return emailAddress;
@@ -441,10 +456,9 @@ public class GradebookController implements Serializable {
     }
 
     public String getEmailResponse() {
+
         if (emailAddress != null) {
             int result;
-
-            Gradebook gradebook = gradebookHelper.getGradebookID(gradebookID);
 
             StringBuilder emailBody = new StringBuilder();
             
@@ -459,7 +473,7 @@ public class GradebookController implements Serializable {
             emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
                     + "1px solid #ddd\"");
             emailBody.append(">");
-            emailBody.append(gradebook.getGradebookId());
+            emailBody.append(gradebookID);
             emailBody.append("</td></tr>");
             emailBody.append("<tr><td style=");
             emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
@@ -468,7 +482,7 @@ public class GradebookController implements Serializable {
             emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
                     + "1px solid #ddd\"");
             emailBody.append(">");
-            emailBody.append(gradebook.getSemester());
+            emailBody.append(semesterName);
             emailBody.append("</td></tr>");
             emailBody.append("<tr><td style=");
             emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
@@ -477,11 +491,11 @@ public class GradebookController implements Serializable {
             emailBody.append("\"padding: .5em 1em; vertical-allign: top; text-align: left; border-bottom:"
                     + "1px solid #ddd\"");
             emailBody.append(">");
-            emailBody.append(gradebook.getCourse());
+            emailBody.append(courseName);
             emailBody.append("</td></tr>");
             emailBody.append("</tbody></table>");
 
-            String subject = " Gradebook Details";
+            String subject = "Gradebook Details";
 
             HTMLEmailHelper emailHelper = new HTMLEmailHelper();
 
@@ -502,7 +516,7 @@ public class GradebookController implements Serializable {
     }
 
 
-public void setEmailResponse(String emailResponse) {
+    public void setEmailResponse(String emailResponse) {
         this.emailResponse = emailResponse;
     }
 
@@ -518,4 +532,6 @@ public void setEmailResponse(String emailResponse) {
         selectedID = getGradebookID();
         return "email";
     }
+    
+    
 }

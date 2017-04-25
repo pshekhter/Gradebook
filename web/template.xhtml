@@ -48,6 +48,8 @@
                         <li><h:link value="Create Assignment" outcome="createAssignment"></h:link></li>
                         <li><h:link value="Email Grades" outcome="emailGrades"></h:link></li>
                         <li><h:link value="Email" outcome="email"></h:link></li>
+                        <li><h:link value="Delete Students" outcome="deleteStudents"></h:link></li>
+
                     </ul>
                 </div>
             </div>
@@ -151,6 +153,24 @@
                                     <f:setPropertyActionListener target="#{gradebookAssignmentController.gradebookId}"
                                                                  value="#{gId.gradebookId}" />
                                     <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}"
+                                                                 value="#{gId.gradebookId}" />
+                                </h:commandLink>
+                            </h:column>
+                            
+                            <h:column>
+                                <f:facet name="header">Email</f:facet>
+                                <h:commandLink action="#{gradebookController.prepareEmail()}"
+                                               value="Email">
+                                    <f:setPropertyActionListener target="#{gradebookController.gradebookID}"
+                                                                 value="#{gId.gradebookId}" />
+                                </h:commandLink>
+                            </h:column>
+                            
+                            <h:column>
+                                <f:facet name="header">Delete Students</f:facet>
+                                <h:commandLink action="#{gradebookController.deleteStudents}"
+                                               value="Delete Students">
+                                    <f:setPropertyActionListener target="#{gradebookController.gradebookID}"
                                                                  value="#{gId.gradebookId}" />
                                 </h:commandLink>
                             </h:column>
