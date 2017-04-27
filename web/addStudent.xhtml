@@ -29,14 +29,6 @@
                     <h:commandButton id="submit" value="Submit" action="addStudent" />
                     <h:commandButton value="Clear" type="reset" />
 
-                    <h:commandButton id="goToAssign" value="Assign to Student" action="#{studentAssignmentController.assignToStudent}">
-                        <f:setPropertyActionListener target="#{studentAssignmentController.assignmentName}" value="#{gradebookAssignmentController.assignmentName}" />
-                        <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{studentAssignmentController.assignment}" />
-                        <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{gradebookStudentController.gradebookID}" />
-                    </h:commandButton>
-
-
-
                     <h:outputText escape="false" value="#{gradebookStudentController.response}" />
 
                     <!--<h:outputText value="Delete Student"/>
