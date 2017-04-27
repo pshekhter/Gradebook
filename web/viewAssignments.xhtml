@@ -35,6 +35,10 @@
                                         <h:commandLink action="#{gradebookAssignmentController.viewStudents}" value="View Student Submission">
                                             <f:setPropertyActionListener target="#{studentAssignmentController.assignment}" value="#{aId.assignmentId}" />
                                             <f:setPropertyActionListener target="#{studentAssignmentController.gradebookId}" value="#{gradebookAssignmentController.gradebookId}" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.firstRun}" value="true" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.readyToRefresh}" value="false" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.isModified}" value="false" />
+                                            <f:setPropertyActionListener target="#{studentAssignmentController.n}" value="0" />
                                         </h:commandLink>
                                     </h:column>
 

@@ -64,6 +64,8 @@ public class StudentAssignmentController implements Serializable {
     List<Student> assignmentStudents;
     List<Student> gradebookStudents;
 
+    int n = 0;
+
     boolean readyToRefresh;
     boolean firstRun = true;
     boolean isModified = false;
@@ -305,6 +307,8 @@ public class StudentAssignmentController implements Serializable {
             grade = modifyGrade;
         }
 
+        int numStudents = sh.getStudentNumber();
+
         if (firstRun || (readyToRefresh && isModified)) {
             gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
             StudentAssignment said = helper.getStudentAssignment(student, gaid);
@@ -313,6 +317,17 @@ public class StudentAssignmentController implements Serializable {
                 // grade = helper.getGrade(saId).getStudentAssignmentGrade();
             }
 
+        }
+
+        if (n < numStudents) {
+            gaid = helper.getGradebookAssignmentId(gradebookId, assignment);
+
+            StudentAssignment said = helper.getStudentAssignment(student, gaid);
+            if (said != null) {
+                int saId = said.getStudentAssignmentId();
+                grade = helper.getGrade(saId).getStudentAssignmentGrade();
+            }
+            n++;
         }
         return grade;
     }
@@ -499,7 +514,7 @@ public class StudentAssignmentController implements Serializable {
             }
 
         } else {
-            resultGrade = grade;
+            resultGrade = this.getGrade();
         }
         return resultGrade;
     }
@@ -516,4 +531,13 @@ public class StudentAssignmentController implements Serializable {
         this.currentSaid = currentSaid;
     }
 
+    public int getN() {
+        return n;
+    }
+
+    public void setN(int n) {
+        this.n = n;
+    }
+
+    
 }

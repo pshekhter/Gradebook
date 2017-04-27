@@ -37,6 +37,7 @@
                     <f:setPropertyActionListener target="#{studentAssignmentController.readyToRefresh}" value="true" />
                     <f:setPropertyActionListener target="#{studentAssignmentController.firstRun}" value="false" />
                     <f:setPropertyActionListener target="#{studentAssignmentController.isModified}" value="true" />
+                    <f:setPropertyActionListener target="#{studentAssignmentController.n}" value="0" />
                 </h:commandButton>
             </h:form>
             <h:outputText escape="false" value="#{studentAssignmentController.gradeResponse}" />
